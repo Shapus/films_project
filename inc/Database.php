@@ -10,7 +10,7 @@
 			$this->host = 'localhost';
 			$this->user = 'root';
 			$this->password = '';
-			$this->database_name = 'news_portal';
+			$this->database_name = 'films_project';
 			$this->connect();
 		}
 

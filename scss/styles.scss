@@ -244,19 +244,17 @@ body{
 		}
 
 		&__item {
-            height: 400px;
+            height: max-content;
             padding: 10px;  
             @include inner-elements();
 		}
 
 		&__item-image-box {
-            height: 100%;
-            width: 300px;
 		}
 
 		&__item-img {
-            height: 100%;
-            width: 100%;
+            height: 400px;
+            width: 300px;
             @include inner-elements();
 		}
 
@@ -277,7 +275,10 @@ body{
 		}
 
 		&__item-description {
-		}
+        }
+        &__item-more-btn{
+            
+        }
 }
 .footer {
 
