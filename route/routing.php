@@ -3,26 +3,25 @@
 	$num = substr_count($host, '/');
 	$path = explode('/',$host)[$num];
 
-	if($path == '' or $path == 'index' or $path == 'index.php')
+	if($num == 2 and ($path == '' or $path == 'index' or $path == 'index.php')){
 		$response = Controller::startSite();
+	}
 
-	elseif($path == 'all')
-		$response = Controller::getAllNews();
+	elseif($path == 'all'){
+		$response = Controller::getAllItems();
+	}
 
-	elseif($path == 'category' and isset($_GET['id']))
-		$response = Controller::getNewsByCategoryId($_GET['id']);
+	elseif($path == 'item' and isset($_GET['id'])){
+		$response = Controller::getItemById($_GET['id']);
+	}
 
-	elseif($path == 'news' and isset($_GET['id']))
-		$response = Controller::GetNewsById($_GET['id']);
-
-	elseif($path == 'insertcomment' and isset($_GET['comment'],$_GET['id']))
-		$response = Controller::insertComment($_GET['id'],$_GET['comment']);
-
-	elseif ($path == 'registrationForm')
-		$response = Controller::registrationForm();
-
-	elseif($path == 'registrationAnswer')
-		$response = Controller::registrationAnswer();
-	else
+	elseif($path == 'serial' and isset($_GET['id'])){
+		$response = Controller::getSeasonsBySerialId($_GET['id']);
+	}	
+	elseif($path == "season" and isset($_GET['id'])){
+		$response = Controller::getItemsBySeasonId($_GET['id']);
+	}
+	else{
 		$response = Controller::error404();
+	}
 ?>

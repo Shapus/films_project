@@ -13,7 +13,7 @@ class Items{
 	}
 
 	public static function getItemById($id){
-		$query = "SELECT * FROM item WHERE id=\"".(string)$id."\"";
+		$query = "SELECT * FROM item WHERE id=\"".$id."\"";
 		$database = new Database();
 		return $database->getOne($query);
 	}
@@ -24,16 +24,10 @@ class Items{
 		return $database->getAll($query);
 	}
 
-	public static function getSeriasBySeasonId($id){
-		$query = "SELECT * FROM seria WHERE season_id=\"".(string)$id."\"";
+	public static function getItemsBySeasonId($id){
+		$query = "SELECT * FROM item WHERE season_id=\"".(string)$id."\"";
 		$database = new Database();
 		return $database->getAll($query);
-	}
-
-	public static function getSeriaById($id){
-		$query = "SELECT * FROM seria WHERE id=\"".(string)$id."\"";
-		$database = new Database();
-		return $database->getOne($query);
 	}
 }
 ?>
