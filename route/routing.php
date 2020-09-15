@@ -1,9 +1,9 @@
 <?php
+
 	$host = explode('?', $_SERVER['REQUEST_URI'])[0];
 	$num = substr_count($host, '/');
 	$path = explode('/',$host)[$num];
-
-	if($num == 2 and ($path == '' or $path == 'index' or $path == 'index.php')){
+	if($num == 2 and ($path == "" or $path == "index" or $path == "index.php")){
 		$response = Controller::startSite();
 	}
 

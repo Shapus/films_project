@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,11 +23,9 @@
                     <div class="header__top-line row row--center">
                         <div class="header__menu">
                             <div class="menu">
-                                <ul class="menu__list row row--center">
+                                <ul class="menu__list row">
                                     <div class="menu__dropbox">
-                                        <div class="menu__dropbtn-box">
-                                            <a class="menu__dropbtn" href="#">Фильмы</a>
-                                        </div>
+                                        <a class="menu__dropbtn" href="#">Фильмы</a>
                                         <ul class="menu__drop-content">
                                             <li class="menu__item">
                                                 <a href="" class="menu__link">film_genre_1</a>
@@ -41,9 +39,7 @@
                                         </ul>
                                     </div> 
                                     <div class="menu__dropbox">
-                                        <div class="menu__dropbtn-box">
-                                            <a class="menu__dropbtn" href="#">Сериалы</a>
-                                        </div>
+                                        <a class="menu__dropbtn" href="#">Сериалы</a>
                                         <ul class="menu__drop-content">
                                             <li class="menu__item">
                                                 <a href="" class="menu__link">series_genre_1</a>
@@ -57,9 +53,7 @@
                                         </ul>
                                     </div> 
                                     <div class="menu__dropbox">
-                                        <div class="menu__dropbtn-box">
-                                            <a class="menu__dropbtn" href="#">О нас</a>
-                                        </div>
+                                        <a class="menu__dropbtn" href="#">О нас</a>
                                     </div> 
                                 </ul>
                             </div>
@@ -81,16 +75,15 @@
                             <div class="left-menu__inner">
                                 <div class="logo logo--left-menu row row--center">ЛОГОТИП</div>
                                 <div class="registration column column--center">
-                                    <img class="registration__img" src="images/no_img.jpg" alt="">
+                                    <img class="registration__img" src="" alt="">
                                     <form class="registration__form" method="POST" action="">
                                         <input type="text" placeholder="Имя пользователя">
                                         <input type="text" placeholder="Пароль">
                                         <input type="submit" value="Войти">
                                     </form>                      
-                                    <a href="" class="registration__btn">Зарегистрироваться</a> 
-                                    <a href="" class="registration__btn">Забыли пароль?</a>                   
+                                    <a href="" class="registration__btn">Зарегистрироваться</a>              
                                 </div>
-                                <div class="genre-map row row--center">КАРТА ЖАНРОВ</div>
+                                <div class="genre-map row row--center">КАРТА ЖАНРОВ (???)</div>
                             </div>
                         </div>
                     </section>    
@@ -98,36 +91,93 @@
                     <section class="content">
                         <div class="container container--section-container container--content">
                             <div class="content__inner">
-                            <?php 
-				                if(isset($content))
-                                    echo $content;
-                                else
-                                    echo "<h1>Ups, no content!</h1>";
-			                ?>
+                                <div class="item-player column">
+                                    <div class="item-player__header row">
+                                        <div class="item-player__image-box">
+                                            <img class="item-player__img" src="" alt="">
+                                        </div>
+                                        <div class="item-player__data column">
+                                            <h1 class="item-player__title">Title</h1>
+                                            <div class="item-player__rating">Rating</div>
+                                            <p class="item-player__year">Year</p>
+                                            <p class="item-player__description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda qui veritatis voluptate. Aspernatur velit, sequi ex sapiente maxime, qui tenetur ad sed eius eos iure dolore corporis minus, cumque saepe.Architecto repudiandae itaque eum? Vel dolorum corrupti facilis eius consequatur possimus doloribus nemo, laboriosam ducimus quisquam. Reprehenderit, dignissimos veniam. Quia adipisci quae provident soluta mollitia voluptatum incidunt dolores ipsam repudiandae!</p>
+                                            <button class="item-player__back-btn">Назад</button>
+                                        </div>
+                                    </div>
+                                    <div class="item-player__video-box">
+                                        <iframe class="item-player__video" src="https://www.youtube.com/embed/pXRviuL6vMY" controls></iframe>
+                                    </div>
+                                </div>
+
+
+
+
+                                <!-- 
+                                
+                                <div class="content__content">
+                                    <div class="content__item row">
+                                        <div class="content__item-image-box">
+                                            <img class="content__item-img" src="" alt="item_image_1">
+                                        </div>
+                                        <div class="content__item-data column">
+                                            <p class="content__item-title">item_title_1</p>
+                                            <div class="content__rating">item_raiting_1</div>
+                                            <p class="content__item-year">item_year_1</p>
+                                            <p class="content__item-description">item_short_description_1</p>
+                                            <button class="content__more">more</button>
+                                        </div>
+                                    </div>
+                                    <div class="content__item row">
+                                        <div class="content__item-image-box">
+                                            <img class="content__item-img" src="" alt="item_image_2">
+                                        </div>
+                                        <div class="content__item-data column">
+                                            <p class="content__item-title">item_title_2</p>
+                                            <div class="content__rating">item_raiting_2</div>
+                                            <p class="content__item-year">item_year_2</p>
+                                            <p class="content__item-description">item_short_description_2</p>
+                                            <button class="content__more">more</button>
+                                        </div>
+                                    </div>
+                                    <div class="content__item row">
+                                        <div class="content__item-image-box">
+                                            <img class="content__item-img" src="" alt="item_image_3">
+                                        </div>
+                                        <div class="content__item-data column">
+                                            <p class="content__item-title">item_title_3</p>
+                                            <div class="content__rating">item_raiting_3</div>
+                                            <p class="content__item-year">item_year_3</p>
+                                            <p class="content__item-description">item_short_description_3</p>
+                                            <button class="content__more">more</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                 -->
                             </div>
                         </div>
                     </section>
+                   
                     <section class="favorites row">
                         <div class="container container--section-container container--favorites">
                             <div class="favorites__inner">
                                 <div class="favorites__item column column--center">
-                                    <img class="favorites__img" src="images/no_img.jpg" alt="favorites_image_1">
+                                    <img class="favorites__img" src="" alt="favorites_image_1">
                                     <div class="favorites__title">favorites_title_1\akdagdkjaghdk\jagksfhsgfkj,hzsgfkj,sgdfk,jhsgdkdg</div>
                                 </div>
                                 <div class="favorites__item column column--center">
-                                    <img class="favorites__img" src="images/no_img.jpg" alt="favorites_image_2">
+                                    <img class="favorites__img" src="" alt="favorites_image_2">
                                     <div class="favorites__title">favorites_title_2</div>
                                 </div>
                                 <div class="favorites__item column column--center">
-                                    <img class="favorites__img" src="images/no_img.jpg" alt="favorites_image_3">
+                                    <img class="favorites__img" src="" alt="favorites_image_3">
                                     <div class="favorites__title">favorites_title_3</div>
                                 </div>
                                 <div class="favorites__item column column--center">
-                                    <img class="favorites__img" src="images/no_img.jpg" alt="favorites_image_4">
+                                    <img class="favorites__img" src="" alt="favorites_image_4">
                                     <div class="favorites__title">favorites_title_4</div>
                                 </div>
                                 <div class="favorites__item column column--center">
-                                    <img class="favorites__img" src="images/no_img.jpg" alt="favorites_image_5">
+                                    <img class="favorites__img" src="" alt="favorites_image_5">
                                     <div class="favorites__title">favorites_title_5</div>
                                 </div>
                             </div>
@@ -145,4 +195,7 @@
 </body>
 </html>
 
-                                
+
+
+
+
