@@ -1,7 +1,7 @@
 <?php
 class Category{
 	public static function getAllCategories(){
-		$query = "SELECT name FROM category";
+		$query = "SELECT * FROM category";
 		$database = new Database();
 		return $database->getAll($query);
 	}

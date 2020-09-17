@@ -29,14 +29,14 @@
                                             <a class="menu__dropbtn" href="#">Фильмы</a>
                                         </div>
                                         <ul class="menu__drop-content">
-                                            <li class="menu__item">
-                                                <a href="" class="menu__link">film_genre_1</a>
+                                            <li class="menu__item row row--center">
+                                                <a href="" class="menu__link row row--center">film_genre_1</a>
                                             </li>
-                                            <li class="menu__item">
-                                                <a href="" class="menu__link">film_genre_2</a>
+                                            <li class="menu__item row row--center">
+                                                <a href="" class="menu__link row row--center">film_genre_2</a>
                                             </li>
-                                            <li class="menu__item">
-                                                <a href="" class="menu__link">film_genre_3</a>
+                                            <li class="menu__item row row--center">
+                                                <a href="" class="menu__link row row--center">film_genre_3</a>
                                             </li>
                                         </ul>
                                     </div> 
@@ -45,14 +45,14 @@
                                             <a class="menu__dropbtn" href="#">Сериалы</a>
                                         </div>
                                         <ul class="menu__drop-content">
-                                            <li class="menu__item">
-                                                <a href="" class="menu__link">series_genre_1</a>
+                                            <li class="menu__item row row--center">
+                                                <a href="" class="menu__link row row--center">series_genre_1</a>
                                             </li>
-                                            <li class="menu__item">
-                                                <a href="" class="menu__link">series_genre_2</a>
+                                            <li class="menu__item row row--center">
+                                                <a href="" class="menu__link row row--center">series_genre_2</a>
                                             </li>
-                                            <li class="menu__item">
-                                                <a href="" class="menu__link">series_genre_3</a>
+                                            <li class="menu__item row row--center">
+                                                <a href="" class="menu__link row row--center">series_genre_3</a>
                                             </li>
                                         </ul>
                                     </div> 
@@ -99,10 +99,8 @@
                         <div class="container container--section-container container--content">
                             <div class="content__inner">
                             <?php 
-				                if(isset($content))
-                                    echo $content;
-                                else
-                                    echo "<h1>Ups, no content!</h1>";
+				                if(isset($content)) echo $content;
+                                else echo "<h1>Ups, no content!</h1>";
 			                ?>
                             </div>
                         </div>

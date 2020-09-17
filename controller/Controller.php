@@ -1,20 +1,12 @@
 <?php
 class Controller{
-	public static function getAllCategory(){
-		$database_response = Category::getAllCategory();
-		if(empty($database_response)){
-			include_once "view/error404.php";
-			return;
-		}
-		include_once "view/all_categories.php";
-	}
-
 	public static function getAllItems(){		
+		$categories = Category::getAllCategories();
 		$database_response = Items::getAllItems();
 		if(empty($database_response)){
 			include_once "view/error404.php";
 			return;
-		}
+		}		
 		include_once "view/items.php";
 	}
 
@@ -53,18 +45,12 @@ class Controller{
 		}
 		include_once "view/serias.php";
 	}
-	
 	public static function error404(){
 		include_once "view/error404.php";
 	}
 
 	public static function startSite(){
-		$database_response = Items::getAllItems();
-		if(empty($database_response)){
-			include_once "view/error404.php";
-			return;
-		}
-		include_once "view/items.php";
+		Controller::getAllItems();
 	}
 }
 ?>

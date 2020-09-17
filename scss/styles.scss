@@ -51,10 +51,14 @@ body{
             width: 150px;
             text-align: center;
             position: relative;
+            
 		}
 		&__dropbtn {
             font-size: 20px;
+            height: 100%;
+            width: 100%;
             text-decoration: none;
+            
 		}
 		&__drop-content {
             height: 0;
@@ -65,19 +69,30 @@ body{
             margin: 0;
             text-align: center;
             transition-duration: 0.8s;
-            background-color: #fff;
+            background-color: #eee;
         }
         &__dropbtn-box{
             height: 70px;
             width: 150px;
             display: table-cell;
-            vertical-align: middle
+            vertical-align: middle;
+            &--focused{
+                background-color: #aaa;
+                color: #fff;
+            }
         }
         &__item{
             height: 50px;
             width: 150px;
+            padding: 10px;
+            margin: 0;
+            &:hover{
+                background-color: #aaa;
+            }
         }
 		&__link {
+            height: 100%;
+            width: 100%;
 		}
 }
 .logo {
@@ -115,7 +130,6 @@ body{
 }
 
 .filter {
-    
     &__title-list {
         list-style-type: none;
         padding-inline-start: 0;
@@ -172,7 +186,8 @@ body{
 		}
 }
 .favorites{
-    width: 15%;
+    width: 200px;
+    min-width: 200px;
 		&__inner {
 		}
 
@@ -196,9 +211,10 @@ body{
             word-wrap: break-word;
             z-index: 1;
             height: 0;
-            padding: 0;           
+            padding: 0;   
+            margin: 0;        
             width: 180px;           
-            
+            max-width: 90%;
 
             &--focused{
                 display: block;
@@ -206,8 +222,8 @@ body{
 		}
 }
 .left-menu {
-    width: 20%;
-    
+    width: 400px;
+    min-width: 300px;
     &__inner {
     }
 }
@@ -247,13 +263,12 @@ body{
 .content {
     display: flex;
     flex-grow: 1;
-    max-width: 65%;
 		&__inner {
             height: 100%;
+            width: 100%;
 		}
 
 		&__filter {
-           height: 200px;
            padding: 10px;  
            display: flex;
            align-items: center;
@@ -266,7 +281,7 @@ body{
 		}
 
 		&__item {
-            height: max-content;
+            height: 300px;
             padding: 10px;  
             @include inner-elements();
 		}
@@ -275,12 +290,13 @@ body{
 		}
 
 		&__item-img {
-            height: 300px;
+            height: 100%;
             width: 200px;
             @include inner-elements();
 		}
 
 		&__item-data {
+            height: 100%;
             display: flex;
             flex-grow: 1;
             align-self: stretch;
@@ -297,6 +313,20 @@ body{
 		}
 
 		&__item-description {
+            max-height: 30%;
+            min-width: 90%;
+            overflow: hidden;
+            position: relative;
+            &:after{
+                content: "";
+                text-align: right;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 70%;
+                height: 1.2em;
+                background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+            }
         }
         &__item-more-btn{
             
@@ -307,13 +337,6 @@ body{
 		&__inner {
 		}
 }
-
-
-
-
-
-
-
 .item-player {    
     height: 100%;
         &__header{
@@ -366,4 +389,13 @@ body{
             width: 100%;
             border: none;
 		}
+}
+.pages{
+    &__inner{
+        padding: 10px;
+    }
+    &__number{
+        padding: 1px;
+        font-size: 20px;
+    }
 }

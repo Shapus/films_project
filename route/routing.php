@@ -7,7 +7,7 @@
 		$response = Controller::startSite();
 	}
 
-	elseif($path == 'all'){
+	elseif($path == 'items'){
 		$response = Controller::getAllItems();
 	}
 

@@ -1,5 +1,6 @@
 $(document).ready(function(){
-    for (let i = 0; i < $(".favorites__item").length; i++) {
+    //favorites titles
+    for (let i = 0; i < $(".favorites__item").length; i++) {       
         $(".favorites__item").eq(i).mouseenter(function(){
             var child = $(".favorites__item").eq(i).children("div");
             child.addClass("favorites__title--focused");
@@ -13,18 +14,21 @@ $(document).ready(function(){
             $(".favorites__item").eq(i).children("div").removeClass("favorites__title--focused");
         });        
     }
-    
+    //menu dropboxes
     for(let i = 0;i < $(".menu__dropbox").length;i++){
-        $(".menu__dropbox").eq(i).mouseenter(function(){           
-            var drop_content = $(".menu__dropbox").eq(i).children(".menu__drop-content");
+        $(".menu__dropbox").eq(i).mouseenter(function(){                    
+            var drop_content = $(this).children(".menu__drop-content");
             var childs_count = drop_content.children(".menu__item").length;
             var childs_h = drop_content.children(".menu__item").innerHeight();
             drop_content.css("height",childs_count*childs_h);
+            $(this).children(".menu__dropbtn-box").addClass("menu__dropbtn-box--focused");   
+            
         }); 
          
         $(".menu__dropbox").eq(i).mouseleave(function(){           
-            var drop_content = $(".menu__dropbox").eq(i).children(".menu__drop-content");
+            var drop_content = $(this).children(".menu__drop-content");
             drop_content.css("height","0");
+            $(this).children(".menu__dropbtn-box").removeClass("menu__dropbtn-box--focused");  
         });           
     }
 });
