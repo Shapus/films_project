@@ -9,7 +9,15 @@ class Controller{
 		}		
 		include_once "view/items.php";
 	}
-
+	public static function getAllSerials(){
+		$categories = Category::getAllCategories();
+		$database_response = Items::getAllSerials();
+		if(empty($database_response)){
+			include_once "view/error404.php";
+			return;
+		}		
+		include_once "view/items.php";
+	} 
 	public static function getItemsByFilter(){							//!!!
 		$database_response = Items::getItemsByFilter();
 		if(empty($database_response)){

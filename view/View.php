@@ -5,22 +5,16 @@ class View{
     public static function viewItems($database_response){
         global $item_on_page;
         $page = 0;
-		if(isset($_GET['page'])) $page = $_GET['page'];
-        for($i=$page*$item_on_page;$i<($page+1)*$item_on_page;$i++) {
-            echo "<div class=\"content__item row\">";
-            echo    "<div class=\"content__item-image-box\">";
-            echo         "<img class=\"content__item-img\" src=\"".$database_response[$i]['image']."\" alt=\"\">";
-            echo    "</div>";
-            echo    "<div class=\"content__item-data column\">";
-            echo        "<h1 class=\"content__item-title\">".$database_response[$i]['title']."</h1>";
-            echo        "<div class=\"content__item-rating\">".$database_response[$i]['rating']."</div>";
-            echo       "<p class=\"content__item-year\">".$database_response[$i]['year']."</p>";
-            echo            "<p class=\"content__item-description\">".$database_response[$i]['description']."</p>";
-            echo         "<a class=\"content__item-more-btn\" href=\"item?id=".$database_response[$i]['id']."\">Смотреть</a>";
-            echo   "</div>";
-            echo "</div>";
-
+        $item_count = min($item_on_page, count($database_response));
+        if(isset($_GET['page'])) $page = $_GET['page'];
+        echo "<div class=\"content__item grid\">";
+        for($i=$page*$item_on_page;$i<($page*$item_on_page)+$item_count;$i++) {           
+            echo    "<a href=\"item?id=".$database_response[$i]['id']."\" class=\"grid-cell\">";
+            echo         "<img class=\"content__item-img\" src=\"".$database_response[$i]['image']."\">";
+            echo         "<h2 class=\"content__item-title\">".$database_response[$i]['title']."</h2>";
+            echo    "</a>";
         }
+        echo "</div>";
     }
     public static function viewItem($database_response){
         echo "<div class=\"item-player column\">";
@@ -56,10 +50,8 @@ class View{
         echo "  <div class=\"content__filter\">";
         echo "      <div class=\"filter column column--center\">";
         echo "        <ul class=\"filter__title-list row\">";
-        echo "            <li class=\"filter__list-item\">Фильмы</li>";
-        echo "            <li class=\"filter__list-item\">Сериалы</li>";
-        echo "            <li class=\"filter__list-item\">Год выпускуа</li>";
-        echo "            <li class=\"filter__list-item\">Оценка пользователей</li>";
+        echo "            <a href=\"items\"><li class=\"filter__list-item\">Фильмы</li></a>";
+        echo "            <a href=\"serials\"><li class=\"filter__list-item\">Сериалы</li></a>";
         echo "        </ul>";
         echo "        <div class=\"filter__grid\">";
         foreach($database_response as $value){
@@ -81,6 +73,20 @@ class View{
             echo "<a class=\"pages__number\" href=\"items?page=".$i."\">".$page_num."</a>";
         }
         echo "  </div>";
+        echo "</div>";
+    }
+    public static function viewSerials($database_response){
+        global $item_on_page;
+        $page = 0;
+        $item_count = min($item_on_page, count($database_response));
+        if(isset($_GET['page'])) $page = $_GET['page'];
+        echo "<div class=\"content__item grid\">";
+        for($i=$page*$item_on_page;$i<($page*$item_on_page)+$item_count;$i++) {           
+            echo    "<a href=\"serial?id=".$database_response[$i]['id']."\" class=\"grid-cell\">";
+            echo         "<img class=\"content__item-img\" src=\"".$database_response[$i]['image']."\">";
+            echo         "<h2 class=\"content__item-title\">".$database_response[$i]['title']."</h2>";
+            echo    "</a>";
+        }
         echo "</div>";
     }
 }

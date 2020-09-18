@@ -10,7 +10,9 @@
 	elseif($path == 'items'){
 		$response = Controller::getAllItems();
 	}
-
+	elseif($path == 'serials'){
+		$response = Controller::getAllSerials();
+	}
 	elseif($path == 'item' and isset($_GET['id'])){
 		$response = Controller::getItemById($_GET['id']);
 	}

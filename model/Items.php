@@ -5,6 +5,11 @@ class Items{
 		$database = new Database();
 		return $database->getAll($query);
 	}
+	public static function getAllSerials(){
+		$query = "SELECT * FROM serial ORDER BY id DESC";
+		$database = new Database();
+		return $database->getAll($query);
+	}
 
 	public static function getItemsByFilter(){
 		$query = "";

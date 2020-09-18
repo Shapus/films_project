@@ -128,7 +128,13 @@ body{
         align-items: center;
     }
 }
+.grid{
+    display: grid;
+    grid-template-columns: repeat(5, 200px);
+    &-cell{
 
+    }
+}
 .filter {
     &__title-list {
         list-style-type: none;
@@ -222,7 +228,7 @@ body{
 		}
 }
 .left-menu {
-    width: 400px;
+    width: 20%;
     min-width: 300px;
     &__inner {
     }
@@ -281,17 +287,14 @@ body{
 		}
 
 		&__item {
-            height: 300px;
             padding: 10px;  
-            @include inner-elements();
-		}
-
-		&__item-image-box {
+            width: 200px;
+            text-align: center;
 		}
 
 		&__item-img {
-            height: 100%;
-            width: 200px;
+            height: 200px;
+            width: 150px;
             @include inner-elements();
 		}
 
