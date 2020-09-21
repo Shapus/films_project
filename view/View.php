@@ -1,15 +1,14 @@
 <?php
-$item_on_page = 2;
-class View{
-    
-    public static function viewItems($database_response){
+$item_on_page = 3;
+class View{  
+    public static function viewItems($database_response,$type){
         global $item_on_page;
         $page = 0;
         $item_count = min($item_on_page, count($database_response));
         if(isset($_GET['page'])) $page = $_GET['page'];
         echo "<div class=\"content__item grid\">";
         for($i=$page*$item_on_page;$i<($page*$item_on_page)+$item_count;$i++) {           
-            echo    "<a href=\"item?id=".$database_response[$i]['id']."\" class=\"grid-cell\">";
+            echo    "<a href=\"".$type."?id=".$database_response[$i]['id']."\" class=\"grid-cell\">";
             echo         "<img class=\"content__item-img\" src=\"".$database_response[$i]['image']."\">";
             echo         "<h2 class=\"content__item-title\">".$database_response[$i]['title']."</h2>";
             echo    "</a>";
@@ -70,7 +69,7 @@ class View{
         echo "  <div class=\"pages__inner row row--center\">";
         for($i=0;$i<count($database_response)/$item_on_page;$i++){
             $page_num = $i+1;
-            echo "<a class=\"pages__number\" href=\"items?page=".$i."\">".$page_num."</a>";
+            echo "<a class=\"pages__number\" href=\"?page=".$i."\">".$page_num."</a>";
         }
         echo "  </div>";
         echo "</div>";

@@ -113,6 +113,10 @@ body {
   display: grid;
   grid-template-columns: repeat(5, 200px);
 }
+.grid-cell {
+  -ms-grid-column: 20px;
+}
+
 .filter__title-list {
   list-style-type: none;
   padding-inline-start: 0;
@@ -227,8 +231,7 @@ body {
   border: solid red 1px;
 }
 .content__item {
-  padding: 10px;
-  width: 200px;
+  margin: 10px;
   text-align: center;
 }
 .content__item-img {

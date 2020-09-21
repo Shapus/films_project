@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Сен 18 2020 г., 09:59
+-- Время создания: Сен 21 2020 г., 10:23
 -- Версия сервера: 10.4.13-MariaDB
 -- Версия PHP: 7.2.31
 
@@ -59,12 +59,23 @@ INSERT INTO `category` (`id`, `name`, `icon`, `serial`, `film`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `favorite_item`
+-- Структура таблицы `favorite_film`
 --
 
-CREATE TABLE `favorite_item` (
+CREATE TABLE `favorite_film` (
   `user_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `favorite_season`
+--
+
+CREATE TABLE `favorite_season` (
+  `user_id` int(11) NOT NULL,
+  `season_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -81,10 +92,10 @@ CREATE TABLE `favorite_serial` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `item`
+-- Структура таблицы `film`
 --
 
-CREATE TABLE `item` (
+CREATE TABLE `film` (
   `id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -92,18 +103,16 @@ CREATE TABLE `item` (
   `rating` set('0','1','2','3','4','5','6','7','8','9') DEFAULT NULL,
   `year` int(11) NOT NULL,
   `description` text NOT NULL,
-  `source` varchar(255) DEFAULT NULL,
-  `season_id` int(11) DEFAULT NULL,
-  `seria_number` int(11) DEFAULT NULL
+  `source` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `item`
+-- Дамп данных таблицы `film`
 --
 
-INSERT INTO `item` (`id`, `category_id`, `title`, `image`, `rating`, `year`, `description`, `source`, `season_id`, `seria_number`) VALUES
-(1, 1, 'Title_1', '', NULL, 2000, 'Vivamus rutrum quis lorem a dictum. Mauris feugiat magna eget lorem dictum, vel euismod dolor imperdiet. In porta ornare porta. Pellentesque fermentum tincidunt elit, eget suscipit lorem luctus et. Fusce molestie, erat quis consequat dignissim, tortor ipsum egestas ante, ut pretium sem metus ac augue. Donec tristique nulla neque, id maximus lacus interdum id. Aliquam tortor lectus, dictum non volutpat in, rutrum non mi. Vivamus sed ex in neque auctor fringilla eget vel justo. Morbi consequat tellus non odio imperdiet blandit. Proin eget lorem sit amet leo imperdiet finibus semper ut est. Cras id rhoncus enim, ut sodales ligula. Morbi a lectus auctor, efficitur lorem quis, mattis leo. ', NULL, NULL, NULL),
-(2, 2, 'Title_2', 'images/cat_1.jpg', '6', 2019, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tincidunt dolor at felis auctor, in hendrerit tellus commodo. Vestibulum vulputate ultricies nunc vitae porttitor. Cras rhoncus molestie felis eu auctor. Curabitur id lectus volutpat tortor semper iaculis at ut risus. Donec aliquet et erat eget viverra. Phasellus tincidunt auctor ultricies. Proin quis tempus mauris. Nam quis magna ac metus congue dictum eu sed lectus. Vestibulum auctor ultricies nulla vitae sollicitudin. Ut varius condimentum lorem eu interdum. ', 'https://www.youtube.com/embed/yuFI5KSPAt4', NULL, NULL);
+INSERT INTO `film` (`id`, `category_id`, `title`, `image`, `rating`, `year`, `description`, `source`) VALUES
+(1, 1, 'Title_1', '', NULL, 2000, 'Vivamus rutrum quis lorem a dictum. Mauris feugiat magna eget lorem dictum, vel euismod dolor imperdiet. In porta ornare porta. Pellentesque fermentum tincidunt elit, eget suscipit lorem luctus et. Fusce molestie, erat quis consequat dignissim, tortor ipsum egestas ante, ut pretium sem metus ac augue. Donec tristique nulla neque, id maximus lacus interdum id. Aliquam tortor lectus, dictum non volutpat in, rutrum non mi. Vivamus sed ex in neque auctor fringilla eget vel justo. Morbi consequat tellus non odio imperdiet blandit. Proin eget lorem sit amet leo imperdiet finibus semper ut est. Cras id rhoncus enim, ut sodales ligula. Morbi a lectus auctor, efficitur lorem quis, mattis leo. ', NULL),
+(2, 2, 'Title_2', 'images/cat_1.jpg', '6', 2019, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tincidunt dolor at felis auctor, in hendrerit tellus commodo. Vestibulum vulputate ultricies nunc vitae porttitor. Cras rhoncus molestie felis eu auctor. Curabitur id lectus volutpat tortor semper iaculis at ut risus. Donec aliquet et erat eget viverra. Phasellus tincidunt auctor ultricies. Proin quis tempus mauris. Nam quis magna ac metus congue dictum eu sed lectus. Vestibulum auctor ultricies nulla vitae sollicitudin. Ut varius condimentum lorem eu interdum. ', 'https://www.youtube.com/embed/yuFI5KSPAt4');
 
 -- --------------------------------------------------------
 
@@ -114,7 +123,25 @@ INSERT INTO `item` (`id`, `category_id`, `title`, `image`, `rating`, `year`, `de
 CREATE TABLE `season` (
   `id` int(11) NOT NULL,
   `serial_id` int(11) NOT NULL,
-  `season_number` int(11) NOT NULL
+  `season_number` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `rating` enum('0','1','2','3','4','5','6','7','8','9','10') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `seria`
+--
+
+CREATE TABLE `seria` (
+  `id` int(11) NOT NULL,
+  `season_id` int(11) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `rating` enum('0','1','2','3','4','5','6','7','8','9','10') NOT NULL,
+  `description` text DEFAULT NULL,
+  `source` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -128,10 +155,20 @@ CREATE TABLE `serial` (
   `category_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
+  `rating` enum('0','1','2','3','4','5','6','7','8','9','10') NOT NULL,
   `year_start` int(11) NOT NULL,
   `year_end` int(11) DEFAULT NULL,
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `serial`
+--
+
+INSERT INTO `serial` (`id`, `category_id`, `title`, `image`, `rating`, `year_start`, `year_end`, `description`) VALUES
+(1, 15, 'Игра престолов', '', '0', 2011, 2019, 'description'),
+(2, 13, 'Ходячие мертвецы', '', '0', 2010, NULL, 'description'),
+(3, 3, 'Шерлок', '', '0', 2010, NULL, 'description');
 
 -- --------------------------------------------------------
 
@@ -159,11 +196,20 @@ ALTER TABLE `category`
   ADD UNIQUE KEY `id` (`id`);
 
 --
--- Индексы таблицы `favorite_item`
+-- Индексы таблицы `favorite_film`
 --
-ALTER TABLE `favorite_item`
+ALTER TABLE `favorite_film`
+  ADD PRIMARY KEY (`user_id`,`item_id`),
   ADD KEY `user_id` (`user_id`,`item_id`),
   ADD KEY `item_id` (`item_id`);
+
+--
+-- Индексы таблицы `favorite_season`
+--
+ALTER TABLE `favorite_season`
+  ADD PRIMARY KEY (`user_id`,`season_id`),
+  ADD KEY `season_id` (`season_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Индексы таблицы `favorite_serial`
@@ -174,11 +220,10 @@ ALTER TABLE `favorite_serial`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Индексы таблицы `item`
+-- Индексы таблицы `film`
 --
-ALTER TABLE `item`
+ALTER TABLE `film`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `season_id` (`season_id`),
   ADD KEY `category_id` (`category_id`);
 
 --
@@ -187,6 +232,13 @@ ALTER TABLE `item`
 ALTER TABLE `season`
   ADD PRIMARY KEY (`id`),
   ADD KEY `serial_id` (`serial_id`);
+
+--
+-- Индексы таблицы `seria`
+--
+ALTER TABLE `seria`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `season_id` (`season_id`);
 
 --
 -- Индексы таблицы `serial`
@@ -212,9 +264,9 @@ ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT для таблицы `item`
+-- AUTO_INCREMENT для таблицы `film`
 --
-ALTER TABLE `item`
+ALTER TABLE `film`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
@@ -224,10 +276,16 @@ ALTER TABLE `season`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT для таблицы `seria`
+--
+ALTER TABLE `seria`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT для таблицы `serial`
 --
 ALTER TABLE `serial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
@@ -240,11 +298,18 @@ ALTER TABLE `user`
 --
 
 --
--- Ограничения внешнего ключа таблицы `favorite_item`
+-- Ограничения внешнего ключа таблицы `favorite_film`
 --
-ALTER TABLE `favorite_item`
-  ADD CONSTRAINT `favorite_item_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`),
-  ADD CONSTRAINT `favorite_item_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+ALTER TABLE `favorite_film`
+  ADD CONSTRAINT `favorite_film_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `film` (`id`),
+  ADD CONSTRAINT `favorite_film_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `favorite_season`
+--
+ALTER TABLE `favorite_season`
+  ADD CONSTRAINT `favorite_season_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `favorite_season_ibfk_2` FOREIGN KEY (`season_id`) REFERENCES `season` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `favorite_serial`
@@ -254,17 +319,22 @@ ALTER TABLE `favorite_serial`
   ADD CONSTRAINT `favorite_serial_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `item`
+-- Ограничения внешнего ключа таблицы `film`
 --
-ALTER TABLE `item`
-  ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`season_id`) REFERENCES `season` (`id`),
-  ADD CONSTRAINT `item_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
+ALTER TABLE `film`
+  ADD CONSTRAINT `film_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `season`
 --
 ALTER TABLE `season`
   ADD CONSTRAINT `season_ibfk_1` FOREIGN KEY (`serial_id`) REFERENCES `serial` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `seria`
+--
+ALTER TABLE `seria`
+  ADD CONSTRAINT `seria_ibfk_1` FOREIGN KEY (`season_id`) REFERENCES `season` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `serial`

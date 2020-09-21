@@ -7,13 +7,13 @@
 		$response = Controller::startSite();
 	}
 
-	elseif($path == 'items'){
-		$response = Controller::getAllItems();
+	elseif($path == 'all'){
+		$response = Controller::getAll();
 	}
 	elseif($path == 'serials'){
 		$response = Controller::getAllSerials();
 	}
-	elseif($path == 'item' and isset($_GET['id'])){
+	elseif($path == 'film' and isset($_GET['id'])){
 		$response = Controller::getItemById($_GET['id']);
 	}
 

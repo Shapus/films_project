@@ -1,7 +1,7 @@
 <?php
 class Items{
-	public static function getAllItems(){
-		$query = "SELECT * FROM item ORDER BY id DESC";
+	public static function getFilms(){
+		$query = "SELECT * FROM film ORDER BY id DESC";
 		$database = new Database();
 		return $database->getAll($query);
 	}
@@ -17,8 +17,8 @@ class Items{
 		return $database->getAll($query);
 	}
 
-	public static function getItemById($id){
-		$query = "SELECT * FROM item WHERE id=\"".$id."\"";
+	public static function getFilmById($id){
+		$query = "SELECT * FROM film WHERE id=\"".$id."\"";
 		$database = new Database();
 		return $database->getOne($query);
 	}
@@ -31,6 +31,11 @@ class Items{
 
 	public static function getItemsBySeasonId($id){
 		$query = "SELECT * FROM item WHERE season_id=\"".(string)$id."\"";
+		$database = new Database();
+		return $database->getAll($query);
+	}
+	public static function getAll(){
+		$query = "SELECT * FROM film,serial";
 		$database = new Database();
 		return $database->getAll($query);
 	}
