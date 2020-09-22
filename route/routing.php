@@ -3,26 +3,50 @@
 	$host = explode('?', $_SERVER['REQUEST_URI'])[0];
 	$num = substr_count($host, '/');
 	$path = explode('/',$host)[$num];
+
+	//index
 	if($num == 2 and ($path == "" or $path == "index" or $path == "index.php")){
 		$response = Controller::startSite();
 	}
 
-	elseif($path == 'all'){
-		$response = Controller::getAll();
+	//items
+	elseif($path == 'items'){
+		if(isset($_GET['category'])){
+			$response = Controller::getItemsByCategory($_GET['category']);
+		}
+		elseif(isset($_GET['id'])){
+			$response = Controller::getItemById($_GET['id']);
+		}
+		else $response = Controller::getAllItems();
 	}
+	
+		
+
+	//serials
 	elseif($path == 'serials'){
-		$response = Controller::getAllSerials();
-	}
-	elseif($path == 'film' and isset($_GET['id'])){
-		$response = Controller::getItemById($_GET['id']);
+		if(isset($_GET['category'])){
+			$response = Controller::getSerialsByCategory($_GET['category']);
+		}
+		elseif(isset($_GET['id'])){
+			$response = Controller::getSerialById($_GET['id']);
+		}
+		else $response = Controller::getAllSerials();
 	}
 
-	elseif($path == 'serial' and isset($_GET['id'])){
-		$response = Controller::getSeasonsBySerialId($_GET['id']);
-	}	
-	elseif($path == "season" and isset($_GET['id'])){
-		$response = Controller::getItemsBySeasonId($_GET['id']);
+
+	//films
+	elseif($path == 'films'){
+		if(isset($_GET['category'])){
+			$response = Controller::getFilmsByCategory($_GET['category']);
+		}
+		elseif(isset($_GET['id'])){
+			$response = Controller::getFilmById($_GET['id']);
+		}
+		else $response = Controller::getAllFilms();
 	}
+	
+	
+	//error
 	else{
 		$response = Controller::error404();
 	}

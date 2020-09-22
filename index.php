@@ -1,7 +1,9 @@
 <?php
 session_start();
 include_once 'inc/Database.php';
-require 'model/Items.php';
+require 'model/Item.php';
+require 'model/Film.php';
+require 'model/Serial.php';
 require 'model/Category.php';
 
 include_once 'view/View.php';
