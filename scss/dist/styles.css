@@ -5,7 +5,6 @@ body {
 
 .wrapper {
   width: 100%;
-  max-width: 1920px;
 }
 
 .header, .recent-slider, .main, .footer {
@@ -180,8 +179,7 @@ body {
 }
 
 .left-menu {
-  width: 20%;
-  min-width: 300px;
+  width: 300px;
 }
 .logo {
   border: solid red 1px;
@@ -290,9 +288,9 @@ body {
   width: 90%;
 }
 .item-player__video-box {
-  height: 600px;
+  width: 1280px;
+  height: 720px;
   display: flex;
-  flex-grow: 1;
 }
 .item-player__video {
   height: 100%;

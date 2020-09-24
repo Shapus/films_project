@@ -1,4 +1,8 @@
 <?php
+class Functions{
+    public static  function getUrl(){
+    }
+}
 session_start();
 include_once 'inc/Database.php';
 require 'model/Item.php';
