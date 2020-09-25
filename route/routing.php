@@ -1,5 +1,4 @@
 <?php
-	$url = "";
 	$host = explode('?', $_SERVER['REQUEST_URI'])[0];
 	$num = substr_count($host, '/');
 	$path = explode('/',$host)[$num];
@@ -8,7 +7,7 @@
 	if($num == 2 and ($path == "" or $path == "index" or $path == "index.php")){
 		$response = Controller::startSite();
 	}
-
+		
 	//items
 	elseif($path == 'items'){
 		if(isset($_GET['category'])) $response = Controller::getItemsByCategory($_GET['category']);

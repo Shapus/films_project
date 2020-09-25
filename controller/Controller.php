@@ -80,9 +80,7 @@ class Controller{
 		include_once "view/items.php";
 	}
 
-
-
-
+	
 	public static function getItemsByFilter(){							//!!!
 		$database_response = Items::getItemsByFilter();
 		if(empty($database_response)){
@@ -91,25 +89,13 @@ class Controller{
 		}
 		include_once "view/items.php";
 	}
-
-
-	public static function getItemsBySeasonId($id){
-		$database_response = Items::getItemsBySeasonId($id);
-		if(empty($database_response)){
-			include_once "view/error404.php";
-			return;
-		}
-		include_once "view/serias.php";
-	}
 	public static function error404(){
 		include_once "view/error404.php";
 	}
 	public static function startSite(){
 		$categories = Category::getAllCategories();	
-		$database_response = Item::getAllItems();
-		$type = 'items';
-		
-		include_once "view/items.php";
+		$database_response = Item::getAllItems();		
+		include_once "view/start.php";
 	}
 }
 ?>

@@ -80,21 +80,21 @@
                         <div class="container container--section-container container--left-menu">
                             <div class="left-menu__inner">
                                 <div class="logo logo--left-menu row row--center">ЛОГОТИП</div>
-                                <div class="registration column column--center">
+                                <div class="registration column column--center" id="registrationForm">
+                                    <!--enter/registration form-->
                                     <img class="registration__img" src="images/no_img.jpg" alt="">
                                     <form class="registration__form" method="POST" action="">
                                         <input type="text" placeholder="Имя пользователя">
-                                        <input type="text" placeholder="Пароль">
+                                        <input type="password" placeholder="Пароль">
                                         <input type="submit" value="Войти">
                                     </form>                      
-                                    <a href="" class="registration__btn">Зарегистрироваться</a> 
-                                    <a href="" class="registration__btn">Забыли пароль?</a>                   
+                                    <button onclick="registration()" class="registration__btn" id="registration_btn">Зарегистрироваться</button> 
+                                    <a href="" class="registration__btn">Забыли пароль?</a>
                                 </div>
                                 <div class="genre-map row row--center">КАРТА ЖАНРОВ</div>
                             </div>
                         </div>
-                    </section>    
-                              
+                    </section>                                  
                     <section class="content">
                         <div class="container container--section-container container--content">
                             <div class="content__inner">
@@ -110,7 +110,7 @@
                             <div class="favorites__inner">
                                 <div class="favorites__item column column--center">
                                     <img class="favorites__img" src="images/no_img.jpg" alt="favorites_image_1">
-                                    <div class="favorites__title">favorites_title_1\akdagdkjaghdk\jagksfhsgfkj,hzsgfkj,sgdfk,jhsgdkdg</div>
+                                    <div class="favorites__title">favorites_title_1akdagdkjaghdkjagksfhsgfkj,hzsgfkj,sgdfk,jhsgdkdg</div>
                                 </div>
                                 <div class="favorites__item column column--center">
                                     <img class="favorites__img" src="images/no_img.jpg" alt="favorites_image_2">

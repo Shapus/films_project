@@ -34,6 +34,11 @@ class Serial{
                                                                   WHERE serial_id = {$serial_id} and number = {$season_number})";
         $database = new Database();
         return $database->getOne($query);
+    }
+    public static function getSeasonNumberById($season_id){
+        $query = "SELECT number FROM season WHERE season_id={$season_id}";
+        $database = new Database();
+        return $database->getOne($query);
     }  
 }
 

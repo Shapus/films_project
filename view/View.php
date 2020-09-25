@@ -1,3 +1,5 @@
+
+
 <?php
 $item_on_page = 6;
 class View{  
@@ -7,7 +9,7 @@ class View{
         if(isset($_GET['page'])) $page = $_GET['page'];
         $i = 0;
         $current_item = $page*$item_on_page+$i;
-
+        $_SESSION['prev_url'] = $_SERVER['REQUEST_URI'];
         echo "<div class=\"content__item grid\">";
         while($i<$item_on_page and count($database_response)>$current_item) {      
             $type = 'films';
@@ -60,8 +62,7 @@ class View{
         $category_id = 1;   
     }
     public static function viewFilm($database_response){
-        $last_url = "./";
-        if(isset($_SERVER['HTTP_REFERER']) and $_SERVER['HTTP_REFERER']!="") $last_url = $_SERVER['HTTP_REFERER'];
+        $last_url = isset($_SESSION['prev_url'])?$_SESSION['prev_url']:"./";
         echo "<div class=\"item-player column\">";
         echo    "<div class=\"item-player__header row\">";
         echo        "<div class=\"item-player__image-box\">";
@@ -81,6 +82,7 @@ class View{
         echo "<div>";
     }
     public static function viewSeasons($database_response){
+        $last_url = isset($_SESSION['prev_url'])?$_SESSION['prev_url']:"./";
         echo "<div class=\"content__item grid\">";
         for($i=0;$i<count($database_response);$i++){           
             echo    "<a href=\"{$_SERVER['REQUEST_URI']}&season={$database_response[$i]['number']}\" class=\"grid-cell\">";
@@ -88,7 +90,7 @@ class View{
             echo         "<h2 class=\"content__item-title\">Сезон {$database_response[$i]['number']}</h2>";
             echo    "</a>";
         }
-        echo "<a class=\"content__item-more-btn\" href=\"".Functions::getUrl()."\">Назад</a>";
+        echo "<a class=\"content__item-more-btn\" href=\"{$last_url}\">Назад</a>";
     }
     public static function viewSerias($database_response){
         echo "<div class=\"content__item grid\">";
@@ -99,11 +101,11 @@ class View{
             echo         "<h2 class=\"content__item-title\">{$seria_title}</h2>";
             echo    "</a>";
         }
-        echo "<a class=\"content__item-more-btn\" href=\"./\">Назад</a>";
+        echo "<a class=\"content__item-more-btn\" href=\"serials?id={$_GET['id']}\">К списку сезонов</a>";
     }
     public static function viewSeria($database_response){
-        $last_url = "./";
-        if(isset($_SERVER['HTTP_REFERER']) and $_SERVER['HTTP_REFERER']!="") $last_url = $_SERVER['HTTP_REFERER'];
+        //echo "<ul class=\"row row--center\">";
+        //echo    "<li><a href=\"/{$_SESSION['project_name']}?serial={$_SESSION['serial_id']}&season={$_SESSION['season_id']}\"></a></li>";
         echo "<div class=\"item-player column\">";
         echo    "<div class=\"item-player__header row\">";
         echo        "<div class=\"item-player__image-box\">";
@@ -113,7 +115,7 @@ class View{
         echo            "<h1 class=\"content__item-title\">{$database_response['title']}</h1>";
         echo            "<div class=\"content__item-rating\">{$database_response['rating']}</div>";
         echo            "<p class=\"content__item-description\">{$database_response['description']}</p>";
-        echo            "<a class=\"content__item-more-btn\" href=\"{$last_url}\">Назад</a>";
+        echo            "<a class=\"content__item-more-btn\" href=\"serials?id={$_GET['id']}&season={$_GET['season']}\">К списку серий</a>";
         echo        "</div>";
         echo    "</div>";
         echo    "<div class=\"item-player__video-box\">";
@@ -126,6 +128,43 @@ class View{
             echo "<option class=\"categories__item\" value=\"".$value['name']."\">".$value['name']."</oprion>";
         }
     } 
+    public static function viewRegistrationForm(){
+        echo "
+            <div>
+                <form class=\"column\" role=\"form\" method=\"POST\" action=\"registrationAnswer\"\">
+                    <div class=\"input_box\">
+                        <label class=\"\">Имя пользователя</label>
+                        <input class=\"\" type=\"text\" id=\"name\" name=\"name\" required>
+                    </div>
+                    <div class=\"input_box\">
+                        <label class=\"\">E-mail</label>
+                        <input class=\"\" type=\"email\" id=\"email\" name=\"email\" required>
+                    </div>
+                    <div class=\"input_box\">
+                        <label class=\"\">Пароль</label>
+                        <input class=\"\" type=\"password\" id=\"password\" name=\"password\" required>
+                    </div>
+                    <div class=\"input_box\">
+                        <label class=\"\">Повторите пароль</label>
+                        <input class=\"\" type=\"password\" id=\"confirm\" name=\"confirm\" required>
+                    </div>
+                </form>
+            </div>
+        ";
+       
+    }
+    public static function viewEnterForm(){
+        echo "
+            <img class=\"registration__img\" src=\"images/no_img.jpg\" alt=\"\">
+                <form class=\"registration__form\" method=\"POST\" action=\"\">
+                    <input type=\"text\" placeholder=\"Имя пользователя\">
+                    <input type=\"password\" placeholder=\"Пароль\">
+                    <input type=\"submit\" value=\"Войти\">
+                </form>                      
+            <button onclick=\"registration()\" class=\"registration__btn\">Зарегистрироваться</button> 
+            <a href=\"\" class=\"registration__btn\">Забыли пароль?</a>
+        ";
+    }
 }
 ?>
 
