@@ -40,7 +40,8 @@ class View{
         foreach($database_response as $value){
             echo "           <a href={$path}?category={$value['id']}>";
             echo "            <div class=\"filter__grid-cell row\">";
-            echo "                <img class=\"filter__grid-img\" src=\"{$value['icon']}\" alt=\"\">";
+            echo "                <div class=\"filter__grid-img filter__grid-img--main\" icon=\"{$value['icon']}\" style=\"background-image:url({$value['icon']})\"alt=\"\"></div>";
+            echo "                <div class=\"filter__grid-img filter__grid-img--focused\" style=\"background-image:url({$value['icon_focused']})\"alt=\"\"></div>";
             echo "                <p class=\"filter__grid-text\">{$value['name']}</p>";
             echo "            </div>";
             echo "           </a>";

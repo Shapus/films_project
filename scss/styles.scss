@@ -1,3 +1,11 @@
+$color1:#0F1F38;
+$color2: #8E7970;
+$color3: #F55449;
+$color4: #1B4B5A;
+
+
+
+
 body{
     display: flex;
     justify-content: center;
@@ -6,13 +14,13 @@ body{
     width: 100%;
 }
 .header, .recent-slider, .main, .footer{
-    border:solid black 1px;
+    //border:solid black 1px;
 }
 .favorites, .content, .left-menu{
-    border: solid blue 1px;
+    //border: solid blue 1px;
 }
 @mixin inner-elements(){
-    border: solid green 1px;
+    //border: solid green 1px;
 }
 .container {
     &--header{
@@ -154,18 +162,24 @@ body{
         align-items: center;
         text-align: center;
         padding: 5px;
+        &--focused{
+            background: red;
+        }
     }
-    &__grid-img{
+    &__grid-img{       
+        height: 70px;
+        width: 70px;
+        margin-right: 5px;      
+        background-size: contain;
+        transition: background-image 1s ease;
+        &--focused{
+           position: absolute;
+           z-index: -1;
+        }
         
-        height: 30px;
-        width: 30px;
-        margin-right: 5px;
     }
     &__grid-text{
-
     }
-
-    
 }
 
 
@@ -200,7 +214,7 @@ body{
 		&__item {
             text-align: center;
             height: 200px;                                                  //set height                                           
-            border: solid red 1px;
+            //border: solid red 1px;
 		}
 
 		&__img {
@@ -233,7 +247,7 @@ body{
     }
 }
 .logo {
-    border: solid red 1px;
+    //border: solid red 1px;
     padding: 10px;
     &--header{
     }
@@ -243,7 +257,7 @@ body{
 }
 .registration{
     height: 400px;
-    border: solid red 1px;
+    //border: solid red 1px;
     padding: 10px;
     &__form{
         display: flex;
@@ -262,7 +276,7 @@ body{
 }
 .genre-map{
     height: 200px;
-    border: solid red 1px;
+    //border: solid red 1px;
     padding: 10px;
 }
 .content {
@@ -278,11 +292,11 @@ body{
            display: flex;
            align-items: center;
            flex-direction: column;
-           border: solid red 1px;
+           //border: solid red 1px;
 		}
 
 		&__content { 
-            border: solid red 1px;
+            //border: solid red 1px;
 		}
 
 		&__item {
