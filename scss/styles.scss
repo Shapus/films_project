@@ -3,25 +3,6 @@ $color2: #8E7970;
 $color3: #F55449;
 $color4: #1B4B5A;
 
-
-
-
-body{
-    display: flex;
-    justify-content: center;
-}
-.wrapper {
-    width: 100%;
-}
-.header, .recent-slider, .main, .footer{
-    //border:solid black 1px;
-}
-.favorites, .content, .left-menu{
-    //border: solid blue 1px;
-}
-@mixin inner-elements(){
-    //border: solid green 1px;
-}
 .container {
     &--header{
     }
@@ -72,6 +53,7 @@ body{
             overflow: hidden;
             position: absolute;
             list-style-type: none;
+            z-index: 1000;
             padding: 0;
             margin: 0;
             text-align: center;
@@ -185,26 +167,6 @@ body{
 
 
 
-.header {
-
-		&__inner {
-		}
-
-		&__top-line {
-		}
-
-		&__menu {
-            width: 70%;
-        }
-        &__search{
-
-            width: 30%;
-        }
-}
-.main {
-		&__inner {
-		}
-}
 .favorites{
     width: 200px;
     min-width: 200px;
@@ -346,11 +308,6 @@ body{
         &__item-more-btn{
             
         }
-}
-.footer {
-
-		&__inner {
-		}
 }
 .item-player {    
     height: 100%;
