@@ -1,18 +1,23 @@
-body {
-  display: flex;
-  justify-content: center;
+.color-1 {
+  color: #c08b61;
 }
 
-.wrapper {
-  width: 100%;
+.color-2 {
+  color: #4c1a0d;
 }
 
-.container--section-container {
-  width: 100%;
+.color-3 {
+  color: #d9d6d5;
 }
-.recent-slider {
-  height: 100px;
+
+.color-4 {
+  color: #302b2a;
 }
+
+.color-5 {
+  color: #111111;
+}
+
 .menu {
   width: max-content;
   height: 70px;
@@ -28,7 +33,6 @@ body {
   position: relative;
 }
 .menu__dropbtn {
-  font-size: 20px;
   height: 100%;
   width: 100%;
   text-decoration: none;
@@ -46,6 +50,7 @@ body {
   background-color: #eee;
 }
 .menu__dropbtn-box {
+  font-size: 20px;
   height: 70px;
   width: 150px;
   display: table-cell;
@@ -53,7 +58,6 @@ body {
 }
 .menu__dropbtn-box--focused {
   background-color: #aaa;
-  color: #fff;
 }
 .menu__item {
   height: 50px;
@@ -69,41 +73,9 @@ body {
   width: 100%;
 }
 
-.logo {
-  border: solid red 1px;
-}
-.logo--left-menu {
-  height: 200px;
-}
-
-.search_box__input {
-  width: 100%;
-}
-.search_box--header {
-  width: 40%;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-}
-.row--center {
-  justify-content: center;
-  align-items: center;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-}
-.column--center {
-  justify-content: center;
-  align-items: center;
-}
-
 .grid {
   display: grid;
-  grid-template-columns: repeat(5, 200px);
+  grid-template-columns: repeat(5, 150px);
 }
 .grid-cell {
   -ms-grid-column: 20px;
@@ -121,15 +93,13 @@ body {
 }
 .filter__grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, 150px);
 }
 .filter__grid-cell {
-  align-items: center;
-  text-align: center;
-  padding: 5px;
+  border-radius: 10px;
 }
-.filter__grid-cell--focused {
-  background: red;
+.filter__grid-cell:hover {
+  background: lightgray;
 }
 .filter__grid-img {
   height: 70px;
@@ -142,11 +112,9 @@ body {
   position: absolute;
   z-index: -1;
 }
-.header__menu {
-  width: 70%;
-}
-.header__search {
-  width: 30%;
+
+.search-input {
+  height: 25px;
 }
 
 .favorites {
@@ -182,13 +150,6 @@ body {
 .left-menu {
   width: 300px;
 }
-.logo {
-  padding: 10px;
-}
-.logo--left-menu {
-  height: 200px;
-}
-
 .registration {
   height: 400px;
   padding: 10px;
@@ -203,11 +164,6 @@ body {
   width: 150px;
   margin-bottom: 40px;
 }
-.genre-map {
-  height: 200px;
-  padding: 10px;
-}
-
 .content {
   display: flex;
   flex-grow: 1;

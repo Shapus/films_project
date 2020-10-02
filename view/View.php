@@ -1,26 +1,29 @@
 
 
 <?php
-$item_on_page = 6;
+$item_on_page = 10;
 class View{  
-    public static function viewItems($database_response){
+    public static function viewItems($database_response, $categories){
         global $item_on_page;
         $page = 0;
         if(isset($_GET['page'])) $page = $_GET['page'];
         $i = 0;
         $current_item = $page*$item_on_page+$i;
         $_SESSION['prev_url'] = $_SERVER['REQUEST_URI'];
-        echo "<div class=\"content__item grid\">";
-        while($i<$item_on_page and count($database_response)>$current_item) {      
+        echo "<div class=\"content__item container row justify-contetn-center\">";
+        while($i<$item_on_page and count($database_response)>$current_item) {  
             $type = 'films';
+            
             if($database_response[$current_item]['is_serial'] == 1) $type = 'serials';     
-            echo    "<a href=\"".$type."?id={$database_response[$current_item]['id']}\" class=\"grid-cell\">";
+            echo    "<a href=\"".$type."?id={$database_response[$current_item]['id']}\" class=\"col-md-2\">";
             echo         "<img class=\"content__item-img\" src=\"images/{$database_response[$current_item]['image']}\">";
-            echo         "<h2 class=\"content__item-title\">{$database_response[$current_item]['title']}</h2>";
+            echo         "<p class=\"color-4 p-0 m-0\">{$database_response[$current_item]['title']}</p>";
+            echo         "<p class=\"color-3\">{$database_response[$current_item]['year']}, {$categories[$database_response[$current_item]['category_id']-1]['name']}</p>";
             echo    "</a>";
             $i++;
             $current_item = $page*$item_on_page+$i;
         }
+        echo "</div>";
     }
     public static function viewFilter($database_response){
         $host = explode('?', $_SERVER['REQUEST_URI'])[0];
@@ -29,36 +32,32 @@ class View{
         if($num == 2 and ($path == "" or $path == "index" or $path == "index.php")){
             $path = "items";
         }
-        echo "  <div class=\"content__filter\">";
-        echo "      <div class=\"filter column column--center\">";
-        echo "        <ul class=\"filter__title-list row\">";
+        echo "      <div class=\"filter d-flex flex-column justify-content-center mb-5\">";
+        echo "        <ul class=\"filter__title-list d-flex justify-content-center\">";
         echo "            <a href=\"items\"><li class=\"filter__list-item\">Все</li></a>";
         echo "            <a href=\"films\"><li class=\"filter__list-item\">Фильмы</li></a>";
         echo "            <a href=\"serials\"><li class=\"filter__list-item\">Сериалы</li></a>";
         echo "        </ul>";
-        echo "        <div class=\"filter__grid\">";
+        echo "        <div class=\"filter__grid justify-content-center verical-align-middle\">";
         foreach($database_response as $value){
-            echo "           <a href={$path}?category={$value['id']}>";
-            echo "            <div class=\"filter__grid-cell row\">";
-            echo "                <div class=\"filter__grid-img filter__grid-img--main\" icon=\"{$value['icon']}\" style=\"background-image:url({$value['icon']})\"alt=\"\"></div>";
-            echo "                <div class=\"filter__grid-img filter__grid-img--focused\" style=\"background-image:url({$value['icon_focused']})\"alt=\"\"></div>";
-            echo "                <p class=\"filter__grid-text\">{$value['name']}</p>";
+            echo "           <a href={$path}?category={$value['id']} class=\"filter__grid-cell row justify-content-center align-items-center px-4 py-3\">";
+            echo "            <div>";
+            //echo "                <div class=\"filter__grid-img filter__grid-img--main\" icon=\"{$value['icon']}\" style=\"background-image:url({$value['icon']})\"alt=\"\"></div>";
+            //echo "                <div class=\"filter__grid-img filter__grid-img--focused\" style=\"background-image:url({$value['icon_focused']})\"alt=\"\"></div>";
+            echo "                <p class=\"filter__grid-text color-4 p-0 m-0\">{$value['name']}</p>";
             echo "            </div>";
             echo "           </a>";
         }
         echo "        </div>";
         echo "      </div>";
-        echo "  </div>";
     }
     public static function viewPagesNumbers($database_response){
         global $item_on_page;
-        echo "<div class=\"pages\">";
-        echo "  <div class=\"pages__inner row row--center\">";
+        echo "<div class=\"pages row\">";
         for($i=0;$i<count($database_response)/$item_on_page;$i++){
             $page_num = $i+1;
-            echo "<a class=\"pages__number\" href=\"?page={$i}\">{$page_num}</a>";
+            echo "<a class=\"pages__number d-flex justify-content-center\" href=\"?page={$i}\">{$page_num}</a>";
         }
-        echo "  </div>";
         echo "</div>";
         $category_id = 1;   
     }

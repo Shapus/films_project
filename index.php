@@ -1,8 +1,5 @@
 <?php
-class Functions{
-    public static  function getUrl(){
-    }
-}
+
 session_start();
 $_SESSION['project_name'] = "films_project";
 include_once 'inc/Database.php';

@@ -10,70 +10,56 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="wrapper container-fluid d-flex justify-content-center">
-        <div class="wrapper-inner container d-flex flex-column">
-            <header class="header d-flex">
-                <div class="container container--header">
-                    <div class="header__inner">                    
-                        <div class="header__top-line row row--center">
-                            <div class="header__menu">
-
-                                <div class="menu">
-                                    <ul class="menu__list row row--center">
-                                        <div class="menu__dropbox">
-                                            <div class="menu__dropbtn-box">
-                                                <a class="menu__dropbtn" href="#">Фильмы</a>
-                                            </div>
-                                            <ul class="menu__drop-content">
-                                                <li class="menu__item row row--center">
-                                                    <a href="" class="menu__link row row--center">film_genre_1</a>
-                                                </li>
-                                                <li class="menu__item row row--center">
-                                                    <a href="" class="menu__link row row--center">film_genre_2</a>
-                                                </li>
-                                                <li class="menu__item row row--center">
-                                                    <a href="" class="menu__link row row--center">film_genre_3</a>
-                                                </li>
-                                            </ul>
-                                        </div> 
-                                        <div class="menu__dropbox">
-                                            <div class="menu__dropbtn-box">
-                                                <a class="menu__dropbtn" href="#">Сериалы</a>
-                                            </div>
-                                            <ul class="menu__drop-content">
-                                                <li class="menu__item row row--center">
-                                                    <a href="" class="menu__link row row--center">series_genre_1</a>
-                                                </li>
-                                                <li class="menu__item row row--center">
-                                                    <a href="" class="menu__link row row--center">series_genre_2</a>
-                                                </li>
-                                                <li class="menu__item row row--center">
-                                                    <a href="" class="menu__link row row--center">series_genre_3</a>
-                                                </li>
-                                            </ul>
-                                        </div> 
-                                        <div class="menu__dropbox">
-                                            <div class="menu__dropbtn-box">
-                                                <a class="menu__dropbtn" href="#">О нас</a>
-                                            </div>
-                                        </div> 
-                                    </ul>
-                                
-                                </div>
-                            
-                            </div>
-                            <div class="header__search row row--center">
-                                <div class="search_box search_box--header">
-                                    <input class="search_box__input search_box__input--header" type="text">
-                                </div>
-                            </div>
-                        </div>
+    <div class="wrapper container-fluid row flex-column align-items-center">
+            <header class="header w-100 row justify-content-center">  
+                <div class="header__inner container row justify-content-between">                 
+                    <div class="menu">
+                        <ul class="menu__list row justify-content-center align-items-center">
+                            <div class="menu__dropbox">
+                                <a class="menu__dropbtn-box" href="#">Фильмы</a>
+                                <ul class="menu__drop-content">
+                                    <a class="menu__item row justify-content-center align-items-center" href="">
+                                        <li  class="menu__link row justify-content-center align-items-center">film_genre_1</li>
+                                    </a>
+                                    <a class="menu__item row justify-content-center align-items-center" href="">
+                                        <li  class="menu__link row justify-content-center align-items-center">film_genre_2</li>
+                                    </a>
+                                    <a class="menu__item row justify-content-center align-items-center" href="">
+                                        <li  class="menu__link row justify-content-center align-items-center">film_genre_3</li>
+                                    </a>
+                                </ul>
+                            </div> 
+                            <div class="menu__dropbox">
+                                <a class="menu__dropbtn-box" href="#">Сериалы</a>
+                                <ul class="menu__drop-content">
+                                    <a class="menu__item row justify-content-center align-items-center" href="">
+                                        <li  class="menu__link row justify-content-center align-items-center">series_genre_1</li>
+                                    </a>
+                                    <a class="menu__item row justify-content-center align-items-center" href="">
+                                        <li  class="menu__link row justify-content-center align-items-center">series_genre_2</li>
+                                    </a>
+                                    <a class="menu__item row justify-content-center align-items-center" href="">
+                                        <li  class="menu__link row justify-content-center align-items-center">series_genre_3</li>
+                                    </a>
+                                </ul>
+                            </div> 
+                            <div class="menu__dropbox">
+                                <a class="menu__dropbtn-box" href="#">О нас</a>
+                            </div> 
+                            <div class="menu__dropbox">
+                                <a class="menu__dropbtn-box" href="#">Избранное</a>
+                            </div> 
+                        </ul>
+                    
+                    </div>
+                    <div class="search_bow row align-items-center">
+                        <input class="search-input" type="text">
                     </div>
                 </div>
             </header>
-            <main class="main d-flex">
-                <div class="main__inner d-flex justify-content-center">  
-                    <section class="favorites d-flex">
+            <main class="main row justify-content-center"> 
+                    <!--
+                    <section class="favorites row">
                             <div class="container container--section-container container--favorites">
                                 <div class="favorites__inner">
                                     <div class="favorites__item column column--center">
@@ -99,23 +85,20 @@
                                 </div>
                             </div>
                     </section>  
-                                                    
-                    <section class="content d-flex">
-                        <div class="container container--section-container container--content">
-                            <div class="content__inner">
-                            <?php 
-                                if(isset($content)) echo $content;
-                                else echo "<h1>Ups, no content!</h1>";
-                            ?>
-                            </div>
-                        </div>
+                    -->                               
+                    <section class="content row flex-column align-items-center">
+                        <?php 
+                            if(isset($content)) echo $content;
+                            else echo "<h1>Ups, no content!</h1>";
+                        ?>
                     </section>
-                    <section class="left-menu d-flex">
+                    <!--
+                    <section class="left-menu row">
                         <div class="container container--section-container container--left-menu">
                             <div class="left-menu__inner">
-                                <div class="logo logo--left-menu row row--center">ЛОГОТИП</div>
+                                <div class="logo logo--left-menu row justify-content-center align-items-center">ЛОГОТИП</div>
                                 <div class="registration column column--center" id="registrationForm">
-                                    <!--enter/registration form-->
+                                    enter/registration form
                                     <img class="registration__img" src="images/no_img.jpg" alt="">
                                     <form class="registration__form" method="POST" action="">
                                         <input type="text" placeholder="Имя пользователя">
@@ -125,13 +108,12 @@
                                     <button onclick="registration()" class="registration__btn" id="registration_btn">Зарегистрироваться</button> 
                                     <a href="" class="registration__btn">Забыли пароль?</a>
                                 </div>
-                                <div class="genre-map row row--center">КАРТА ЖАНРОВ</div>
+                                <div class="genre-map row justify-content-center align-items-center">КАРТА ЖАНРОВ</div>
                             </div>
                         </div>
-                    </section>     
-                </div> <!--main inner-->
+                    </section>  
+                    -->     
             </main>
-        </div> <!--wrapper-inner-->
     </div>  <!--wrapper-->
 </body>
 </html>
