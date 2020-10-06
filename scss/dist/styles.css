@@ -1,3 +1,7 @@
+a:hover {
+  text-decoration: none !important;
+}
+
 .color-1 {
   color: #c08b61;
 }
@@ -39,6 +43,7 @@
 }
 .menu__drop-content {
   height: 0;
+  width: 100%;
   overflow: hidden;
   position: absolute;
   list-style-type: none;
@@ -95,11 +100,12 @@
   display: grid;
   grid-template-columns: repeat(5, 150px);
 }
-.filter__grid-cell {
-  border-radius: 10px;
-}
-.filter__grid-cell:hover {
+.filter__grid-cell:hover .filter__grid-text {
   background: lightgray;
+}
+.filter__grid-text {
+  padding: 10px 20px;
+  border-radius: 10px;
 }
 .filter__grid-img {
   height: 70px;
@@ -114,7 +120,7 @@
 }
 
 .search-input {
-  height: 25px;
+  height: 1.5rem;
 }
 
 .favorites {
@@ -149,10 +155,6 @@
 
 .left-menu {
   width: 300px;
-}
-.registration {
-  height: 400px;
-  padding: 10px;
 }
 .registration__form {
   display: flex;

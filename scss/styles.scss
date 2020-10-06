@@ -4,6 +4,10 @@ $color3:#d9d6d5;
 $color4:#302b2a;
 $color5: #111111;
 
+a:hover { 
+    text-decoration: none !important;  
+} 
+
 .color-1{
     color: $color1;
 }.color-2{
@@ -38,6 +42,7 @@ $color5: #111111;
 		}
 		&__drop-content {
             height: 0;
+            width: 100%;
             overflow: hidden;
             position: absolute;
             list-style-type: none;
@@ -96,10 +101,15 @@ $color5: #111111;
         grid-template-columns: repeat(5, 150px);
     }
     &__grid-cell{
-        border-radius: 10px;
         &:hover{
-            background: lightgray;
+            .filter__grid-text{
+                background: lightgray;
+            }
         }
+    }
+    &__grid-text{
+        padding: 10px 20px;
+        border-radius: 10px;
     }
     &__grid-img{       
         height: 70px;
@@ -115,7 +125,7 @@ $color5: #111111;
     }
 }
 .search-input{
-    height: 25px;
+    height: 1.5rem;
 }
 
 
@@ -162,9 +172,6 @@ $color5: #111111;
     }
 }
 .registration{
-    height: 400px;
-    //border: solid red 1px;
-    padding: 10px;
     &__form{
         display: flex;
         flex-direction: column;

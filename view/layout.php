@@ -55,6 +55,11 @@
                     <div class="search_bow row align-items-center">
                         <input class="search-input" type="text">
                     </div>
+                    <div class="registration row align-items-center">
+                        <a href="">Войти </a>
+                        &nbsp;/&nbsp;
+                        <a href=""> Зарегистрироваться</a>
+                    </div>
                 </div>
             </header>
             <main class="main row justify-content-center"> 

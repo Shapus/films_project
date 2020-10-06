@@ -4,7 +4,8 @@ class Controller{
 	//items
 	public static function getAllItems(){	
 		$categories = Category::getAllCategories();	
-		$database_response = Item::getAllItems();
+		$database_response_films = Film::getAllFilms();
+		$database_response_serials = Serial::getAllSerials();
 		include_once "view/items.php";
 	}
 	public static function getItemById($id){	
@@ -26,8 +27,8 @@ class Controller{
 
 	//serials
 	public static function getAllSerials(){
-		$categories = Category::getAllCategories();
-		$database_response = Serial::getAllSerials();		
+		$categories = Category::getAllCategories();	
+		$database_response_serials = Serial::getAllSerials();		
 		include_once "view/items.php";
 	}
 	public static function getSerialById($id){	
@@ -66,8 +67,8 @@ class Controller{
 
 	//films
 	public static function getAllFilms(){
-		$categories = Category::getAllCategories();
-		$database_response = Film::getAllFilms();	
+		$categories = Category::getAllCategories();	
+		$database_response_films = Film::getAllFilms();
 		include_once "view/items.php";
 	} 
 	public static function getFilmById($id){
@@ -94,7 +95,8 @@ class Controller{
 	}
 	public static function startSite(){
 		$categories = Category::getAllCategories();	
-		$database_response = Item::getAllItems();		
+		$database_response_films = Film::getAllFilms();
+		$database_response_serials = Serial::getAllSerials();		
 		include_once "view/start.php";
 	}
 }

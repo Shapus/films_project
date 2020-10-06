@@ -1,66 +1,141 @@
 
 
 <?php
-$item_on_page = 10;
-class View{  
-    public static function viewItems($database_response, $categories){
-        global $item_on_page;
-        $page = 0;
-        if(isset($_GET['page'])) $page = $_GET['page'];
-        $i = 0;
-        $current_item = $page*$item_on_page+$i;
-        $_SESSION['prev_url'] = $_SERVER['REQUEST_URI'];
-        echo "<div class=\"content__item container row justify-contetn-center\">";
-        while($i<$item_on_page and count($database_response)>$current_item) {  
-            $type = 'films';
-            
-            if($database_response[$current_item]['is_serial'] == 1) $type = 'serials';     
-            echo    "<a href=\"".$type."?id={$database_response[$current_item]['id']}\" class=\"col-md-2\">";
-            echo         "<img class=\"content__item-img\" src=\"images/{$database_response[$current_item]['image']}\">";
-            echo         "<p class=\"color-4 p-0 m-0\">{$database_response[$current_item]['title']}</p>";
-            echo         "<p class=\"color-3\">{$database_response[$current_item]['year']}, {$categories[$database_response[$current_item]['category_id']-1]['name']}</p>";
-            echo    "</a>";
-            $i++;
-            $current_item = $page*$item_on_page+$i;
+$item_in_row = 10;
+class View{     
+    public static function viewItems($database_response_films, $database_response_serials, $categories){
+        global $item_in_row;
+
+        //view films
+        if(!is_null($database_response_films)){
+            echo "
+                <h2 class=\"align-self-start\">Фильмы</h2> 
+                <div class=\"content__item container row justify-contetn-center\">
+                ";  
+                
+            foreach ($database_response_films as $film){  
+
+            //view film item
+            echo "
+                <a href=\"film?id={$film['id']}\" class=\"col\">
+                    <img class=\"content__item-img\" src=\"images/{$film['image']}\">
+                    <p class=\"color-4 p-0 m-0\">{$film['title']}</p>
+                    <p class=\"color-3\">{$film['year']}, {$categories[$film['category_id']-1]['name']}</p>
+                </a>
+                ";
+            }
+            echo "</div>";
+        }
+        if(!is_null($database_response_serials)){
+            //view serials
+            echo "
+                <h2 class=\"align-self-start\">Сериалы</h2> 
+                <div class=\"content__item container row justify-contetn-center\">
+                ";        
+            foreach ($database_response_serials as $serial){  
+
+                //view film item
+                echo "
+                    <a href=\"serial?id={$serial['id']}\" class=\"col\">
+                        <img class=\"content__item-img\" src=\"images/{$serial['image']}\">
+                        <p class=\"color-4 p-0 m-0\">{$serial['title']}</p>
+                        <p class=\"color-3\">{$serial['year']}, {$categories[$serial['category_id']-1]['name']}</p>
+                    </a>
+                    ";
+            }
+            echo "</div>";
+        }
+    }
+
+
+    public static function viewSerials($database_response_serials, $categories){
+        global $item_in_row;
+        //view serials
+        echo "
+            <h2 class=\"align-self-start\">Сериалы</h2> 
+            <div class=\"content__item container row justify-contetn-center\">
+            ";        
+        foreach ($database_response_serials as $serial){  
+
+            //view film item
+            echo "
+                <a href=\"serial?id={$serial['id']}\" class=\"col\">
+                    <img class=\"content__item-img\" src=\"images/{$serial['image']}\">
+                    <p class=\"color-4 p-0 m-0\">{$serial['title']}</p>
+                    <p class=\"color-3\">{$serial['year']}, {$categories[$serial['category_id']-1]['name']}</p>
+                </a>
+                ";
         }
         echo "</div>";
     }
+
+
+    public static function viewFilms($database_response_film, $categories){
+        global $item_in_row;
+
+        //view films
+        echo "
+            <h2 class=\"align-self-start\">Фильмы</h2> 
+            <div class=\"content__item container row justify-contetn-center\">
+            ";  
+            
+        foreach ($database_response_films as $film){  
+
+            //view film item
+        echo "
+            <a href=\"film?id={$film['id']}\" class=\"col\">
+                <img class=\"content__item-img\" src=\"images/{$film['image']}\">
+                <p class=\"color-4 p-0 m-0\">{$film['title']}</p>
+                <p class=\"color-3\">{$film['year']}, {$categories[$film['category_id']-1]['name']}</p>
+            </a>
+            ";
+        }
+        echo "</div>";
+    }
+
+
     public static function viewFilter($database_response){
         $host = explode('?', $_SERVER['REQUEST_URI'])[0];
         $num = substr_count($host, '/');
         $path = explode('/',$host)[$num];
+
+        //set link type
         if($num == 2 and ($path == "" or $path == "index" or $path == "index.php")){
             $path = "items";
         }
-        echo "      <div class=\"filter d-flex flex-column justify-content-center mb-5\">";
-        echo "        <ul class=\"filter__title-list d-flex justify-content-center\">";
-        echo "            <a href=\"items\"><li class=\"filter__list-item\">Все</li></a>";
-        echo "            <a href=\"films\"><li class=\"filter__list-item\">Фильмы</li></a>";
-        echo "            <a href=\"serials\"><li class=\"filter__list-item\">Сериалы</li></a>";
-        echo "        </ul>";
-        echo "        <div class=\"filter__grid justify-content-center verical-align-middle\">";
+
+        //filter header
+        echo "
+            <div class=\"filter d-flex flex-column justify-content-center mb-5\">
+                <ul class=\"filter__title-list d-flex justify-content-center\">
+                    <a href=\"items\"><li class=\"filter__list-item\">Все</li></a>
+                    <a href=\"films\"><li class=\"filter__list-item\">Фильмы</li></a>
+                    <a href=\"serials\"><li class=\"filter__list-item\">Сериалы</li></a>
+                </ul>
+            <div class=\"filter__grid justify-content-center verical-align-middle\">
+            ";
+
+        //filter body
         foreach($database_response as $value){
-            echo "           <a href={$path}?category={$value['id']} class=\"filter__grid-cell row justify-content-center align-items-center px-4 py-3\">";
-            echo "            <div>";
-            //echo "                <div class=\"filter__grid-img filter__grid-img--main\" icon=\"{$value['icon']}\" style=\"background-image:url({$value['icon']})\"alt=\"\"></div>";
-            //echo "                <div class=\"filter__grid-img filter__grid-img--focused\" style=\"background-image:url({$value['icon_focused']})\"alt=\"\"></div>";
-            echo "                <p class=\"filter__grid-text color-4 p-0 m-0\">{$value['name']}</p>";
-            echo "            </div>";
-            echo "           </a>";
+            //hovered categories icons
+                //<div class=\"filter__grid-img filter__grid-img--main\" icon=\"{$value['icon']}\" style=\"background-image:url({$value['icon']})\"alt=\"\"></div>
+                //<div class=\"filter__grid-img filter__grid-img--focused\" style=\"background-image:url({$value['icon_focused']})\"alt=\"\"></div>
+            echo "
+                <a href={$path}?category={$value['id']} class=\"filter__grid-cell row justify-content-center align-items-center px-4 py-3\">
+                    <div>
+                        
+                        <p class=\"filter__grid-text color-4 m-0\">{$value['name']}</p>
+                    </div>
+                </a>
+                ";
         }
-        echo "        </div>";
-        echo "      </div>";
+        echo "
+                </div>
+            </div>
+            ";
     }
-    public static function viewPagesNumbers($database_response){
-        global $item_on_page;
-        echo "<div class=\"pages row\">";
-        for($i=0;$i<count($database_response)/$item_on_page;$i++){
-            $page_num = $i+1;
-            echo "<a class=\"pages__number d-flex justify-content-center\" href=\"?page={$i}\">{$page_num}</a>";
-        }
-        echo "</div>";
-        $category_id = 1;   
-    }
+
+
     public static function viewFilm($database_response){
         $last_url = isset($_SESSION['prev_url'])?$_SESSION['prev_url']:"./";
         echo "<div class=\"item-player column\">";
@@ -81,6 +156,8 @@ class View{
         echo    "<div>";
         echo "<div>";
     }
+
+
     public static function viewSeasons($database_response){
         $last_url = isset($_SESSION['prev_url'])?$_SESSION['prev_url']:"./";
         echo "<div class=\"content__item grid\">";
@@ -92,6 +169,8 @@ class View{
         }
         echo "<a class=\"content__item-more-btn\" href=\"{$last_url}\">Назад</a>";
     }
+
+
     public static function viewSerias($database_response){
         echo "<div class=\"content__item grid\">";
         for($i=0;$i<count($database_response);$i++){      
@@ -103,6 +182,8 @@ class View{
         }
         echo "<a class=\"content__item-more-btn\" href=\"serials?id={$_GET['id']}\">К списку сезонов</a>";
     }
+
+
     public static function viewSeria($database_response){
         //echo "<ul class=\"row row--center\">";
         //echo    "<li><a href=\"/{$_SESSION['project_name']}?serial={$_SESSION['serial_id']}&season={$_SESSION['season_id']}\"></a></li>";
@@ -123,11 +204,15 @@ class View{
         echo    "<div>";
         echo "<div>";
     }
+
+
     public static function viewCategories($database_response){
         foreach($database_response as $value){
-            echo "<option class=\"categories__item\" value=\"".$value['name']."\">".$value['name']."</oprion>";
+            echo "<option class=\"categories__item\" value=\"".$value['name']."\">".$value['name']."</option>";
         }
     } 
+
+
     public static function viewRegistrationForm(){
         echo "
             <div>
@@ -153,6 +238,8 @@ class View{
         ";
        
     }
+
+
     public static function viewEnterForm(){
         echo "
             <img class=\"registration__img\" src=\"images/no_img.jpg\" alt=\"\">
