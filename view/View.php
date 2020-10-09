@@ -17,7 +17,7 @@ class View{
 
             //view film item
             echo "
-                <a href=\"film?id={$film['id']}\" class=\"col\">
+                <a href=\"films?id={$film['id']}\" class=\"col\">
                     <img class=\"content__item-img\" src=\"images/{$film['image']}\">
                     <p class=\"color-4 p-0 m-0\">{$film['title']}</p>
                     <p class=\"color-3\">{$film['year']}, {$categories[$film['category_id']-1]['name']}</p>
@@ -36,7 +36,7 @@ class View{
 
                 //view film item
                 echo "
-                    <a href=\"serial?id={$serial['id']}\" class=\"col\">
+                    <a href=\"serials?id={$serial['id']}\" class=\"col\">
                         <img class=\"content__item-img\" src=\"images/{$serial['image']}\">
                         <p class=\"color-4 p-0 m-0\">{$serial['title']}</p>
                         <p class=\"color-3\">{$serial['year']}, {$categories[$serial['category_id']-1]['name']}</p>
@@ -59,7 +59,7 @@ class View{
 
             //view film item
             echo "
-                <a href=\"serial?id={$serial['id']}\" class=\"col\">
+                <a href=\"serials?id={$serial['id']}\" class=\"col\">
                     <img class=\"content__item-img\" src=\"images/{$serial['image']}\">
                     <p class=\"color-4 p-0 m-0\">{$serial['title']}</p>
                     <p class=\"color-3\">{$serial['year']}, {$categories[$serial['category_id']-1]['name']}</p>
@@ -83,7 +83,7 @@ class View{
 
             //view film item
         echo "
-            <a href=\"film?id={$film['id']}\" class=\"col\">
+            <a href=\"films?id={$film['id']}\" class=\"col\">
                 <img class=\"content__item-img\" src=\"images/{$film['image']}\">
                 <p class=\"color-4 p-0 m-0\">{$film['title']}</p>
                 <p class=\"color-3\">{$film['year']}, {$categories[$film['category_id']-1]['name']}</p>
@@ -215,30 +215,42 @@ class View{
 
     public static function viewRegistrationForm(){
         echo "
-            <div>
-                <form class=\"column\" role=\"form\" method=\"POST\" action=\"registrationAnswer\"\">
-                    <div class=\"input_box\">
-                        <label class=\"\">Имя пользователя</label>
-                        <input class=\"\" type=\"text\" id=\"name\" name=\"name\" required>
+            <form class=\"form container w-50 mt-5 flex-column align-items-center justify-content-center text-center\" role=\"form\" method=\"POST\" action=\"registrationAnswer\">
+                <h2 class=\"mb-5\">Регистрация</h2>
+                <div class=\"col-md-12 mb-3\">
+                    <input class=\"w-50 p-2\" type=\"text\" id=\"name\" name=\"name\" placeholder=\"Имя пользователя\" required>
+                </div>
+                <div class=\"col-md-12 mb-3\">
+                    <input class=\"w-50 p-2\" type=\"email\" id=\"email\" name=\"email\" placeholder=\"E-mail\" required>
+                </div>
+                <div class=\"col-md-12 mb-3\">
+                    <input class=\"w-50 p-2\" type=\"password\" id=\"password\" name=\"password\" placeholder=\"Пароль\" required>
+                </div>
+                <div class=\"col-md-12 mb-4\">
+                    <input class=\"w-50 p-2\" type=\"password\" id=\"confirm\" name=\"confirm\" placeholder=\"Повторите пароль\" required>
+                </div>
+                <div class=\"row justify-content-center\">
+                    <div class=\"row\" style=\"width:60%\">
+                        <a href=\"./\" class=\"col-md-2 back_btn d-flex justify-self-start align-self-center\">Назад</a> 
+                        <input class=\"col-md-8 form__submit\" type=\"submit\" name=\"submit\" value=\"Зарегистрироваться\">  
+                        <div class=\"col-md-2\"></div>    
                     </div>
-                    <div class=\"input_box\">
-                        <label class=\"\">E-mail</label>
-                        <input class=\"\" type=\"email\" id=\"email\" name=\"email\" required>
-                    </div>
-                    <div class=\"input_box\">
-                        <label class=\"\">Пароль</label>
-                        <input class=\"\" type=\"password\" id=\"password\" name=\"password\" required>
-                    </div>
-                    <div class=\"input_box\">
-                        <label class=\"\">Повторите пароль</label>
-                        <input class=\"\" type=\"password\" id=\"confirm\" name=\"confirm\" required>
-                    </div>
-                </form>
-            </div>
+                </div>
+            </form>
         ";
        
     }
-
+    public static function viewRegistrationAnswer($control){
+        print_r($control);
+        if($control[0]){
+            echo "
+                <h2 class=\"mb-5\">Регистрация</h2>
+            ";
+        }
+        else{
+            View::viewRegistrationForm();
+        }
+    }
 
     public static function viewEnterForm(){
         echo "

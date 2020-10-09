@@ -7,6 +7,7 @@ require 'model/Item.php';
 require 'model/Film.php';
 require 'model/Serial.php';
 require 'model/Category.php';
+require 'model/Registration.php';
 
 include_once 'view/View.php';
 include_once 'controller/Controller.php';

@@ -34,9 +34,17 @@
 		else $response = Controller::getAllFilms();
 	}
 	
+
+	//registration
+	elseif($path == 'registration'){
+		$response = Controller::registrationForm();
+	}
+	elseif ($path == 'registrationAnswer') {
+		$response = Controller::registrationAnswer();
+	}
 	
 	//error
 	else{
-		$response = Controller::error404();
+		$response = Controller::error404($_SERVER['REQUEST_URI']);
 	}
 ?>

@@ -1,7 +1,7 @@
 <?php
 class Film{
     public static function getAllFilms(){
-        $query = "SELECT * FROM item WHERE is_serial=0 ORDER BY year DESC";
+        $query = "SELECT * FROM item WHERE type=\"film\" ORDER BY year DESC";
         $database = new Database();
         return $database->getAll($query);
     }
@@ -11,7 +11,7 @@ class Film{
         return $database->getOne($query);
     }
     public static function getFilmsByCategory($category_id){
-        $query = "SELECT * FROM item WHERE is_serial=0 and category_id={$category_id} ORDER BY year DESC";
+        $query = "SELECT * FROM item WHERE type=\"film\" and category_id={$category_id} ORDER BY year DESC";
         $database = new Database();
         return $database->getAll($query);
     }

@@ -16,7 +16,7 @@
                     <div class="menu">
                         <ul class="menu__list row justify-content-center align-items-center">
                             <div class="menu__dropbox">
-                                <a class="menu__dropbtn-box" href="#">Фильмы</a>
+                                <a class="menu__dropbtn-box" href="films">Фильмы</a>
                                 <ul class="menu__drop-content">
                                     <a class="menu__item row justify-content-center align-items-center" href="">
                                         <li  class="menu__link row justify-content-center align-items-center">film_genre_1</li>
@@ -30,7 +30,7 @@
                                 </ul>
                             </div> 
                             <div class="menu__dropbox">
-                                <a class="menu__dropbtn-box" href="#">Сериалы</a>
+                                <a class="menu__dropbtn-box" href="serials">Сериалы</a>
                                 <ul class="menu__drop-content">
                                     <a class="menu__item row justify-content-center align-items-center" href="">
                                         <li  class="menu__link row justify-content-center align-items-center">series_genre_1</li>
@@ -58,7 +58,7 @@
                     <div class="registration row align-items-center">
                         <a href="">Войти </a>
                         &nbsp;/&nbsp;
-                        <a href=""> Зарегистрироваться</a>
+                        <a href="registration"> Зарегистрироваться</a>
                     </div>
                 </div>
             </header>

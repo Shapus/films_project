@@ -11,7 +11,7 @@ a:hover {
 }
 
 .color-3 {
-  color: #d9d6d5;
+  color: #adaaa9;
 }
 
 .color-4 {
@@ -255,4 +255,31 @@ a:hover {
 .pages__number {
   padding: 1px;
   font-size: 20px;
+}
+
+.form {
+  min-width: 800px;
+}
+.form__submit {
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 10px;
+  border: solid #111111 2px;
+  background-color: #fafafa;
+  cursor: pointer;
+}
+.form__submit:hover {
+  color: #fafafa;
+  background-color: #111111;
+  transition: background-color 0.2s linear, color 0.2s linear;
+}
+
+.back_btn {
+  justify-self: self-start;
+  width: max-content;
+  color: #adaaa9;
+}
+.back_btn:hover {
+  color: #111111;
 }

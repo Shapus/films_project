@@ -5,5 +5,5 @@
     View::viewFilter($categories);
     View::viewItems($database_response_films, $database_response_serials, $categories);
     $content = ob_get_clean();
-    include_once 'view/layout.php';
+    include_once 'view/layout/layout.php';
 ?>
