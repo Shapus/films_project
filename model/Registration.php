@@ -3,10 +3,9 @@
 class Registration{
 
 	public static function registrationUser(){
-		$database = new Database();
-		$errorString = array();
+		$errorString = array("","","","");
 		$confirm = false;
-		print_r($_POST);
+		$noErrors = true;
 		if(isset($_POST['submit'])){
 			$name = $_POST['name'];
 			$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
@@ -18,23 +17,29 @@ class Registration{
 			$emails = Registration::getEmails();
 
 			//check errors
+			if(in_array($name, $names))		
+				$errorString[0] = "Имя занято";
 			if(!$email)
-				array_push($errorString, "Неверный e-mail");
+				$errorString[1] = "Неверный e-mail";
 			if(in_array($email, $emails))		
-				array_push($errorString,"Пользователь с такой почтой уже существует!");
-			if(in_array($name, $name))		
-				array_push($errorString,"Имя занято!");
-			if($password != $confirmPassword)
-				array_push($errorString,"Пароли не совпадают!");
+				$errorString[1] = "Пользователь с такой почтой уже существует";
 			if(mb_strlen($password)<6)
-				array_push($errorString,"Длина пароля должна быть не менее 6 символов!");
+				$errorString[2] = "Длина пароля должна быть не менее 6 символов";
+			if($password != $confirmPassword)
+				$errorString[3] = "Пароли не совпадают";
+			
+			foreach ($errorString as $error) {
+				if($error != ""){
+					$noErrors = false;
+					break;
+				}
+			}
 
-
-			if(count($errorString) == 0){
+			if($noErrors){
 				$passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-				$date = date("y-m-d");
-				$query = "INSERT INTO user(name,email,password,status) VALUES({$name},{$email},{$password})";
-				
+				//$date = date("y-m-d");
+				$database = new Database();
+				$query = "INSERT INTO user(name,email,password) VALUES('{$name}','{$email}','{$passwordHash}')";				
 				$item = $database->executeRun($query);
 				if($item)
 					$confirm = true;

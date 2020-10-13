@@ -1,6 +1,6 @@
 <?php 
-    if(!isset($database_response_films)) $database_response_films = null;
-    if(!isset($database_response_serials)) $database_response_serials = null;
+    if(count($database_response_films) == 0) $database_response_films = null;
+    if(count($database_response_serials) == 0) $database_response_serials = null;
     ob_start();
     View::viewFilter($categories);
     View::viewItems($database_response_films, $database_response_serials, $categories);
