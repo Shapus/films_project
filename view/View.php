@@ -212,10 +212,17 @@ class View{
                 </div>
                 <div class=\"row justify-content-center\">
                     <div class=\"row\" style=\"width:60%\">
-                        <a href=\"./\" class=\"col back_btn d-flex justify-self-start align-self-center\">Назад</a> 
+                        <div class=\"col  d-flex justify-self-start align-self-center\">
+                            <a href=\"./\" class=\" back_btn\">Назад</a>
+                        </div>
                         <input class=\"col-6 form__submit\" type=\"submit\" name=\"submit\" value=\"Зарегистрироваться\">  
                         <div class=\"col\"></div>    
                     </div>
+                    <div class=\"row\" style=\"width:60%\">
+                    <div class=\"col mt-3\">
+                        <a href=\"#\" class=\"\">Уже есть аккаунт?</a> 
+                    </div>    
+                </div>
                 </div>
             </form>
         ";
@@ -224,25 +231,56 @@ class View{
     public static function viewRegistrationAnswer($control){
         if($control[0]){
             echo "
-                <h2 class=\"mb-5\">Регистрация</h2>
+            <div class=\"col mt-5 text-center\">
+                <h2 class=\"mb-4\">Пользователь успешно зарегистрирован</h2>
+                <a href=\"./\" class=\"col back_btn \">На главную</a> 
+            </div>
             ";
         }
         else{
+            print_r($control[1]);
             View::viewRegistrationForm($control[1]);
         }
     }
 
     public static function viewEnterForm(){
         echo "
-            <img class=\"registration__img\" src=\"images/no_img.jpg\" alt=\"\">
-                <form class=\"registration__form\" method=\"POST\" action=\"\">
-                    <input type=\"text\" placeholder=\"Имя пользователя\">
-                    <input type=\"password\" placeholder=\"Пароль\">
-                    <input type=\"submit\" value=\"Войти\">
-                </form>                      
-            <button onclick=\"registration()\" class=\"registration__btn\">Зарегистрироваться</button> 
-            <a href=\"\" class=\"registration__btn\">Забыли пароль?</a>
-        ";
+            <form class=\"form container w-50 mt-5 flex-column align-items-center justify-content-center text-center\" role=\"form\" method=\"POST\" action=\"registrationAnswer\">
+            <div class=\"row mb-3 align-items-center\">
+                <div class=\"col\"></div>
+                <h2 class=\"col-8 mb-5\">Вход</h2>
+                <div class=\"col\"></div>
+            </div>
+            <div class=\"row mb-3 align-items-center\">
+                <div class=\"col\"></div>
+                <input class=\"col-8 w-50 p-2\" type=\"email\" id=\"email\" name=\"email\" placeholder=\"E-mail\" required>
+                <div class=\"col\"></div>
+            </div>
+            <div class=\"row mb-3 align-items-center\">
+                <div class=\"col\"></div>
+                <input class=\"col-8 w-50 p-2\" type=\"password\" id=\"password\" name=\"password\" placeholder=\"Пароль\" required>
+                <div class=\"col\"></div>
+            </div>
+            <div class=\"row justify-content-center\">
+                <div class=\"row\" style=\"width:60%\">
+                    <div class=\"col  d-flex justify-self-start align-self-center\">
+                        <a href=\"./\" class=\" back_btn\">Назад</a>
+                    </div> 
+                    <input class=\"col-6 form__submit\" type=\"submit\" name=\"submit\" value=\"Войти\">  
+                    <div class=\"col\"></div>    
+                </div>
+                <div class=\"row mt-3\" style=\"width:60%\">
+                    <div class=\"col\">
+                        <a href=\"registration\" class=\"\">Зарегистрироваться</a>
+                    </div> 
+                </div>
+                <div class=\"row\" style=\"width:60%\">
+                    <div class=\"col\">
+                        <a href=\"#\" class=\"\">Забыли пароль?</a> 
+                    </div>    
+                </div>
+            </div>
+        </form>";
     }
 }
 ?>

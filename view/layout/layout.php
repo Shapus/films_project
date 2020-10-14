@@ -56,7 +56,7 @@
                         <input class="search-input" type="text">
                     </div>
                     <div class="registration row align-items-center">
-                        <a href="">Войти </a>
+                        <a href="enter">Войти </a>
                         &nbsp;/&nbsp;
                         <a href="registration"> Зарегистрироваться</a>
                     </div>

@@ -95,6 +95,9 @@ class Controller{
 	public static function registrationAnswer(){
 		include_once "view/blocks/registrationAnswer.php";
 	}
+	public static function enter(){
+		include_once "view/blocks/enter.php";
+	}
 
 
 	//other

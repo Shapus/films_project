@@ -17,11 +17,11 @@ class Registration{
 			$emails = Registration::getEmails();
 
 			//check errors
-			if(in_array($name, $names))		
+			if(in_array($name, $names[0]))		
 				$errorString[0] = "Имя занято";
 			if(!$email)
 				$errorString[1] = "Неверный e-mail";
-			if(in_array($email, $emails))		
+			if(in_array($email, $emails[0]))		
 				$errorString[1] = "Пользователь с такой почтой уже существует";
 			if(mb_strlen($password)<6)
 				$errorString[2] = "Длина пароля должна быть не менее 6 символов";
@@ -37,9 +37,9 @@ class Registration{
 
 			if($noErrors){
 				$passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-				//$date = date("y-m-d");
+				$date = date("y-m-d");
 				$database = new Database();
-				$query = "INSERT INTO user(name,email,password) VALUES('{$name}','{$email}','{$passwordHash}')";				
+				$query = "INSERT INTO user(name,email,password,registration_date) VALUES('{$name}','{$email}','{$passwordHash}','{$date}')";				
 				$item = $database->executeRun($query);
 				if($item)
 					$confirm = true;

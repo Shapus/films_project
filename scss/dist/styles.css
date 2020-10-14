@@ -279,6 +279,7 @@ a:hover {
   justify-self: self-start;
   width: max-content;
   color: #adaaa9;
+  font-size: 1.5rem;
 }
 .back_btn:hover {
   color: #111111;

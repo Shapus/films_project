@@ -35,12 +35,15 @@
 	}
 	
 
-	//registration
+	//registration&entring
 	elseif($path == 'registration'){
 		$response = Controller::registrationForm();
 	}
 	elseif ($path == 'registrationAnswer') {
 		$response = Controller::registrationAnswer();
+	}
+	elseif($path == 'enter'){
+		$response = Controller::enter();
 	}
 	
 	//error
