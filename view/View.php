@@ -3,6 +3,8 @@
 <?php
 $item_in_row = 10;
 class View{     
+    //------------------------------------------------------------------------------------------------------------------------- VIEW ITEMS
+    //-------------------------------------------------------------------- all items
     public static function viewItems($database_response_films, $database_response_serials, $categories){
         global $item_in_row;
 
@@ -14,8 +16,7 @@ class View{
             View::viewSerials($database_response_serials, $categories);
         }
     }
-
-
+    //-------------------------------------------------------------------- serial list
     public static function viewSerials($database_response_serials, $categories){
         global $item_in_row;
 
@@ -37,8 +38,7 @@ class View{
         }
         echo "</div>";
     }
-
-
+    //-------------------------------------------------------------------- film list
     public static function viewFilms($database_response_films, $categories){
         global $item_in_row;
 
@@ -63,6 +63,12 @@ class View{
     }
 
 
+
+
+
+
+    //------------------------------------------------------------------------------------------------------------------------- VIEW FILTER
+    //-------------------------------------------------------------------- filter
     public static function viewFilter($database_response){
         $host = explode('?', $_SERVER['REQUEST_URI'])[0];
         $num = substr_count($host, '/');
@@ -90,12 +96,9 @@ class View{
                 //<div class=\"filter__grid-img filter__grid-img--main\" icon=\"{$value['icon']}\" style=\"background-image:url({$value['icon']})\"alt=\"\"></div>
                 //<div class=\"filter__grid-img filter__grid-img--focused\" style=\"background-image:url({$value['icon_focused']})\"alt=\"\"></div>
             echo "
-                <a href={$path}?category={$value['id']} class=\"filter__grid-cell row justify-content-center align-items-center px-4 py-3\">
-                    <div>
-                        
-                        <p class=\"filter__grid-text color-4 m-0\">{$value['name']}</p>
-                    </div>
-                </a>
+                <div class=\"filter__grid-cell row justify-content-center align-items-center px-4 py-3\">
+                    <a href={$path}?category={$value['id']} class=\"filter__grid-text color-4 m-0\">{$value['name']}</a>
+                </div>
                 ";
         }
         echo "
@@ -105,28 +108,33 @@ class View{
     }
 
 
+
+
+
+    //------------------------------------------------------------------------------------------------------------------------- VIEW ITEMS INNER CONTENT
+    //-------------------------------------------------------------------- film
     public static function viewFilm($database_response){
         $last_url = isset($_SESSION['prev_url'])?$_SESSION['prev_url']:"./";
-        echo "<div class=\"item-player column\">";
-        echo    "<div class=\"item-player__header row\">";
-        echo        "<div class=\"item-player__image-box\">";
-        echo            "<img class=\"content__item-img\" src=\"images/{$database_response['image']}\" alt=\"\">";
+        echo "<div class=\"col-md-6 justify-content-center\">";
+        echo    "<div class=\"\">";
+        echo        "<div class=\"\">";
+        echo            "<img class=\"\" src=\"images/{$database_response['image']}\" alt=\"\">";
         echo        "</div>";
-        echo        "<div class=\"content__item-data column\">";
-        echo            "<h1 class=\"content__item-title\">{$database_response['title']}</h1>";
-        echo            "<div class=\"content__item-rating\">{$database_response['rating']}</div>";
-        echo            "<p class=\"content__item-year\">{$database_response['year']}</p>";
-        echo            "<p class=\"content__item-description\">{$database_response['description']}</p>";
-        echo            "<a class=\"content__item-more-btn\" href=\"{$last_url}\">Назад</a>";
+        echo        "<div class=\"\">";
+        echo            "<h1 class=\"\">{$database_response['title']}</h1>";
+        echo            "<div class=\"\">{$database_response['rating']}</div>";
+        echo            "<p class=\"\">{$database_response['year']}</p>";
+        echo            "<p class=\"\">{$database_response['description']}</p>";
+        echo            "<a class=\"\" href=\"{$last_url}\">Назад</a>";
         echo        "</div>";
         echo    "</div>";
-        echo    "<div class=\"item-player__video-box\">";
-        echo        "<iframe class=\"item-player__video\" src=\"{$database_response['source']}\"></iframe>";
+        echo    "<div class=\"\">";
+        echo        "<iframe class=\"\" src=\"{$database_response['source']}\"></iframe>";
         echo    "<div>";
         echo "<div>";
     }
 
-
+    //-------------------------------------------------------------------- seasons
     public static function viewSeasons($database_response){
         $last_url = isset($_SESSION['prev_url'])?$_SESSION['prev_url']:"./";
         echo "<div class=\"content__item grid\">";
@@ -138,8 +146,7 @@ class View{
         }
         echo "<a class=\"content__item-more-btn\" href=\"{$last_url}\">Назад</a>";
     }
-
-
+    //-------------------------------------------------------------------- serias
     public static function viewSerias($database_response){
         echo "<div class=\"content__item grid\">";
         for($i=0;$i<count($database_response);$i++){      
@@ -151,8 +158,7 @@ class View{
         }
         echo "<a class=\"content__item-more-btn\" href=\"serials?id={$_GET['id']}\">К списку сезонов</a>";
     }
-
-
+    //-------------------------------------------------------------------- seria
     public static function viewSeria($database_response){
         //echo "<ul class=\"row row--center\">";
         //echo    "<li><a href=\"/{$_SESSION['project_name']}?serial={$_SESSION['serial_id']}&season={$_SESSION['season_id']}\"></a></li>";
@@ -173,8 +179,7 @@ class View{
         echo    "<div>";
         echo "<div>";
     }
-
-
+    //-------------------------------------------------------------------- category list
     public static function viewCategories($database_response){
         foreach($database_response as $value){
             echo "<option class=\"categories__item\" value=\"".$value['name']."\">".$value['name']."</option>";
@@ -182,6 +187,10 @@ class View{
     } 
 
 
+
+
+    //------------------------------------------------------------------------------------------------------------------------- VIEW REGISTRATION
+    //-------------------------------------------------------------------- registration form
     public static function viewRegistrationForm($errors){
         echo "
             <form class=\"form container w-50 mt-5 flex-column align-items-center justify-content-center text-center\" role=\"form\" method=\"POST\" action=\"registrationAnswer\">
@@ -228,6 +237,7 @@ class View{
         ";
        
     }
+    //-------------------------------------------------------------------- registration answer
     public static function viewRegistrationAnswer($control){
         if($control[0]){
             echo "
@@ -242,7 +252,7 @@ class View{
             View::viewRegistrationForm($control[1]);
         }
     }
-
+    //-------------------------------------------------------------------- enter form
     public static function viewEnterForm(){
         echo "
             <form class=\"form container w-50 mt-5 flex-column align-items-center justify-content-center text-center\" role=\"form\" method=\"POST\" action=\"registrationAnswer\">

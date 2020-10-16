@@ -101,15 +101,14 @@ a:hover {
         grid-template-columns: repeat(5, 150px);
     }
     &__grid-cell{
-        &:hover{
-            .filter__grid-text{
-                background: lightgray;
-            }
-        }
+        cursor: auto;
     }
     &__grid-text{
         padding: 10px 20px;
         border-radius: 10px;
+        &:hover{
+            background: lightgray;
+        }
     }
     &__grid-img{       
         height: 70px;
@@ -188,68 +187,66 @@ a:hover {
     }
 }
 .content {
-    display: flex;
-    flex-grow: 1;
-		&__inner {
-            height: 100%;
-            width: 100%;
-		}
+    &__inner {
+        height: 100%;
+        width: 100%;
+    }
 
-		&__filter {
-           padding: 10px;  
-           display: flex;
-           align-items: center;
-           flex-direction: column;
-           //border: solid red 1px;
-		}
+    &__filter {
+        padding: 10px;  
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        //border: solid red 1px;
+    }
 
-		&__content { 
-            //border: solid red 1px;
-		}
+    &__content { 
+        //border: solid red 1px;
+    }
 
-		&__item {
-            margin: 10px;
-            text-align: center;
-		}
+    &__item {
+        margin: 10px;
+        text-align: center;
+    }
 
-		&__item-img {
-            height: 200px;
-            width: 150px;
-		}
+    &__item-img {
+        height: 200px;
+        width: 150px;
+    }
 
-		&__item-data {
-            height: 100%;
-            display: flex;
-            flex-grow: 1;
-            align-self: stretch;
-            padding: 10px;
-		}
+    &__item-data {
+        height: 100%;
+        display: flex;
+        flex-grow: 1;
+        align-self: stretch;
+        padding: 10px;
+    }
 
-		&__rating {
-		}
+    &__rating {
+    }
 
-		&__item-year {
-		}
+    &__item-year {
+    }
 
-		&__item-description {
-            max-height: 30%;
-            min-width: 90%;
-            overflow: hidden;
-            position: relative;
-            &:after{
-                content: "";
-                text-align: right;
-                position: absolute;
-                bottom: 0;
-                right: 0;
-                width: 70%;
-                height: 1.2em;
-                background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
-            }
+    &__item-description {
+        max-height: 30%;
+        min-width: 90%;
+        overflow: hidden;
+        position: relative;
+        &:after{
+            content: "";
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 70%;
+            height: 1.2em;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
         }
-        &__item-more-btn{
-            
-        }
+    }
+    &__item-more-btn{
+        
+    }
 }
 .item-player {    
     height: 100%;

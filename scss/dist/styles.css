@@ -100,12 +100,15 @@ a:hover {
   display: grid;
   grid-template-columns: repeat(5, 150px);
 }
-.filter__grid-cell:hover .filter__grid-text {
-  background: lightgray;
+.filter__grid-cell {
+  cursor: auto;
 }
 .filter__grid-text {
   padding: 10px 20px;
   border-radius: 10px;
+}
+.filter__grid-text:hover {
+  background: lightgray;
 }
 .filter__grid-img {
   height: 70px;
@@ -165,10 +168,6 @@ a:hover {
   height: 150px;
   width: 150px;
   margin-bottom: 40px;
-}
-.content {
-  display: flex;
-  flex-grow: 1;
 }
 .content__inner {
   height: 100%;

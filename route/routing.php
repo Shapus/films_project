@@ -22,7 +22,7 @@
 		if(isset($_GET['category'])) $response = Controller::getSerialsByCategory($_GET['category']);
 		elseif(isset($_GET['id']) and isset($_GET['season']) and isset($_GET['seria'])) $response = Controller::getSeria($_GET['id'], $_GET['season'], $_GET['seria']);
 		elseif(isset($_GET['id']) and isset($_GET['season'])) $response = Controller::getSeriasBySerialSeason($_GET['id'], $_GET['season']);
-		elseif(isset($_GET['id'])) $response = Controller::getSerialById($_GET['id']);
+		elseif(isset($_GET['id'])) $response = Controller::getSeasonsBySerialId($_GET['id']);
 		else $response = Controller::getAllSerials();
 	}
 

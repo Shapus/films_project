@@ -36,8 +36,8 @@ class Controller{
 		$database_response_serials = Serial::getAllSerials();		
 		include_once "view/blocks/items.php";
 	}
-	public static function getSerialById($id){	
-		$database_response_serials = Serial::getSeasonsBySerialId($id);
+	public static function getSeasonsBySerialId($id){	
+		$database_response = Serial::getSeasonsBySerialId($id);
 		include_once "view/blocks/serial.php";
 	}
 	public static function getSerialsByCategory($category_id){	
@@ -45,28 +45,12 @@ class Controller{
 		$database_response_serials = Serial::getSerialsByCategory($category_id);
 		include_once "view/blocks/items.php";
 	}
-	public static function getSeasonsBySerialId($id){
-		$database_response_serials = Serial::getSeasonsBySerialId($id);
-		if(empty($database_response)){
-			include_once "view/blocks/error404.php";
-			return;
-		}
-		include_once "view/blocks/serial.php";
-	}
 	public static function getSeriasBySerialSeason($serial_id, $season_number){
-		$database_response_serials = Serial::getSeriasBySerialSeason($serial_id, $season_number);
-		if(empty($database_response)){
-			include_once "view/blocks/error404.php";
-			return;
-		}
+		$database_response = Serial::getSeriasBySerialSeason($serial_id, $season_number);
 		include_once "view/blocks/season.php";
 	}
 	public static function getSeria($serial_id, $season_number, $seria_number){
-		$database_response_serials = Serial::getSeria($serial_id, $season_number, $seria_number);
-		if(empty($database_response)){
-			include_once "view/blocks/error404.php";
-			return;
-		}
+		$database_response = Serial::getSeria($serial_id, $season_number, $seria_number);
 		include_once "view/blocks/seria.php";
 	}
 
@@ -79,7 +63,7 @@ class Controller{
 		include_once "view/blocks/items.php";
 	} 
 	public static function getFilmById($id){
-		$database_response_films = Film::getFilmById($id);	
+		$database_response = Film::getFilmById($id);	
 		include_once "view/blocks/item.php";
 	} 
 	public static function getfilmsByCategory($category_id){	
