@@ -2,17 +2,17 @@
 
 class Serial{
     public static function getAllSerials(){
-        $query = "SELECT * FROM item WHERE type='serial' ORDER BY year DESC";
+        $query = "SELECT * FROM item WHERE type='serials' ORDER BY year DESC";
         $database = new Database();
         return $database->getAll($query);
     }
     public static function getSerialById($id){
-        $query = "SELECT * FROM item WHERE type='serial' and id={$id}";
+        $query = "SELECT * FROM item WHERE type='serials' and id={$id}";
         $database = new Database();
         return $database->getOne($query);
     }
     public static function getSerialsByCategory($category_id){
-        $query = "SELECT * FROM item WHERE type='serial' and category_id={$category_id} ORDER BY year DESC";
+        $query = "SELECT * FROM item WHERE type='serials' and category_id={$category_id} ORDER BY year DESC";
         $database = new Database();
         return $database->getAll($query);
     }

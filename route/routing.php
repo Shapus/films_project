@@ -37,15 +37,36 @@
 
 	//registration&entring
 	elseif($path == 'registration'){
-		$response = Controller::registrationForm();
+		$response = Controller::registration();
 	}
 	elseif ($path == 'registrationAnswer') {
-		$response = Controller::registrationAnswer();
+		if(isset($_POST['submit']))
+			$response = Controller::registrationAnswer();
+		else
+			header("Location: registration");
 	}
 	elseif($path == 'enter'){
 		$response = Controller::enter();
 	}
+	elseif($path == 'enterAnswer'){
+		if(isset($_POST['submit']))
+			$response = Controller::enterAnswer($_POST['email'], $_POST['password']);
+		else
+			header("Location: enter");
+	}
+	elseif($path == 'logout'){
+		unset($_SESSION['user']);
+		unset($_SESSION['favorites']);
+		header("Location: items");
+	}
 	
+	//add favorite
+	elseif($path == "addFavorite"){
+		$favoriteData = explode(',', $_POST['favoriteData']);
+		Controller::addFavorite($favoriteData[0], $favoriteData[1]);
+		header("Location: {$_SERVER['HTTP_REFERER']}");
+	}
+
 	//error
 	else{
 		$response = Controller::error404($_SERVER['REQUEST_URI']);

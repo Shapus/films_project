@@ -1,7 +1,7 @@
 
 
 <?php
-$item_in_row = 10;
+$item_in_row = 5;
 class View{     
     //------------------------------------------------------------------------------------------------------------------------- VIEW ITEMS
     //-------------------------------------------------------------------- all items
@@ -16,50 +16,88 @@ class View{
             View::viewSerials($database_response_serials, $categories);
         }
     }
-    //-------------------------------------------------------------------- serial list
-    public static function viewSerials($database_response_serials, $categories){
-        global $item_in_row;
 
-        //view title
-        echo "
-            <h2 class=\"align-self-start\">Сериалы</h2> 
-            <div class=\"content__item container row justify-contetn-center\">
-            ";        
-        foreach ($database_response_serials as $serial){  
-
-            //view film item
-            echo "
-                <a href=\"serials?id={$serial['id']}\" class=\"col\">
-                    <img class=\"content__item-img\" src=\"images/{$serial['image']}\">
-                    <p class=\"color-4 p-0 m-0\">{$serial['title']}</p>
-                    <p class=\"color-3\">{$serial['year']}, {$categories[$serial['category_id']-1]['name']}</p>
-                </a>
-                ";
-        }
-        echo "</div>";
-    }
     //-------------------------------------------------------------------- film list
     public static function viewFilms($database_response_films, $categories){
         global $item_in_row;
-
+        $count_items = 0;
         //view title
         echo "
-            <h2 class=\"align-self-start\">Фильмы</h2> 
-            <div class=\"content__item container row justify-contetn-center\">
+            <div class=\"container\">
+                <h2 class=\"align-self-start\">Фильмы</h2> 
+                <div class=\"row\">
             ";  
-            
-        foreach ($database_response_films as $film){  
-
-            //view film item
+                foreach ($database_response_films as $item){  
+                    View::viewItemInGrid($item['type'], $item['id'], $item['image'], $item['title'], $item['year'], $categories[$item['category_id']-1]['name']);
+                    $count_items++;
+                    $count_items%=$item_in_row;
+                }
+                for ($count_items; $count_items < $item_in_row; $count_items++) { 
+                    echo "<div class=\"col\"></div>";
+                }
         echo "
-            <a href=\"films?id={$film['id']}\" class=\"col\">
-                <img class=\"content__item-img\" src=\"images/{$film['image']}\">
-                <p class=\"color-4 p-0 m-0\">{$film['title']}</p>
-                <p class=\"color-3\">{$film['year']}, {$categories[$film['category_id']-1]['name']}</p>
+                </div>
+            </div>";
+    }
+
+    //-------------------------------------------------------------------- serial list
+    public static function viewSerials($database_response_serials, $categories){
+        global $item_in_row;
+        $count_items = 0;
+        //view title
+        echo "
+            <div class=\"container\">
+                <h2 class=\"align-self-start\">Сериалы</h2> 
+                <div class=\"row\">
+            ";        
+                foreach ($database_response_serials as $item){  
+                    View::viewItemInGrid($item['type'], $item['id'], $item['image'], $item['title'], $item['year'], $categories[$item['category_id']-1]['name']);
+                    $count_items++;
+                    $count_items%=$item_in_row;
+                }
+        echo "
+                </div>
+            </div>";
+    }
+    //-------------------------------------------------------------------- view item
+    public static function viewItemInGrid($linkType, $id, $image, $title, $year, $category){
+        echo "
+        <div class=\"col-md-2 flex-column\">
+            <a class=\"d-flex flex-wrap\" href=\"{$linkType}?id={$id}\">
+                <img class=\"content__item-img\" src=\"images/{$image}\">    
             </a>
             ";
+        var_dump($_SESSION['favorites']);
+        $favoriteItem = array(
+            'item_id' => $id,
+            'item_type' => $linkType
+        );
+        if(in_array($favoriteItem, $_SESSION['favorites'][0])){
+            echo "
+                <form role=\"form\" method=\"POST\" action=\"addFavorite\">
+                    <input type=\"hidden\" name=\"favoriteData\" value=\"{$id},{$linkType}\">
+                    <input type=\"image\" src=\"images/other/star.png\" name=\"submit\" style=\"height:20px; width:20px; margin-top:5px\">
+                </form>
+                <a class=\"d-flex flex-wrap color-4 p-0 m-0\" href=\"serials?id={$id}\">
+                    <p class=\"color-4 p-0 m-0\">{$title}</p>
+                    <p class=\"color-3 p-0 m-0\">{$year}, {$category}</p>
+                </a>
+            </div>
+            ";
         }
-        echo "</div>";
+        else{
+            echo "
+                <form role=\"form\" method=\"POST\" action=\"addFavorite\">
+                    <input type=\"hidden\" name=\"favoriteData\" value=\"{$id},{$linkType}\">
+                    <input type=\"image\" src=\"images/other/starEmpty.png\" name=\"submit\" style=\"height:20px; width:20px; margin-top:5px\">
+                </form>
+                <a class=\"d-flex flex-wrap color-4 p-0 m-0\" href=\"serials?id={$id}\">
+                    <p class=\"color-4 p-0 m-0\">{$title}</p>
+                    <p class=\"color-3 p-0 m-0\">{$year}, {$category}</p>
+                </a>
+            </div>
+            ";
+        }
     }
 
 
@@ -129,7 +167,7 @@ class View{
         echo        "</div>";
         echo    "</div>";
         echo    "<div class=\"\">";
-        echo        "<iframe class=\"\" src=\"{$database_response['source']}\"></iframe>";
+        echo        "<iframe class=\"video-player\" src=\"{$database_response['source']}\"></iframe>";
         echo    "<div>";
         echo "<div>";
     }
@@ -137,13 +175,23 @@ class View{
     //-------------------------------------------------------------------- seasons
     public static function viewSeasons($database_response){
         $last_url = isset($_SESSION['prev_url'])?$_SESSION['prev_url']:"./";
-        echo "<div class=\"content__item grid\">";
-        for($i=0;$i<count($database_response);$i++){           
-            echo    "<a href=\"{$_SERVER['REQUEST_URI']}&season={$database_response[$i]['number']}\" class=\"grid-cell\">";
-            echo         "<img class=\"content__item-img\" src=\"images/{$database_response[$i]['image']}\">";
-            echo         "<h2 class=\"content__item-title\">Сезон {$database_response[$i]['number']}</h2>";
-            echo    "</a>";
+
+        //view title
+        echo "
+            <h2 class=\"align-self-start\">Сезоны</h2> 
+            <div class=\"content__item row\">
+            ";        
+
+        foreach ($database_response as $season){  
+            //view film item
+            echo "
+                <a href=\"season?id={$season['id']}\" class=\"col\">
+                    <img class=\"content__item-img\" src=\"images/{$season['image']}\">
+                    <p class=\"color-4 p-0 m-0\">Сезон {$season['number']}</p>
+                </a>
+                ";
         }
+        echo "</div>";
         echo "<a class=\"content__item-more-btn\" href=\"{$last_url}\">Назад</a>";
     }
     //-------------------------------------------------------------------- serias
@@ -197,27 +245,32 @@ class View{
                 <div class=\"row mb-3 align-items-center\">
                     <div class=\"col\"></div>
                     <h2 class=\"col-8 mb-5\">Регистрация</h2>
+                    <div class=\"col\"\"></div>
+                </div>
+                <div class=\"row mb-3 align-items-center\">
+                    <div class=\"col\"></div>
+                        <h2 class=\"col-8 mb-5\" style=\"color:red; font-size:0.9rem;\">{$errors[4]}</h2>
                     <div class=\"col\"></div>
                 </div>
                 <div class=\"row mb-3 align-items-center\">
                     <div class=\"col\"></div>
                     <input class=\"col-8 w-50 p-2\" type=\"text\" id=\"name\" name=\"name\" placeholder=\"Имя пользователя\" required>
-                    <label class=\"col p-0 m-0\" style=\"color:red; font-size:0.8rem;\">{$errors[0]}</label>
+                    <label class=\"col p-0 m-0\" style=\"color:red; font-size:0.9rem;\">{$errors[0]}</label>
                 </div>
                 <div class=\"row mb-3 align-items-center\">
                     <div class=\"col\"></div>
                     <input class=\"col-8 w-50 p-2\" type=\"email\" id=\"email\" name=\"email\" placeholder=\"E-mail\" required>
-                    <label class=\"col p-0 m-0\" style=\"color:red; font-size:0.8rem;\">{$errors[1]}</label>
+                    <label class=\"col p-0 m-0\" style=\"color:red; font-size:0.9rem;\">{$errors[1]}</label>
                 </div>
                 <div class=\"row mb-3 align-items-center\">
                     <div class=\"col\"></div>
                     <input class=\"col-8 w-50 p-2\" type=\"password\" id=\"password\" name=\"password\" placeholder=\"Пароль\" required>  
-                    <label class=\"col p-0 m-0\" style=\"color:red; font-size:0.8rem;\">{$errors[2]}</label>
+                    <label class=\"col p-0 m-0\" style=\"color:red; font-size:0.9rem;\">{$errors[2]}</label>
                 </div>
                 <div class=\"row mb-3 align-items-center\">
                     <div class=\"col\"></div>
                     <input class=\"col-8 w-50 p-2\" type=\"password\" id=\"confirm\" name=\"confirm\" placeholder=\"Повторите пароль\" required>
-                    <label class=\"col p-0 m-0\" style=\"color:red; font-size:0.8rem;\">{$errors[3]}</label>
+                    <label class=\"col p-0 m-0\" style=\"color:red; font-size:0.9rem;\">{$errors[3]}</label>
                 </div>
                 <div class=\"row justify-content-center\">
                     <div class=\"row\" style=\"width:60%\">
@@ -229,7 +282,7 @@ class View{
                     </div>
                     <div class=\"row\" style=\"width:60%\">
                     <div class=\"col mt-3\">
-                        <a href=\"#\" class=\"\">Уже есть аккаунт?</a> 
+                        <a href=\"enter\" class=\"\">Уже есть аккаунт?</a> 
                     </div>    
                 </div>
                 </div>
@@ -248,50 +301,105 @@ class View{
             ";
         }
         else{
-            print_r($control[1]);
             View::viewRegistrationForm($control[1]);
         }
     }
     //-------------------------------------------------------------------- enter form
-    public static function viewEnterForm(){
-        echo "
-            <form class=\"form container w-50 mt-5 flex-column align-items-center justify-content-center text-center\" role=\"form\" method=\"POST\" action=\"registrationAnswer\">
-            <div class=\"row mb-3 align-items-center\">
-                <div class=\"col\"></div>
-                <h2 class=\"col-8 mb-5\">Вход</h2>
-                <div class=\"col\"></div>
+    public static function viewEnterForm($noErrors){
+        if(isset($_SESSION['user']) and !is_null($_SESSION['user'])){
+            echo "
+            <div class=\"col mt-5 text-center\">
+                <h2 class=\"mb-4\">Вы вошли как {$_SESSION['user']['name']}</h2>
+                <a href=\"./\" class=\"col back_btn \">На главную</a> 
             </div>
-            <div class=\"row mb-3 align-items-center\">
-                <div class=\"col\"></div>
-                <input class=\"col-8 w-50 p-2\" type=\"email\" id=\"email\" name=\"email\" placeholder=\"E-mail\" required>
-                <div class=\"col\"></div>
-            </div>
-            <div class=\"row mb-3 align-items-center\">
-                <div class=\"col\"></div>
-                <input class=\"col-8 w-50 p-2\" type=\"password\" id=\"password\" name=\"password\" placeholder=\"Пароль\" required>
-                <div class=\"col\"></div>
-            </div>
-            <div class=\"row justify-content-center\">
-                <div class=\"row\" style=\"width:60%\">
-                    <div class=\"col  d-flex justify-self-start align-self-center\">
-                        <a href=\"./\" class=\" back_btn\">Назад</a>
-                    </div> 
-                    <input class=\"col-6 form__submit\" type=\"submit\" name=\"submit\" value=\"Войти\">  
-                    <div class=\"col\"></div>    
-                </div>
-                <div class=\"row mt-3\" style=\"width:60%\">
-                    <div class=\"col\">
-                        <a href=\"registration\" class=\"\">Зарегистрироваться</a>
-                    </div> 
-                </div>
-                <div class=\"row\" style=\"width:60%\">
-                    <div class=\"col\">
-                        <a href=\"#\" class=\"\">Забыли пароль?</a> 
-                    </div>    
-                </div>
-            </div>
-        </form>";
+            ";
+        }
+        else{
+            echo "
+                <form class=\"form container w-50 mt-5 flex-column align-items-center justify-content-center text-center\" role=\"form\" method=\"POST\" action=\"enterAnswer\">
+                    <div class=\"row mb-3 align-items-center\">
+                        <div class=\"col\"></div>
+                        <h2 class=\"col-8 mb-5\">Вход</h2>
+                        <div class=\"col\"></div>
+                    </div>
+                    <div class=\"row mb-3 align-items-center\">
+                        <div class=\"col\"></div>
+                            <h2 class=\"col-8 mb-5\" style=\"color:red; font-size:0.9rem;\">";
+                                if(!$noErrors){
+                                    echo "Неверно введены логин и/или пароль";
+                                }
+            echo            "</h2>
+                        <div class=\"col\"></div>
+                    </div>
+                    <div class=\"row mb-3 align-items-center\">
+                        <div class=\"col\"></div>
+                        <input class=\"col-8 w-50 p-2\" type=\"email\" id=\"email\" name=\"email\" placeholder=\"E-mail\" required>
+                        <div class=\"col\"></div>
+                    </div>
+                    <div class=\"row mb-3 align-items-center\">
+                        <div class=\"col\"></div>
+                        <input class=\"col-8 w-50 p-2\" type=\"password\" id=\"password\" name=\"password\" placeholder=\"Пароль\" required>
+                        <div class=\"col\"></div>
+                    </div>
+                    <div class=\"row justify-content-center\">
+                        <div class=\"row\" style=\"width:60%\">
+                            <div class=\"col  d-flex justify-self-start align-self-center\">
+                                <a href=\"./\" class=\" back_btn\">Назад</a>
+                            </div> 
+                            <input class=\"col-6 form__submit\" type=\"submit\" name=\"submit\" value=\"Войти\">  
+                            <div class=\"col\"></div>    
+                        </div>
+                        <div class=\"row mt-3\" style=\"width:60%\">
+                            <div class=\"col\">
+                                <a href=\"registration\" class=\"\">Зарегистрироваться</a>
+                            </div> 
+                        </div>
+                        <div class=\"row\" style=\"width:60%\">
+                            <div class=\"col\">
+                                <a href=\"#\" class=\"\">Забыли пароль?</a> 
+                            </div>    
+                        </div>
+                    </div>
+                </form>";
+        }
     }
+    //-------------------------------------------------------------------- enter answer
+    public static function viewEnterAnswer(){
+        if(isset($_SESSION['user']) and !is_null($_SESSION['user'])){   
+            echo "
+            <div class=\"col mt-5 text-center\">
+                <h2 class=\"mb-4\">Вы вошли как {$_SESSION['user']['name']}</h2>
+                <a href=\"./\" class=\"col back_btn \">На главную</a> 
+            </div>
+            ";
+        }
+        else{
+            View::viewEnterForm(false);
+        }
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------- VIEW USER DATA
+    //-------------------------------------------------------------------- in header enter/registration
+    public static function viewHeaderEnter(){
+        if(isset($_SESSION['user']) and !is_null($_SESSION['user'])){
+            echo "
+            <div class=\"registration row align-items-center\">
+                {$_SESSION['user']['name']}
+                <a href=\"logout\">Выйти</a>
+            </div>
+            ";
+        }
+        else{
+            echo "
+            <div class=\"registration row align-items-center\">
+                <a href=\"enter\">Войти </a>
+                &nbsp;/&nbsp;
+                <a href=\"registration\"> Зарегистрироваться</a>
+            </div>
+            ";
+        }
+    }
+
 }
 ?>
 

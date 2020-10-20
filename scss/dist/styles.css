@@ -67,8 +67,6 @@ a:hover {
 .menu__item {
   height: 50px;
   width: 150px;
-  padding: 10px;
-  margin: 0;
 }
 .menu__item:hover {
   background-color: #aaa;
@@ -76,14 +74,6 @@ a:hover {
 .menu__link {
   height: 100%;
   width: 100%;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(5, 150px);
-}
-.grid-cell {
-  -ms-grid-column: 20px;
 }
 
 .filter__title-list {
@@ -184,8 +174,8 @@ a:hover {
   text-align: center;
 }
 .content__item-img {
-  height: 200px;
   width: 150px;
+  height: 200px;
 }
 .content__item-data {
   height: 100%;
@@ -282,4 +272,9 @@ a:hover {
 }
 .back_btn:hover {
   color: #111111;
+}
+
+.video-player {
+  width: 1280px;
+  height: 720px;
 }

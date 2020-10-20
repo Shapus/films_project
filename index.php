@@ -8,6 +8,7 @@ require 'model/Film.php';
 require 'model/Serial.php';
 require 'model/Category.php';
 require 'model/Registration.php';
+require 'model/User.php';
 
 include_once 'view/View.php';
 include_once 'controller/Controller.php';

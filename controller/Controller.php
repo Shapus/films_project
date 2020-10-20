@@ -73,19 +73,35 @@ class Controller{
 	}
 
 	//registration
-	public static function registrationForm(){
-		include_once "view/blocks/registrationForm.php";
+	public static function registration(){
+		include_once "view/blocks/registration.php";
 	}
 	public static function registrationAnswer(){
+		$control = Registration::registrationUser();
 		include_once "view/blocks/registrationAnswer.php";
 	}
+
+	//entring
 	public static function enter(){
 		include_once "view/blocks/enter.php";
 	}
+	public static function enterAnswer($email, $password){
+		$_SESSION['user'] = null;
+		$passwordHash = User::getPasswordHash($email)['password'];
+		if(password_verify($password, $passwordHash)){
+			$_SESSION['user'] = User::getUser($email);
+			$_SESSION['favorites'] = User::getFavorites($email);
+		}
+		include_once "view/blocks/enterAnswer.php";
+	}
 
-
+	//add favorite item
+	public static function addFavorite($id, $type){
+		User::addFavorite($id, $type);
+		$_SESSION['favorites'] = User::getFavorites($email);
+	}
 	//other
-	public static function getItemsByFilter(){							//!!!
+	public static function getItemsByFilter(){
 		$database_response = Items::getItemsByFilter();
 		if(empty($database_response)){
 			include_once "view/blocks/error404.php";

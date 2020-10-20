@@ -3,7 +3,7 @@
 class Registration{
 
 	public static function registrationUser(){
-		$errorString = array("","","","");
+		$errorString = array("","","","","");
 		$confirm = false;
 		$noErrors = true;
 		if(isset($_POST['submit'])){
@@ -14,7 +14,9 @@ class Registration{
 			
 			//get data
 			$names = Registration::getNames();
+			array_push($names, array());
 			$emails = Registration::getEmails();
+			array_push($emails, array());
 
 			//check errors
 			if(in_array($name, $names[0]))		
@@ -27,7 +29,6 @@ class Registration{
 				$errorString[2] = "Длина пароля должна быть не менее 6 символов";
 			if($password != $confirmPassword)
 				$errorString[3] = "Пароли не совпадают";
-			
 			foreach ($errorString as $error) {
 				if($error != ""){
 					$noErrors = false;
@@ -43,9 +44,11 @@ class Registration{
 				$item = $database->executeRun($query);
 				if($item)
 					$confirm = true;
+				else
+					$errorString[4] = "Не удалось зарегистрировать пользователя";
 			}		
 		}
-	return array($confirm, $errorString);
+		return array($confirm, $errorString);
 	}	
 
 	public static function getNames(){

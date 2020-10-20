@@ -17,29 +17,17 @@
                     <div class="menu__dropbox">
                         <a class="menu__dropbtn-box" href="films">Фильмы</a>
                         <ul class="menu__drop-content">
-                            <a class="menu__item row justify-content-center align-items-center" href="">
-                                <li  class="menu__link row justify-content-center align-items-center">film_genre_1</li>
-                            </a>
-                            <a class="menu__item row justify-content-center align-items-center" href="">
-                                <li  class="menu__link row justify-content-center align-items-center">film_genre_2</li>
-                            </a>
-                            <a class="menu__item row justify-content-center align-items-center" href="">
-                                <li  class="menu__link row justify-content-center align-items-center">film_genre_3</li>
-                            </a>
+                            <a class="menu__item" href="">film_genre_1</a>
+                            <a class="menu__item" href="">film_genre_2</a>
+                            <a class="menu__item" href="">film_genre_3</a>
                         </ul>
                     </div> 
                     <div class="menu__dropbox">
                         <a class="menu__dropbtn-box" href="serials">Сериалы</a>
                         <ul class="menu__drop-content">
-                            <a class="menu__item row justify-content-center align-items-center" href="">
-                                <li  class="menu__link row justify-content-center align-items-center">series_genre_1</li>
-                            </a>
-                            <a class="menu__item row justify-content-center align-items-center" href="">
-                                <li  class="menu__link row justify-content-center align-items-center">series_genre_2</li>
-                            </a>
-                            <a class="menu__item row justify-content-center align-items-center" href="">
-                                <li  class="menu__link row justify-content-center align-items-center">series_genre_3</li>
-                            </a>
+                            <a class="menu__item col" href="">series_genre_1</a>
+                            <a class="menu__item col" href="">series_genre_2</a>
+                            <a class="menu__item col" href="">series_genre_3</a>
                         </ul>
                     </div> 
                     <div class="menu__dropbox">
@@ -54,15 +42,13 @@
             <div class="search_bow row align-items-center">
                 <input class="search-input" type="text">
             </div>
-            <div class="registration row align-items-center">
-                <a href="enter">Войти </a>
-                &nbsp;/&nbsp;
-                <a href="registration"> Зарегистрироваться</a>
-            </div>
+            <?php
+                View::viewHeaderEnter();
+            ?>
         </div>
     </header>
     <main class="row justify-content-center">                             
-            <section class="d-flex flex-column align-items-center">
+            <section class="container d-flex flex-column align-items-center">
                 <?php 
                     if(isset($content)) echo $content;
                     else echo "<h1>Ups, no content!</h1>";
