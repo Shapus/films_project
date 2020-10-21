@@ -95,11 +95,20 @@ class Controller{
 		include_once "view/blocks/enterAnswer.php";
 	}
 
-	//add favorite item
+	//favorite items
 	public static function addFavorite($id, $type){
-		User::addFavorite($id, $type);
-		$_SESSION['favorites'] = User::getFavorites($email);
+		if(isset($_SESSION['user'])){
+			User::addFavorite($id, $type);
+			$_SESSION['favorites'] = User::getFavorites();
+		}
 	}
+	public static function deleteFavorite($id, $type){
+		if(isset($_SESSION['user'])){
+			User::deleteFavorite($id, $type);
+			$_SESSION['favorites'] = User::getFavorites();
+		}
+	}
+
 	//other
 	public static function getItemsByFilter(){
 		$database_response = Items::getItemsByFilter();

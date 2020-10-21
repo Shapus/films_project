@@ -60,44 +60,20 @@ class View{
             </div>";
     }
     //-------------------------------------------------------------------- view item
-    public static function viewItemInGrid($linkType, $id, $image, $title, $year, $category){
+    public static function viewItemInGrid($type, $id, $image, $title, $year, $category){
         echo "
         <div class=\"col-md-2 flex-column\">
-            <a class=\"d-flex flex-wrap\" href=\"{$linkType}?id={$id}\">
+            <a class=\"d-flex flex-wrap\" href=\"{$type}?id={$id}\">
                 <img class=\"content__item-img\" src=\"images/{$image}\">    
             </a>
             ";
-        var_dump($_SESSION['favorites']);
-        $favoriteItem = array(
-            'item_id' => $id,
-            'item_type' => $linkType
-        );
-        if(in_array($favoriteItem, $_SESSION['favorites'][0])){
-            echo "
-                <form role=\"form\" method=\"POST\" action=\"addFavorite\">
-                    <input type=\"hidden\" name=\"favoriteData\" value=\"{$id},{$linkType}\">
-                    <input type=\"image\" src=\"images/other/star.png\" name=\"submit\" style=\"height:20px; width:20px; margin-top:5px\">
-                </form>
-                <a class=\"d-flex flex-wrap color-4 p-0 m-0\" href=\"serials?id={$id}\">
-                    <p class=\"color-4 p-0 m-0\">{$title}</p>
-                    <p class=\"color-3 p-0 m-0\">{$year}, {$category}</p>
-                </a>
-            </div>
-            ";
-        }
-        else{
-            echo "
-                <form role=\"form\" method=\"POST\" action=\"addFavorite\">
-                    <input type=\"hidden\" name=\"favoriteData\" value=\"{$id},{$linkType}\">
-                    <input type=\"image\" src=\"images/other/starEmpty.png\" name=\"submit\" style=\"height:20px; width:20px; margin-top:5px\">
-                </form>
-                <a class=\"d-flex flex-wrap color-4 p-0 m-0\" href=\"serials?id={$id}\">
-                    <p class=\"color-4 p-0 m-0\">{$title}</p>
-                    <p class=\"color-3 p-0 m-0\">{$year}, {$category}</p>
-                </a>
-            </div>
-            ";
-        }
+        View::favoriteStar($id, $type);
+        echo "  <a class=\"d-flex flex-wrap color-4 p-0 m-0\" href=\"serials?id={$id}\">
+                <p class=\"color-4 p-0 m-0\">{$title}</p>
+                <p class=\"color-3 p-0 m-0\">{$year}, {$category}</p>
+            </a>
+        </div>
+        ";
     }
 
 
@@ -153,23 +129,26 @@ class View{
     //-------------------------------------------------------------------- film
     public static function viewFilm($database_response){
         $last_url = isset($_SESSION['prev_url'])?$_SESSION['prev_url']:"./";
-        echo "<div class=\"col-md-6 justify-content-center\">";
-        echo    "<div class=\"\">";
-        echo        "<div class=\"\">";
-        echo            "<img class=\"\" src=\"images/{$database_response['image']}\" alt=\"\">";
+        echo    "<div class=\"d-flex justify-content-center my-5\">";
+        echo        "<div class=\"mr-5\">";
+        echo            "<img class=\"\" style=\"width:400px; height:600px;\" src=\"images/{$database_response['image']}\" alt=\"\">";
         echo        "</div>";
-        echo        "<div class=\"\">";
+        echo        "<div class=\"d-flex flex-column align-self-center\">";
         echo            "<h1 class=\"\">{$database_response['title']}</h1>";
-        echo            "<div class=\"\">{$database_response['rating']}</div>";
-        echo            "<p class=\"\">{$database_response['year']}</p>";
-        echo            "<p class=\"\">{$database_response['description']}</p>";
+        echo            "<div class=\"flex-column\">";
+                        for($i=0; $i<$database_response['rating'];$i++){
+                            echo "<img src=\"images/other/star.png\" style=\"height:20px; width:20px;\">";
+                        }
+                        for($i=$database_response['rating']; $i<10;$i++){
+                            echo "<img src=\"images/other/starEmpty.png\" style=\"height:20px; width:20px;\">";
+                        }
+        echo            "</div>";
+        echo            "<p class=\"mt-4\">{$database_response['year']}</p>";
+        echo            "<p class=\"mt-4\">{$database_response['description']}</p>";
         echo            "<a class=\"\" href=\"{$last_url}\">Назад</a>";
         echo        "</div>";
         echo    "</div>";
-        echo    "<div class=\"\">";
-        echo        "<iframe class=\"video-player\" src=\"{$database_response['source']}\"></iframe>";
-        echo    "<div>";
-        echo "<div>";
+        echo    "<iframe class=\"video-player\" src=\"{$database_response['source']}\"></iframe>";
     }
 
     //-------------------------------------------------------------------- seasons
@@ -185,7 +164,7 @@ class View{
         foreach ($database_response as $season){  
             //view film item
             echo "
-                <a href=\"season?id={$season['id']}\" class=\"col\">
+                <a href=\"serials?id={$season['serial_id']}&season={$season['id']}\" class=\"col\">
                     <img class=\"content__item-img\" src=\"images/{$season['image']}\">
                     <p class=\"color-4 p-0 m-0\">Сезон {$season['number']}</p>
                 </a>
@@ -208,31 +187,27 @@ class View{
     }
     //-------------------------------------------------------------------- seria
     public static function viewSeria($database_response){
-        //echo "<ul class=\"row row--center\">";
-        //echo    "<li><a href=\"/{$_SESSION['project_name']}?serial={$_SESSION['serial_id']}&season={$_SESSION['season_id']}\"></a></li>";
-        echo "<div class=\"item-player column\">";
-        echo    "<div class=\"item-player__header row\">";
-        echo        "<div class=\"item-player__image-box\">";
-        echo            "<img class=\"content__item-img\" src=\"images/{$database_response['image']}\" alt=\"\">";
+        $last_url = isset($_SESSION['prev_url'])?$_SESSION['prev_url']:"./";
+        echo    "<div class=\"d-flex justify-content-center my-5\">";
+        echo        "<div class=\"mr-5\">";
+        echo            "<img class=\"\" style=\"width:400px; height:600px;\" src=\"images/{$database_response['image']}\" alt=\"\">";
         echo        "</div>";
-        echo        "<div class=\"content__item-data column\">";
-        echo            "<h1 class=\"content__item-title\">{$database_response['title']}</h1>";
-        echo            "<div class=\"content__item-rating\">{$database_response['rating']}</div>";
-        echo            "<p class=\"content__item-description\">{$database_response['description']}</p>";
-        echo            "<a class=\"content__item-more-btn\" href=\"serials?id={$_GET['id']}&season={$_GET['season']}\">К списку серий</a>";
+        echo        "<div class=\"d-flex flex-column align-self-center\">";
+        echo            "<h1 class=\"\">{$database_response['title']}</h1>";
+        echo            "<div class=\"flex-column\">";
+                        for($i=0; $i<$database_response['rating'];$i++){
+                            echo "<img src=\"images/other/star.png\" style=\"height:20px; width:20px;\">";
+                        }
+                        for($i=$database_response['rating']; $i<10;$i++){
+                            echo "<img src=\"images/other/starEmpty.png\" style=\"height:20px; width:20px;\">";
+                        }
+        echo            "</div>";
+        echo            "<p class=\"mt-4\">{$database_response['description']}</p>";
+        echo            "<a class=\"\" href=\"{$last_url}\">Назад</a>";
         echo        "</div>";
         echo    "</div>";
-        echo    "<div class=\"item-player__video-box\">";
-        echo        "<iframe class=\"item-player__video\" src=\"{$database_response['source']}\"></iframe>";
-        echo    "<div>";
-        echo "<div>";
+        echo    "<iframe class=\"video-player\" src=\"{$database_response['source']}\"></iframe>";
     }
-    //-------------------------------------------------------------------- category list
-    public static function viewCategories($database_response){
-        foreach($database_response as $value){
-            echo "<option class=\"categories__item\" value=\"".$value['name']."\">".$value['name']."</option>";
-        }
-    } 
 
 
 
@@ -400,6 +375,32 @@ class View{
         }
     }
 
+
+    //is favorite star
+    public static function favoriteStar($id, $type){
+        $favoriteItem = array(
+            'item_id' => $id,
+            'item_type' => $type
+        );
+        if(isset($_SESSION['favorites']) and in_array($favoriteItem, $_SESSION['favorites'])){
+            echo "
+                <form role=\"form\" method=\"POST\" action=\"deleteFavorite\">
+                    <input type=\"hidden\" name=\"id\" value=\"{$id}\">
+                    <input type=\"hidden\" name=\"type\" value=\"{$type}\">
+                    <input type=\"image\" src=\"images/other/star.png\" name=\"submit\" class=\"favorite-star favorite-star--fill\">
+                </form>
+                ";
+        }
+        else{
+            echo "
+                <form role=\"form\" method=\"POST\" action=\"addFavorite\">
+                    <input type=\"hidden\" name=\"id\" value=\"{$id}\">
+                    <input type=\"hidden\" name=\"type\" value=\"{$type}\">
+                    <input type=\"image\" src=\"images/other/starEmpty.png\" name=\"submit\" class=\"favorite-star favorite-star--empty\">
+                </form>
+                ";
+        }
+    }
 }
 ?>
 

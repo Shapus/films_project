@@ -17,7 +17,12 @@ class User{
         return $database->getAll($query);
     }
     public static function addFavorite($id, $type){
-		$query = "INSERT INTO favorite_item(user_id, item_id, item_type) VALUES({$_SESSION['user']['id']}, {$id}, '{$type}')";
+        $query = "INSERT INTO favorite_item(user_id, item_id, item_type) VALUES({$_SESSION['user']['id']}, '{$id}', '{$type}')";
+        $database = new Database();
+        $database->executeRun($query);
+    }
+    public static function deleteFavorite($id, $type){
+        $query = "DELETE FROM favorite_item WHERE user_id={$_SESSION['user']['id']} AND item_id={$id} AND item_type='{$type}'";
         $database = new Database();
         $database->executeRun($query);
 	}

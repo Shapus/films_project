@@ -57,14 +57,24 @@
 	elseif($path == 'logout'){
 		unset($_SESSION['user']);
 		unset($_SESSION['favorites']);
-		header("Location: items");
+		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
+		header("Location: {$link}");
 	}
 	
-	//add favorite
+	//favorites
 	elseif($path == "addFavorite"){
-		$favoriteData = explode(',', $_POST['favoriteData']);
-		Controller::addFavorite($favoriteData[0], $favoriteData[1]);
-		header("Location: {$_SERVER['HTTP_REFERER']}");
+		if(isset($_POST['id']) and isset($_POST['type']) and isset($_SESSION['user'])){
+			Controller::addFavorite($_POST['id'], $_POST['type']);
+		}
+		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
+		header("Location: {$link}");
+	}
+	elseif($path == "deleteFavorite"){
+		if(isset($_POST['id']) and isset($_POST['type']) and isset($_SESSION['user'])){
+			Controller::deleteFavorite($_POST['id'], $_POST['type']);
+		}
+		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
+		header("Location: {$link}");
 	}
 
 	//error

@@ -4,6 +4,7 @@ $color3:#adaaa9;
 $color4:#302b2a;
 $color5: #111111;
 
+
 a:hover { 
     text-decoration: none !important;  
 } 
@@ -330,4 +331,22 @@ a:hover {
 .video-player{
     width: 1280px;
     height: 720px;
+}
+
+
+//not copleted 
+.favorite-star{
+    height:20px; 
+    width:20px; 
+    margin-top:5px;
+    &--fill{
+        &:hover{
+            content:url("images/other/starEmpty.png");
+        }
+    }
+    &--empty{
+        &:hover{
+            content:url("images/other/star.png");
+        }
+    }
 }
