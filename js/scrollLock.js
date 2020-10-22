@@ -1,10 +1,6 @@
-if(sessionStorage.getItem("scrollX") !== null && sessionStorage.getItem("scrollY") !== null){
-	$(window).scrollLeft(sessionStorage.getItem("scrollX"));
-	$(window).scrollTop(sessionStorage.getItem("scrollY"));
-	sessionStorage.setItem("scrollX", 0);
-    sessionStorage.setItem("scrollY", 0);
-}
-if(sessionStorage.getItem("scrollX--static") !== null && sessionStorage.getItem("scrollY--static") !== null){
-	$(window).scrollLeft(sessionStorage.getItem("scrollX--static"));
-	$(window).scrollTop(sessionStorage.getItem("scrollY--static"));
+if(sessionStorage.getItem("scrollX"+$(location).attr('href')) !== null && sessionStorage.getItem("scrollY"+$(location).attr('href')) !== null){
+	$(window).scrollLeft(sessionStorage.getItem("scrollX"+$(location).attr('href')));
+	$(window).scrollTop(sessionStorage.getItem("scrollY"+$(location).attr('href')));
+	sessionStorage.setItem("scrollX"+$(location).attr('href'),0);
+	sessionStorage.setItem("scrollY"+$(location).attr('href'),0);
 }

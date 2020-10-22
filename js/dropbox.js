@@ -18,15 +18,9 @@ $(document).ready(function(){
     }
 
     // Set a cookie that holds the scroll position.
-    $(".scrollLock--current").click(function() {
-        sessionStorage.setItem("scrollX", $(window).scrollLeft());
-        sessionStorage.setItem("scrollY", $(window).scrollTop());
-        alert("init");
-    });
-    $(".scrollLock--static").click(function() {
-        sessionStorage.setItem("scrollX--static", $(window).scrollLeft());
-        sessionStorage.setItem("scrollY--static", $(window).scrollTop());
-        alert("init");
+    $(".scrollLock").click(function() { 
+        sessionStorage.setItem("scrollX"+$(location).attr('href'), $(window).scrollLeft());
+        sessionStorage.setItem("scrollY"+$(location).attr('href'), $(window).scrollTop());
     });
 
 });

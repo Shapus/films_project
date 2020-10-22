@@ -23,7 +23,7 @@ class Serial{
     }
     public static function getSeriasBySerialSeason($serial_id, $season_number){
         $query = "SELECT * FROM seria 
-                  WHERE season_id = (SELECT season_id FROM season
+                  WHERE season_id = (SELECT id FROM season
                                      WHERE serial_id = {$serial_id} and number = {$season_number})";
         $database = new Database();
         return $database->getAll($query);

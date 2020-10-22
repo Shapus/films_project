@@ -1,3 +1,7 @@
+img {
+  object-fit: cover;
+}
+
 a:hover {
   text-decoration: none !important;
 }

@@ -1,8 +1,12 @@
-<?php ob_start() ?>
+<?php 
+    $last_url = isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:"./";
+    ob_start(); 
+?>
 
 <h1>Oops! Page has not found!</h1>
+<a class="back_btn" href="<?php echo $last_url?>">На предыдущую страницу</a>
 
 <?php 
-echo "<h2>$path</h2>";
-$content = ob_get_clean()?>
-<?php include_once 'view/layout/layout.php' ?>
+    $content = ob_get_clean();
+    include_once 'view/layout/layout.php';
+?>

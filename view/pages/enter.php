@@ -34,7 +34,7 @@
                 <div class="row justify-content-center">
                     <div class="row" style="width:60%">
                         <div class="col  d-flex justify-self-start align-self-center">
-                            <a href="./" class=" back_btn">Назад</a>
+                            <a href="./" class="back_btn">Назад</a>
                         </div> 
                         <input class="col-6 form__submit" type="submit" name="submit" value="Войти">  
                         <div class="col"></div>    

@@ -112,10 +112,6 @@ class Controller{
 	//other
 	public static function getItemsByFilter(){
 		$database_response = Items::getItemsByFilter();
-		if(empty($database_response)){
-			include_once "view/pages/error404.php";
-			return;
-		}
 		include_once "view/pages/films_and_serials.php";
 	}
 	public static function error404($str){
@@ -126,7 +122,7 @@ class Controller{
 		$categories = Category::getAllCategories();	
 		$database_response_films = Film::getAllFilms();
 		$database_response_serials = Serial::getAllSerials();		
-		include_once "view/pages/start.php";
+		include_once "view/pages/films_and_serials.php";
 	}
 }
 ?>
