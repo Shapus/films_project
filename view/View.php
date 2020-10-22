@@ -62,13 +62,14 @@ class View{
     //-------------------------------------------------------------------- view item
     public static function viewItemInGrid($type, $id, $image, $title, $year, $category){
         echo "
-        <div class=\"col-md-2 flex-column\">
-            <a class=\"d-flex flex-wrap\" href=\"{$type}?id={$id}\">
+        <div class=\"col-md-2 flex-column mb-5\" style=\"min-width:160px\">
+            <a class=\"d-flex flex-wrap scrollLock--static\" href=\"{$type}?id={$id}\">
                 <img class=\"content__item-img\" src=\"images/{$image}\">    
             </a>
             ";
         View::favoriteStar($id, $type);
-        echo "  <a class=\"d-flex flex-wrap color-4 p-0 m-0\" href=\"serials?id={$id}\">
+        echo "  
+            <a class=\"d-flex flex-wrap color-4 p-0 m-0 scrollLock\" href=\"serials?id={$id}\">
                 <p class=\"color-4 p-0 m-0\">{$title}</p>
                 <p class=\"color-3 p-0 m-0\">{$year}, {$category}</p>
             </a>
@@ -209,150 +210,6 @@ class View{
         echo    "<iframe class=\"video-player\" src=\"{$database_response['source']}\"></iframe>";
     }
 
-
-
-
-    //------------------------------------------------------------------------------------------------------------------------- VIEW REGISTRATION
-    //-------------------------------------------------------------------- registration form
-    public static function viewRegistrationForm($errors){
-        echo "
-            <form class=\"form container w-50 mt-5 flex-column align-items-center justify-content-center text-center\" role=\"form\" method=\"POST\" action=\"registrationAnswer\">
-                <div class=\"row mb-3 align-items-center\">
-                    <div class=\"col\"></div>
-                    <h2 class=\"col-8 mb-5\">Регистрация</h2>
-                    <div class=\"col\"\"></div>
-                </div>
-                <div class=\"row mb-3 align-items-center\">
-                    <div class=\"col\"></div>
-                        <h2 class=\"col-8 mb-5\" style=\"color:red; font-size:0.9rem;\">{$errors[4]}</h2>
-                    <div class=\"col\"></div>
-                </div>
-                <div class=\"row mb-3 align-items-center\">
-                    <div class=\"col\"></div>
-                    <input class=\"col-8 w-50 p-2\" type=\"text\" id=\"name\" name=\"name\" placeholder=\"Имя пользователя\" required>
-                    <label class=\"col p-0 m-0\" style=\"color:red; font-size:0.9rem;\">{$errors[0]}</label>
-                </div>
-                <div class=\"row mb-3 align-items-center\">
-                    <div class=\"col\"></div>
-                    <input class=\"col-8 w-50 p-2\" type=\"email\" id=\"email\" name=\"email\" placeholder=\"E-mail\" required>
-                    <label class=\"col p-0 m-0\" style=\"color:red; font-size:0.9rem;\">{$errors[1]}</label>
-                </div>
-                <div class=\"row mb-3 align-items-center\">
-                    <div class=\"col\"></div>
-                    <input class=\"col-8 w-50 p-2\" type=\"password\" id=\"password\" name=\"password\" placeholder=\"Пароль\" required>  
-                    <label class=\"col p-0 m-0\" style=\"color:red; font-size:0.9rem;\">{$errors[2]}</label>
-                </div>
-                <div class=\"row mb-3 align-items-center\">
-                    <div class=\"col\"></div>
-                    <input class=\"col-8 w-50 p-2\" type=\"password\" id=\"confirm\" name=\"confirm\" placeholder=\"Повторите пароль\" required>
-                    <label class=\"col p-0 m-0\" style=\"color:red; font-size:0.9rem;\">{$errors[3]}</label>
-                </div>
-                <div class=\"row justify-content-center\">
-                    <div class=\"row\" style=\"width:60%\">
-                        <div class=\"col  d-flex justify-self-start align-self-center\">
-                            <a href=\"./\" class=\" back_btn\">Назад</a>
-                        </div>
-                        <input class=\"col-6 form__submit\" type=\"submit\" name=\"submit\" value=\"Зарегистрироваться\">  
-                        <div class=\"col\"></div>    
-                    </div>
-                    <div class=\"row\" style=\"width:60%\">
-                    <div class=\"col mt-3\">
-                        <a href=\"enter\" class=\"\">Уже есть аккаунт?</a> 
-                    </div>    
-                </div>
-                </div>
-            </form>
-        ";
-       
-    }
-    //-------------------------------------------------------------------- registration answer
-    public static function viewRegistrationAnswer($control){
-        if($control[0]){
-            echo "
-            <div class=\"col mt-5 text-center\">
-                <h2 class=\"mb-4\">Пользователь успешно зарегистрирован</h2>
-                <a href=\"./\" class=\"col back_btn \">На главную</a> 
-            </div>
-            ";
-        }
-        else{
-            View::viewRegistrationForm($control[1]);
-        }
-    }
-    //-------------------------------------------------------------------- enter form
-    public static function viewEnterForm($noErrors){
-        if(isset($_SESSION['user']) and !is_null($_SESSION['user'])){
-            echo "
-            <div class=\"col mt-5 text-center\">
-                <h2 class=\"mb-4\">Вы вошли как {$_SESSION['user']['name']}</h2>
-                <a href=\"./\" class=\"col back_btn \">На главную</a> 
-            </div>
-            ";
-        }
-        else{
-            echo "
-                <form class=\"form container w-50 mt-5 flex-column align-items-center justify-content-center text-center\" role=\"form\" method=\"POST\" action=\"enterAnswer\">
-                    <div class=\"row mb-3 align-items-center\">
-                        <div class=\"col\"></div>
-                        <h2 class=\"col-8 mb-5\">Вход</h2>
-                        <div class=\"col\"></div>
-                    </div>
-                    <div class=\"row mb-3 align-items-center\">
-                        <div class=\"col\"></div>
-                            <h2 class=\"col-8 mb-5\" style=\"color:red; font-size:0.9rem;\">";
-                                if(!$noErrors){
-                                    echo "Неверно введены логин и/или пароль";
-                                }
-            echo            "</h2>
-                        <div class=\"col\"></div>
-                    </div>
-                    <div class=\"row mb-3 align-items-center\">
-                        <div class=\"col\"></div>
-                        <input class=\"col-8 w-50 p-2\" type=\"email\" id=\"email\" name=\"email\" placeholder=\"E-mail\" required>
-                        <div class=\"col\"></div>
-                    </div>
-                    <div class=\"row mb-3 align-items-center\">
-                        <div class=\"col\"></div>
-                        <input class=\"col-8 w-50 p-2\" type=\"password\" id=\"password\" name=\"password\" placeholder=\"Пароль\" required>
-                        <div class=\"col\"></div>
-                    </div>
-                    <div class=\"row justify-content-center\">
-                        <div class=\"row\" style=\"width:60%\">
-                            <div class=\"col  d-flex justify-self-start align-self-center\">
-                                <a href=\"./\" class=\" back_btn\">Назад</a>
-                            </div> 
-                            <input class=\"col-6 form__submit\" type=\"submit\" name=\"submit\" value=\"Войти\">  
-                            <div class=\"col\"></div>    
-                        </div>
-                        <div class=\"row mt-3\" style=\"width:60%\">
-                            <div class=\"col\">
-                                <a href=\"registration\" class=\"\">Зарегистрироваться</a>
-                            </div> 
-                        </div>
-                        <div class=\"row\" style=\"width:60%\">
-                            <div class=\"col\">
-                                <a href=\"#\" class=\"\">Забыли пароль?</a> 
-                            </div>    
-                        </div>
-                    </div>
-                </form>";
-        }
-    }
-    //-------------------------------------------------------------------- enter answer
-    public static function viewEnterAnswer(){
-        if(isset($_SESSION['user']) and !is_null($_SESSION['user'])){   
-            echo "
-            <div class=\"col mt-5 text-center\">
-                <h2 class=\"mb-4\">Вы вошли как {$_SESSION['user']['name']}</h2>
-                <a href=\"./\" class=\"col back_btn \">На главную</a> 
-            </div>
-            ";
-        }
-        else{
-            View::viewEnterForm(false);
-        }
-    }
-
     //------------------------------------------------------------------------------------------------------------------------- VIEW USER DATA
     //-------------------------------------------------------------------- in header enter/registration
     public static function viewHeaderEnter(){
@@ -387,7 +244,7 @@ class View{
                 <form role=\"form\" method=\"POST\" action=\"deleteFavorite\">
                     <input type=\"hidden\" name=\"id\" value=\"{$id}\">
                     <input type=\"hidden\" name=\"type\" value=\"{$type}\">
-                    <input type=\"image\" src=\"images/other/star.png\" name=\"submit\" class=\"favorite-star favorite-star--fill\">
+                    <input type=\"image\" src=\"images/other/star.png\" name=\"submit\" class=\"favorite-star favorite-star--fill scrollLock\">
                 </form>
                 ";
         }
@@ -396,7 +253,7 @@ class View{
                 <form role=\"form\" method=\"POST\" action=\"addFavorite\">
                     <input type=\"hidden\" name=\"id\" value=\"{$id}\">
                     <input type=\"hidden\" name=\"type\" value=\"{$type}\">
-                    <input name=\"favoriteStar\" type=\"image\" src=\"images/other/starEmpty.png\" name=\"submit\" class=\"favorite-star favorite-star--empty\">
+                    <input type=\"image\" src=\"images/other/starEmpty.png\" name=\"submit\" class=\"favorite-star favorite-star--empty scrollLock\">
                 </form>
                 ";
         }

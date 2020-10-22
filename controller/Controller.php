@@ -8,24 +8,24 @@ class Controller{
 		$categories = Category::getAllCategories();	
 		$database_response_films = Film::getAllFilms();
 		$database_response_serials = Serial::getAllSerials();
-		include_once "view/blocks/items.php";
+		include_once "view/pages/films_and_serials.php";
 	}
 	public static function getItemById($id){	
 		$database_response = Item::getItemById($id);
 		if($database_response['type'] == 'serial'){
 			$database_response = Serial::getSerialById($id);
-			include_once "view/blocks/serial.php";
+			include_once "view/pages/seasons.php";
 		}
 		elseif($database_response['type'] == 'film'){
 			$database_response = Film::getItemById($id);
-			include_once "view/blocks/item.php";
+			include_once "view/pages/playerFilm.php";
 		}
 	}
 	public static function getItemsByCategory($category_id){	
 		$categories = Category::getAllCategories();	
 		$database_response_films = Film::getFilmsByCategory($category_id);	
 		$database_response_serials = Serial::getSerialsByCategory($category_id);
-		include_once "view/blocks/items.php";		
+		include_once "view/pages/films_and_serials.php";		
 	}
 
 
@@ -34,24 +34,24 @@ class Controller{
 	public static function getAllSerials(){
 		$categories = Category::getAllCategories();	
 		$database_response_serials = Serial::getAllSerials();		
-		include_once "view/blocks/items.php";
+		include_once "view/pages/films_and_serials.php";
 	}
 	public static function getSeasonsBySerialId($id){	
 		$database_response = Serial::getSeasonsBySerialId($id);
-		include_once "view/blocks/serial.php";
+		include_once "view/pages/seasons.php";
 	}
 	public static function getSerialsByCategory($category_id){	
 		$categories = Category::getAllCategories();	
 		$database_response_serials = Serial::getSerialsByCategory($category_id);
-		include_once "view/blocks/items.php";
+		include_once "view/pages/films_and_serials.php";
 	}
 	public static function getSeriasBySerialSeason($serial_id, $season_number){
 		$database_response = Serial::getSeriasBySerialSeason($serial_id, $season_number);
-		include_once "view/blocks/season.php";
+		include_once "view/pages/serias.php";
 	}
 	public static function getSeria($serial_id, $season_number, $seria_number){
 		$database_response = Serial::getSeria($serial_id, $season_number, $seria_number);
-		include_once "view/blocks/seria.php";
+		include_once "view/pages/playerSeria.php";
 	}
 
 
@@ -60,30 +60,30 @@ class Controller{
 	public static function getAllFilms(){
 		$categories = Category::getAllCategories();	
 		$database_response_films = Film::getAllFilms();
-		include_once "view/blocks/items.php";
+		include_once "view/pages/films_and_serials.php";
 	} 
 	public static function getFilmById($id){
 		$database_response = Film::getFilmById($id);	
-		include_once "view/blocks/item.php";
+		include_once "view/pages/playerFilm.php";
 	} 
 	public static function getfilmsByCategory($category_id){	
 		$categories = Category::getAllCategories();	
 		$database_response_films = Film::getFilmsByCategory($category_id);
-		include_once "view/blocks/items.php";
+		include_once "view/pages/films_and_serials.php";
 	}
 
 	//registration
 	public static function registration(){
-		include_once "view/blocks/registration.php";
+		include_once "view/pages/registration.php";
 	}
 	public static function registrationAnswer(){
 		$control = Registration::registrationUser();
-		include_once "view/blocks/registrationAnswer.php";
+		include_once "view/pages/registrationAnswer.php";
 	}
 
 	//entring
 	public static function enter(){
-		include_once "view/blocks/enter.php";
+		include_once "view/pages/enter.php";
 	}
 	public static function enterAnswer($email, $password){
 		$_SESSION['user'] = null;
@@ -92,7 +92,7 @@ class Controller{
 			$_SESSION['user'] = User::getUser($email);
 			$_SESSION['favorites'] = User::getFavorites($email);
 		}
-		include_once "view/blocks/enterAnswer.php";
+		include_once "view/pages/enterAnswer.php";
 	}
 
 	//favorite items
@@ -113,20 +113,20 @@ class Controller{
 	public static function getItemsByFilter(){
 		$database_response = Items::getItemsByFilter();
 		if(empty($database_response)){
-			include_once "view/blocks/error404.php";
+			include_once "view/pages/error404.php";
 			return;
 		}
-		include_once "view/blocks/items.php";
+		include_once "view/pages/films_and_serials.php";
 	}
 	public static function error404($str){
 		$path = $str;
-		include_once "view/blocks/error404.php";
+		include_once "view/pages/error404.php";
 	}
 	public static function startSite(){
 		$categories = Category::getAllCategories();	
 		$database_response_films = Film::getAllFilms();
 		$database_response_serials = Serial::getAllSerials();		
-		include_once "view/blocks/start.php";
+		include_once "view/pages/start.php";
 	}
 }
 ?>

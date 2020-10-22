@@ -18,9 +18,15 @@ $(document).ready(function(){
     }
 
     // Set a cookie that holds the scroll position.
-    $("input[name = 'favoriteStar']").click(function() {
-            sessionStorage.setItem("scrollX", $(window).scrollLeft());
-            sessionStorage.setItem("scrollY", $(window).scrollTop());
-
+    $(".scrollLock--current").click(function() {
+        sessionStorage.setItem("scrollX", $(window).scrollLeft());
+        sessionStorage.setItem("scrollY", $(window).scrollTop());
+        alert("init");
     });
+    $(".scrollLock--static").click(function() {
+        sessionStorage.setItem("scrollX--static", $(window).scrollLeft());
+        sessionStorage.setItem("scrollY--static", $(window).scrollTop());
+        alert("init");
+    });
+
 });

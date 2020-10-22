@@ -59,5 +59,5 @@
     </main>
 </body>
 </html>
-<script src="js/scrollToItem.js"></script>
+<script src="js/scrollLock.js"></script>
                                 
