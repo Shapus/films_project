@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -6,7 +7,8 @@
     <link rel="stylesheet" href="scss/dist/styles.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="js/script.js"></script>
+    <script src="js/dropbox.js"></script>
+    
     <title>Document</title>
 </head>
 <body>
@@ -57,5 +59,5 @@
     </main>
 </body>
 </html>
-
+<script src="js/scrollToItem.js"></script>
                                 

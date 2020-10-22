@@ -396,7 +396,7 @@ class View{
                 <form role=\"form\" method=\"POST\" action=\"addFavorite\">
                     <input type=\"hidden\" name=\"id\" value=\"{$id}\">
                     <input type=\"hidden\" name=\"type\" value=\"{$type}\">
-                    <input type=\"image\" src=\"images/other/starEmpty.png\" name=\"submit\" class=\"favorite-star favorite-star--empty\">
+                    <input name=\"favoriteStar\" type=\"image\" src=\"images/other/starEmpty.png\" name=\"submit\" class=\"favorite-star favorite-star--empty\">
                 </form>
                 ";
         }

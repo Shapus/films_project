@@ -68,6 +68,7 @@
 		}
 		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
 		header("Location: {$link}");
+		
 	}
 	elseif($path == "deleteFavorite"){
 		if(isset($_POST['id']) and isset($_POST['type']) and isset($_SESSION['user'])){
