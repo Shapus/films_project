@@ -44,13 +44,13 @@
         foreach ($database_response_films as $item){                  
 ?>
             <div class="col-md-2 flex-column mb-5" style="min-width:160px">
-                <a class="d-flex flex-wrap scrollLock" href="<?php echo $item['type'] ?>?id=<?php echo $item['id'] ?>">
+                <a class="d-flex flex-wrap scrollLock" href="films?id=<?php echo $item['id'] ?>">
                     <img class="content__item-img" src="images/<?php echo $item['image'] ?>">    
                 </a>
 <?php            
-                View::favoriteStar($item['id'], $item['type']);
+                View::favoriteStar__item($item['id']);
 ?>        
-                <a class="d-flex flex-wrap color-4 p-0 m-0 scrollLock" href="<?php echo $item['type'] ?>?id=<?php echo $item['id'] ?>">
+                <a class="d-flex flex-wrap color-4 p-0 m-0 scrollLock" href="films?id=<?php echo $item['id'] ?>">
                     <p class="color-4 p-0 m-0"><?php echo $item['title'] ?></p>
                     <p class="color-3 p-0 m-0"><?php echo $item['year'] ?>, <?php echo $categories[$item['category_id']-1]['name'] ?></p>
                 </a>
@@ -78,13 +78,13 @@
             foreach ($database_response_serials as $item){  
                 ?>
                 <div class="col-md-2 flex-column mb-5" style="min-width:160px">
-                    <a class="d-flex flex-wrap scrollLock" href="<?php echo $item['type'] ?>?id=<?php echo $item['id'] ?>">
+                    <a class="d-flex flex-wrap scrollLock" href="serials?id=<?php echo $item['id'] ?>">
                         <img class="content__item-img" src="images/<?php echo $item['image'] ?>">    
                     </a>
     <?php            
-                    View::favoriteStar($item['id'], $item['type']);
+                    View::favoriteStar__item($item['id']);
     ?>        
-                    <a class="d-flex flex-wrap color-4 p-0 m-0 scrollLock" href="<?php echo $item['type'] ?>?id=<?php echo $item['id'] ?>">
+                    <a class="d-flex flex-wrap color-4 p-0 m-0 scrollLock" href="serials?id=<?php echo $item['id'] ?>">
                         <p class="color-4 p-0 m-0"><?php echo $item['title'] ?></p>
                         <p class="color-3 p-0 m-0"><?php echo $item['year'] ?>, <?php echo $categories[$item['category_id']-1]['name'] ?></p>
                     </a>

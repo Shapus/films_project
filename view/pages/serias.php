@@ -16,7 +16,7 @@
                     <img class="content__item-img" src="images/<?php echo $seria['image'] ?>">    
                 </a>
 <?php            
-                View::favoriteStar($seria['id'], $seria['type']);
+                View::favoriteStar__seria($seria['id']);
 ?>        
                 <a class="d-flex flex-wrap color-4 p-0 m-0 scrollLock" href="<?php echo $_SERVER['REQUEST_URI'] ?>&seria=<?php echo $seria['number'] ?>">
                     <p class="color-4 p-0 m-0"><?php echo $seria_title ?> </p>

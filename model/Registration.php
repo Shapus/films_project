@@ -38,9 +38,8 @@ class Registration{
 
 			if($noErrors){
 				$passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-				$date = date("y-m-d");
 				$database = new Database();
-				$query = "INSERT INTO user(name,email,password,registration_date) VALUES('{$name}','{$email}','{$passwordHash}','{$date}')";				
+				$query = "INSERT INTO user(name,email,password,registration_date) VALUES('{$name}','{$email}','{$passwordHash}',CURRENT_TIMESTAMP)";				
 				$item = $database->executeRun($query);
 				if($item)
 					$confirm = true;

@@ -57,6 +57,8 @@
                 ?>
             </section>  
     </main>
+    <footer class="">
+    </footer>
 </body>
 </html>
 <script src="js/scrollLock.js"></script>

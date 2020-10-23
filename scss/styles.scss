@@ -22,6 +22,17 @@ a:hover {
 }.color-5{
     color: $color5;
 }
+.bg-1{
+    background-color: $color1;
+}.bg-2{
+    background-color: $color2;
+}.bg-3{
+    background-color: $color3;
+}.bg-4{
+    background-color: $color4;
+}.bg-5{
+    background-color: $color5;
+}
 .menu {
     width: max-content;
     height: 70px;
@@ -158,11 +169,6 @@ a:hover {
                 display: block;
             }
 		}
-}
-.left-menu {
-    width: 300px;
-    &__inner {
-    }
 }
 .registration{
     &__form{
@@ -351,4 +357,20 @@ a:hover {
             content:url("images/other/star.png");
         }
     }
+}
+.comment{
+   width: 100%;
+   border: solid lightgray 1px;
+   &__data{
+       font-size: 20px;
+       margin: auto;
+   }
+   &__text{
+       display: flex;
+       justify-content: flex-start;
+       padding: 10px;
+   }
+}
+footer{
+    height: 300px;
 }

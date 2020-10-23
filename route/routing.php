@@ -61,18 +61,68 @@
 		header("Location: {$link}");
 	}
 	
-	//favorites
-	elseif($path == "addFavorite"){
-		if(isset($_POST['id']) and isset($_POST['type']) and isset($_SESSION['user'])){
-			Controller::addFavorite($_POST['id'], $_POST['type']);
+	//favorites item
+	elseif($path == "addFavoriteItem"){
+		if(isset($_POST['id']) and isset($_SESSION['user'])){
+			Controller::addFavorite__item($_POST['id']);
 		}
 		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
 		header("Location: {$link}");
 		
 	}
-	elseif($path == "deleteFavorite"){
-		if(isset($_POST['id']) and isset($_POST['type']) and isset($_SESSION['user'])){
-			Controller::deleteFavorite($_POST['id'], $_POST['type']);
+	elseif($path == "deleteFavoriteItem"){
+		if(isset($_POST['id']) and isset($_SESSION['user'])){
+			Controller::deleteFavorite__item($_POST['id']);
+		}
+		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
+		header("Location: {$link}");
+	}
+
+	//favorite season
+	elseif($path == "addFavoriteSeason"){
+		if(isset($_POST['id']) and isset($_SESSION['user'])){
+			Controller::addFavorite__season($_POST['id']);
+		}
+		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
+		header("Location: {$link}");
+		
+	}
+	elseif($path == "deleteFavoriteSeason"){
+		if(isset($_POST['id']) and isset($_SESSION['user'])){
+			Controller::deleteFavorite__season($_POST['id']);
+		}
+		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
+		header("Location: {$link}");
+	}
+
+	//favorite seria
+	elseif($path == "addFavoriteSeria"){
+		if(isset($_POST['id']) and isset($_SESSION['user'])){
+			Controller::addFavorite__seria($_POST['id']);
+		}
+		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
+		header("Location: {$link}");
+		
+	}
+	elseif($path == "deleteFavoriteSeria"){
+		if(isset($_POST['id']) and isset($_SESSION['user'])){
+			Controller::deleteFavorite__seria($_POST['id']);
+		}
+		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
+		header("Location: {$link}");
+	}
+
+	//insert comments
+	elseif($path == "insertCommentItem"){
+		if(isset($_POST['id']) and isset($_POST['comment_text']) and isset($_SESSION['user'])){
+			Controller::insertComment__item($_POST['id'], $_POST['comment_text']);
+		}
+		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
+		header("Location: {$link}");
+	}
+	elseif($path == "insertCommentSeria"){
+		if(isset($_POST['id']) and isset($_POST['comment_text']) and isset($_SESSION['user'])){
+			Controller::insertComment__seria($_POST['id'], $_POST['comment_text']);
 		}
 		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
 		header("Location: {$link}");
