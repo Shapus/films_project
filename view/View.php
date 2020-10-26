@@ -3,23 +3,22 @@
 <?php
 class View{     
 
-    //------------------------------------------------------------------------------------------------------------------------- VIEW USER DATA
-    //-------------------------------------------------------------------- in header enter/registration
+    //enter-registration-userName
     public static function viewHeaderEnter(){
         if(isset($_SESSION['user']) and !is_null($_SESSION['user'])){
             echo "
-            <div class=\"registration col-2 d-flex align-items-center\">
+            <div class=\"registration row align-items-center\">
                 {$_SESSION['user']['name']}
-                <a href=\"logout\" class=\"scrollLock\">Выйти</a>
+                <a href=\"logout\" class=\"clearLock\">Выйти</a>
             </div>
             ";
         }
         else{
             echo "
-            <div class=\"registration col-2 d-flex align-items-center\">
+            <div class=\"registration row align-items-center\">
                 <a href=\"enter\" class=\"clearLock\">Войти</a>
                 &nbsp;/&nbsp;
-                <a href=\"registration\" class=\"clearLock\">Зарегистрироваться</a>
+                <a href=\"registration\" class=\"clearlLock\">Зарегистрироваться</a>
             </div>
             ";
         }
@@ -48,8 +47,9 @@ class View{
                 ";
         }
     }
-        //favorite star season
-        public static function favoriteStar__season($id){
+
+    //favorite star season
+    public static function favoriteStar__season($id){
             $favoriteItem = array(
                 'season_id' => $id,
             );
@@ -69,7 +69,8 @@ class View{
                     </form>
                     ";
             }
-        }
+    }
+
     //favorite star seria
     public static function favoriteStar__seria($id){
         $favoriteItem = array(
@@ -92,6 +93,8 @@ class View{
                 ";
         }
     }
+
+    //comment
     public static function comment($id, $user_id, $user_name, $date, $text, $hidden, $type){
         if($hidden){
             echo "
@@ -143,6 +146,37 @@ class View{
             </div>
             ";
         }
+    }
+
+    public static function favoriteButton($id){
+        $favoriteItem = array(
+            'item_id' => $id,
+        );
+        if(isset($_SESSION['favorites__item']) and in_array($favoriteItem, $_SESSION['favorites__item'])){
+            echo "
+                <div class=\"d-flex justify-content-center align-content-center ml-3 form__submit--focused\">
+                    <p class=\"mr-3 mb-0 d-flex justify-self-center align-self-center\" style=\"vertical-align: center;\">Добавить в избранное</p>                
+            ";
+            echo "
+                <form role=\"form\" method=\"POST\" action=\"deleteFavoriteItem\">
+                    <input type=\"hidden\" name=\"id\" value=\"{$id}\">
+                    <input type=\"image\" src=\"images/other/star.png\" name=\"submit\" class=\"favorite-star favorite-star--big favorite-star--fill scrollLock\">
+                </form>
+                ";
+        }
+        else{
+            echo "
+                <div class=\"d-flex justify-content-center align-content-center ml-3 form__submit\">
+                    <p class=\"mr-3 mb-0 d-flex justify-self-center align-self-center\" style=\"vertical-align: center;\">Добавить в избранное</p>                
+            ";
+            echo "
+                <form role=\"form\" method=\"POST\" action=\"addFavoriteItem\">
+                    <input type=\"hidden\" name=\"id\" value=\"{$id}\">
+                    <input type=\"image\" src=\"images/other/starEmpty.png\" name=\"submit\" class=\"favorite-star favorite-star--big favorite-star--empty scrollLock\">
+                </form>
+                ";
+        }
+        echo "</div>";
     }
 }
 ?>

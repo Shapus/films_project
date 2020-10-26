@@ -7,7 +7,12 @@
                 <img class="" style="width:400px; height:600px;" src="images/<?php echo $database_response['image'] ?>" alt="">
             </div>
             <div class="d-flex flex-column align-self-center">
-                <h1 class=""> <?php echo $database_response['title'] ?> </h1>
+                <div class="d-flex">
+                    <h1 class=""> <?php echo $database_response['title'] ?> </h1>
+<?php                   
+                        View::favoriteButton($database_response['id']);
+?>                        
+                </div>
                 <div class="flex-column">
 <?php                
                     for($i=0; $i<$database_response['rating'];$i++){

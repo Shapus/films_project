@@ -1,7 +1,6 @@
 <?php
 
 session_start();
-$_SESSION['project_name'] = "films_project";
 include_once 'inc/Database.php';
 require 'model/Item.php';
 require 'model/Film.php';
