@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Хост: 127.0.0.1
--- Время создания: Окт 23 2020 г., 10:22
--- Версия сервера: 10.4.13-MariaDB
--- Версия PHP: 7.2.31
+-- Host: 127.0.0.1
+-- Generation Time: Oct 26, 2020 at 09:54 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `films_project`
+-- Database: `films_project`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `category`
+-- Table structure for table `category`
 --
 
 CREATE TABLE `category` (
@@ -35,7 +36,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `category`
+-- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`id`, `name`, `icon`, `icon_focused`) VALUES
@@ -58,7 +59,7 @@ INSERT INTO `category` (`id`, `name`, `icon`, `icon_focused`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `comment__item`
+-- Table structure for table `comment__item`
 --
 
 CREATE TABLE `comment__item` (
@@ -67,21 +68,22 @@ CREATE TABLE `comment__item` (
   `user_name` varchar(255) NOT NULL,
   `item_id` int(11) NOT NULL,
   `date` date NOT NULL,
-  `text` text NOT NULL
+  `text` text NOT NULL,
+  `hidden` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `comment__item`
+-- Dumping data for table `comment__item`
 --
 
-INSERT INTO `comment__item` (`id`, `user_id`, `user_name`, `item_id`, `date`, `text`) VALUES
-(8, 8, 'alex', 5, '2020-10-23', 'Очень хороший фильм!'),
-(9, 8, 'alex', 5, '2020-10-23', 'Очень хороший фильм!Очень хороший фильм!Очень хороший фильм!Очень хороший фильм!Очень хороший фильм!Очень хороший фильм!Очень хороший фильм!Очень хороший фильм!Очень хороший фильм!Очень хороший фильм!Очень хороший фильм!Очень хороший фильм!Очень хороший ф');
+INSERT INTO `comment__item` (`id`, `user_id`, `user_name`, `item_id`, `date`, `text`, `hidden`) VALUES
+(12, 12, 'Shapus', 5, '2020-10-26', 'Отличный фильм!\r\n\r\n\r\n\r\n\r\n\r\n\r\n', 1),
+(13, 11, 'Alex', 5, '2020-10-26', 'Хо-хо-хо\r\n', 1);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `comment__seria`
+-- Table structure for table `comment__seria`
 --
 
 CREATE TABLE `comment__seria` (
@@ -90,13 +92,14 @@ CREATE TABLE `comment__seria` (
   `user_name` varchar(255) NOT NULL,
   `seria_id` int(11) NOT NULL,
   `date` date NOT NULL,
-  `text` text NOT NULL
+  `text` text NOT NULL,
+  `hidden` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `favorite__item`
+-- Table structure for table `favorite__item`
 --
 
 CREATE TABLE `favorite__item` (
@@ -108,7 +111,7 @@ CREATE TABLE `favorite__item` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `favorite__season`
+-- Table structure for table `favorite__season`
 --
 
 CREATE TABLE `favorite__season` (
@@ -120,7 +123,7 @@ CREATE TABLE `favorite__season` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `favorite__seria`
+-- Table structure for table `favorite__seria`
 --
 
 CREATE TABLE `favorite__seria` (
@@ -132,7 +135,7 @@ CREATE TABLE `favorite__seria` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `item`
+-- Table structure for table `item`
 --
 
 CREATE TABLE `item` (
@@ -148,7 +151,7 @@ CREATE TABLE `item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `item`
+-- Dumping data for table `item`
 --
 
 INSERT INTO `item` (`id`, `category_id`, `type`, `title`, `image`, `rating`, `year`, `description`, `source`) VALUES
@@ -165,7 +168,7 @@ INSERT INTO `item` (`id`, `category_id`, `type`, `title`, `image`, `rating`, `ye
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `season`
+-- Table structure for table `season`
 --
 
 CREATE TABLE `season` (
@@ -178,7 +181,7 @@ CREATE TABLE `season` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `season`
+-- Dumping data for table `season`
 --
 
 INSERT INTO `season` (`id`, `serial_id`, `number`, `image`, `description`, `rating`) VALUES
@@ -188,7 +191,7 @@ INSERT INTO `season` (`id`, `serial_id`, `number`, `image`, `description`, `rati
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `seria`
+-- Table structure for table `seria`
 --
 
 CREATE TABLE `seria` (
@@ -203,7 +206,7 @@ CREATE TABLE `seria` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `seria`
+-- Dumping data for table `seria`
 --
 
 INSERT INTO `seria` (`id`, `season_id`, `number`, `title`, `image`, `rating`, `description`, `source`) VALUES
@@ -213,7 +216,7 @@ INSERT INTO `seria` (`id`, `season_id`, `number`, `title`, `image`, `rating`, `d
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -226,26 +229,26 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `registration_date`, `status`) VALUES
-(8, 'alex', 'mail@mail.com', '$2y$10$WlEzpIuFjQae89oUnBuw0u7RMIeefRgOo./q.Aoklf3Iw45SlOezu', '2020-10-20', 'user'),
-(9, 'alex1', 'mail1@mail.com', '$2y$10$B5HLdCnC8mKtinAxLuREqOe2K6sXg4Byo.gCuHW3fG3G.oiAZBA5i', '2020-10-23', 'user');
+(11, 'Alex', 'mail@mail.ru', '$2y$10$qHtHIb.pn1xe/NYcZdNrTuTTcfJXM8/Ck9B1EMQLSPEAtXJHf.NK2', '2020-10-26', 'user'),
+(12, 'Shapus', 'a@a.com', '$2y$10$NFDuhR7utd99sIENI4CuGeg5qeL0EQhM3IXfCftIb9BQ7XSoT2B9a', '2020-10-26', 'user');
 
 --
--- Индексы сохранённых таблиц
+-- Indexes for dumped tables
 --
 
 --
--- Индексы таблицы `category`
+-- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id` (`id`);
 
 --
--- Индексы таблицы `comment__item`
+-- Indexes for table `comment__item`
 --
 ALTER TABLE `comment__item`
   ADD PRIMARY KEY (`id`),
@@ -253,7 +256,7 @@ ALTER TABLE `comment__item`
   ADD KEY `item_id` (`item_id`);
 
 --
--- Индексы таблицы `comment__seria`
+-- Indexes for table `comment__seria`
 --
 ALTER TABLE `comment__seria`
   ADD PRIMARY KEY (`id`),
@@ -261,7 +264,7 @@ ALTER TABLE `comment__seria`
   ADD KEY `seria_id` (`seria_id`);
 
 --
--- Индексы таблицы `favorite__item`
+-- Indexes for table `favorite__item`
 --
 ALTER TABLE `favorite__item`
   ADD PRIMARY KEY (`id`),
@@ -269,7 +272,7 @@ ALTER TABLE `favorite__item`
   ADD KEY `item_id` (`item_id`);
 
 --
--- Индексы таблицы `favorite__season`
+-- Indexes for table `favorite__season`
 --
 ALTER TABLE `favorite__season`
   ADD PRIMARY KEY (`id`),
@@ -277,7 +280,7 @@ ALTER TABLE `favorite__season`
   ADD KEY `season_id` (`season_id`);
 
 --
--- Индексы таблицы `favorite__seria`
+-- Indexes for table `favorite__seria`
 --
 ALTER TABLE `favorite__seria`
   ADD PRIMARY KEY (`id`),
@@ -285,149 +288,149 @@ ALTER TABLE `favorite__seria`
   ADD KEY `seria_id` (`seria_id`);
 
 --
--- Индексы таблицы `item`
+-- Indexes for table `item`
 --
 ALTER TABLE `item`
   ADD PRIMARY KEY (`id`),
   ADD KEY `category_id` (`category_id`);
 
 --
--- Индексы таблицы `season`
+-- Indexes for table `season`
 --
 ALTER TABLE `season`
   ADD PRIMARY KEY (`id`),
   ADD KEY `serial_id` (`serial_id`);
 
 --
--- Индексы таблицы `seria`
+-- Indexes for table `seria`
 --
 ALTER TABLE `seria`
   ADD PRIMARY KEY (`id`),
   ADD KEY `season_id` (`season_id`);
 
 --
--- Индексы таблицы `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT для сохранённых таблиц
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT для таблицы `category`
+-- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT для таблицы `comment__item`
+-- AUTO_INCREMENT for table `comment__item`
 --
 ALTER TABLE `comment__item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `comment__seria`
+--
+ALTER TABLE `comment__seria`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `favorite__item`
+--
+ALTER TABLE `favorite__item`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+
+--
+-- AUTO_INCREMENT for table `favorite__season`
+--
+ALTER TABLE `favorite__season`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT для таблицы `comment__seria`
---
-ALTER TABLE `comment__seria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT для таблицы `favorite__item`
---
-ALTER TABLE `favorite__item`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
-
---
--- AUTO_INCREMENT для таблицы `favorite__season`
---
-ALTER TABLE `favorite__season`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT для таблицы `favorite__seria`
+-- AUTO_INCREMENT for table `favorite__seria`
 --
 ALTER TABLE `favorite__seria`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT для таблицы `item`
+-- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT для таблицы `season`
+-- AUTO_INCREMENT for table `season`
 --
 ALTER TABLE `season`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT для таблицы `seria`
+-- AUTO_INCREMENT for table `seria`
 --
 ALTER TABLE `seria`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT для таблицы `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- Ограничения внешнего ключа сохраненных таблиц
+-- Constraints for dumped tables
 --
 
 --
--- Ограничения внешнего ключа таблицы `comment__item`
+-- Constraints for table `comment__item`
 --
 ALTER TABLE `comment__item`
   ADD CONSTRAINT `comment__item_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `comment__item_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `comment__seria`
+-- Constraints for table `comment__seria`
 --
 ALTER TABLE `comment__seria`
   ADD CONSTRAINT `comment__seria_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `comment__seria_ibfk_2` FOREIGN KEY (`seria_id`) REFERENCES `seria` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `favorite__item`
+-- Constraints for table `favorite__item`
 --
 ALTER TABLE `favorite__item`
   ADD CONSTRAINT `favorite__item_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `favorite__item_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `favorite__season`
+-- Constraints for table `favorite__season`
 --
 ALTER TABLE `favorite__season`
   ADD CONSTRAINT `favorite__season_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `favorite__season_ibfk_2` FOREIGN KEY (`season_id`) REFERENCES `season` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `favorite__seria`
+-- Constraints for table `favorite__seria`
 --
 ALTER TABLE `favorite__seria`
   ADD CONSTRAINT `favorite__seria_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `favorite__seria_ibfk_2` FOREIGN KEY (`seria_id`) REFERENCES `seria` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `item`
+-- Constraints for table `item`
 --
 ALTER TABLE `item`
   ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `season`
+-- Constraints for table `season`
 --
 ALTER TABLE `season`
   ADD CONSTRAINT `season_ibfk_1` FOREIGN KEY (`serial_id`) REFERENCES `item` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `seria`
+-- Constraints for table `seria`
 --
 ALTER TABLE `seria`
   ADD CONSTRAINT `seria_ibfk_1` FOREIGN KEY (`season_id`) REFERENCES `season` (`id`);

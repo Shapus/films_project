@@ -22,5 +22,9 @@ $(document).ready(function(){
         sessionStorage.setItem("scrollX"+$(location).attr('href'), $(window).scrollLeft());
         sessionStorage.setItem("scrollY"+$(location).attr('href'), $(window).scrollTop());
     });
+    $(".clearLock").click(function() { 
+        sessionStorage.setItem(0);
+        sessionStorage.setItem(0);
+    });
 
 });

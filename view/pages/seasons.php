@@ -31,7 +31,7 @@
 ?>
         </div>
     </div>
-    <a class="back_btn" href="serials">Назад</a>
+    <a class="back_btn" href="serials">К списку сериалов</a>
 <?php    
     $content = ob_get_clean();
     include_once 'view/layout/layout.php';

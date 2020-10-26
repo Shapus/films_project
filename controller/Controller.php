@@ -52,7 +52,7 @@ class Controller{
 	}
 	public static function getSeria($serial_id, $season_number, $seria_number){
 		$database_response = Serial::getSeria($serial_id, $season_number, $seria_number);
-		$comments = Comment::getComments__seria($seria_id);
+		$comments = Comment::getComments__seria($database_response['id']);
 		include_once "view/pages/playerSeria.php";
 	}
 
@@ -90,13 +90,16 @@ class Controller{
 	}
 	public static function enterAnswer($email, $password){
 		$_SESSION['user'] = null;
-		$passwordHash = User::getPasswordHash($email)['password'];
-		if(password_verify($password, $passwordHash)){
-			$_SESSION['user'] = User::getUser($email);
-			$_SESSION['favorites__item'] = User::getFavorites__item($email);
-			$_SESSION['favorites__season'] = User::getFavorites__season($email);
-			$_SESSION['favorites__seria'] = User::getFavorites__seria($email);
+		$getPass = User::getPasswordHash($email);
+		if($getPass){
+			$passwordHash = $getPass['password'];
+			if(password_verify($password, $passwordHash)){
+				$_SESSION['user'] = User::getUser($email);
+				$_SESSION['favorites__item'] = User::getFavorites__item($email);
+				$_SESSION['favorites__season'] = User::getFavorites__season($email);
+				$_SESSION['favorites__seria'] = User::getFavorites__seria($email);
 
+			}
 		}
 		include_once "view/pages/enterAnswer.php";
 	}
@@ -147,10 +150,26 @@ class Controller{
 			Comment::insertComment__item($item_id, $comment_text);
 		}
 	}
-	public static function insertComment__seria($item_id, $comment_text){
+	public static function insertComment__seria($seria_id, $comment_text){
 		if(!empty($comment_text)){
 			Comment::insertComment__seria($seria_id, $comment_text);
 		}
+	}
+
+	//hide comment
+	public static function hideComment__item($comment_id){
+		Comment::hideComment__item($comment_id);
+	}
+	public static function hideComment__seria($comment_id){
+		Comment::hideComment__seria($comment_id);
+	}
+
+	//view comment
+	public static function viewComment__item($comment_id){
+		Comment::viewComment__item($comment_id);
+	}
+	public static function viewComment__seria($comment_id){
+		Comment::viewComment__seria($comment_id);
 	}
 
 	//other

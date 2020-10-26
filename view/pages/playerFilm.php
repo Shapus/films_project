@@ -9,36 +9,25 @@
             <div class="d-flex flex-column align-self-center">
                 <h1 class=""> <?php echo $database_response['title'] ?> </h1>
                 <div class="flex-column">
-    <?php                
+<?php                
                     for($i=0; $i<$database_response['rating'];$i++){
-                            echo "<img src=\"images/other/star.png\" style=\"height:20px; width:20px;\">";
+                        echo "<img src=\"images/other/star.png\" style=\"height:20px; width:20px;\">";
                     }
                     for($i=$database_response['rating']; $i<10;$i++){
-                            echo "<img src=\"images/other/starEmpty.png\" style=\"height:20px; width:20px;\">";
+                        echo "<img src=\"images/other/starEmpty.png\" style=\"height:20px; width:20px;\">";
                     }
-    ?>                    
+?>                    
                 </div>
                 <p class="mt-4"> <?php echo $database_response['year'] ?> </p>
                 <p class="mt-4"> <?php echo $database_response['description'] ?> </p>
-                <a class="back_btn" href= <?php echo $last_url ?> >Назад</a>
+                <a class="back_btn" href="films">К списку фильмов</a>
             </div>
         </div>
         <iframe class="video-player" src="<?php echo $database_response['source'] ?>"></iframe>
         <div class="w-100 mt-5 d-flex flex-column">
 <?php                
             for($i=0; $i<count($comments);$i++){
-?>
-                <div class="d-flex comment">
-                    <div class="d-flex flex-column bg-3 align-items-center justify-content-center" style="min-width:150px">   
-                        <p class="comment__data"><?php echo $comments[$i]['user_name'] ?></p>
-                        <p class="comment__data"><?php echo $comments[$i]['date'] ?></p>
-                    </div>
-                    <div class="comment__text">
-                        <p class=""><?php echo $comments[$i]['text'] ?></p>
-                    </div>
-                </div>
-                
-<?php                    
+                View::comment($comments[$i]['id'], $comments[$i]['user_id'], $comments[$i]['user_name'], $comments[$i]['date'], $comments[$i]['text'], $comments[$i]['hidden'], "Item");                          
             }
 ?>      
         </div>
@@ -49,7 +38,7 @@
             </div>   
             <div class="row mt-3">
                 <div class="col"></div>  
-                <input class="col-6 form__submit" type="submit" name="submit" value="Отправить">  
+                <input class="col-6 form__submit scrollLock" type="submit" name="submit" value="Отправить">  
                 <div class="col"></div>    
             </div>
         </form>

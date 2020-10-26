@@ -56,7 +56,9 @@
 	}
 	elseif($path == 'logout'){
 		unset($_SESSION['user']);
-		unset($_SESSION['favorites']);
+		unset($_SESSION['favorites__item']);
+		unset($_SESSION['favorites__season']);
+		unset($_SESSION['favorites__seria']);
 		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
 		header("Location: {$link}");
 	}
@@ -123,6 +125,38 @@
 	elseif($path == "insertCommentSeria"){
 		if(isset($_POST['id']) and isset($_POST['comment_text']) and isset($_SESSION['user'])){
 			Controller::insertComment__seria($_POST['id'], $_POST['comment_text']);
+		}
+		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
+		header("Location: {$link}");
+	}
+
+	//hideComment
+	elseif($path == "hideCommentItem"){
+		if(isset($_POST['comment_id']) and isset($_SESSION['user'])){
+			Controller::hideComment__item($_POST['comment_id']);
+		}
+		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
+		header("Location: {$link}");
+	}
+	elseif($path == "hideCommentSeria"){
+		if(isset($_POST['comment_id']) and isset($_SESSION['user'])){
+			Controller::hideComment__seria($_POST['comment_id']);
+		}
+		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
+		header("Location: {$link}");
+	}
+
+	//viewComment
+	elseif($path == "viewCommentItem"){
+		if(isset($_POST['comment_id']) and isset($_SESSION['user'])){
+			Controller::viewComment__item($_POST['comment_id']);
+		}
+		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
+		header("Location: {$link}");
+	}
+	elseif($path == "viewCommentSeria"){
+		if(isset($_POST['comment_id']) and isset($_SESSION['user'])){
+			Controller::viewComment__seria($_POST['comment_id']);
 		}
 		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
 		header("Location: {$link}");

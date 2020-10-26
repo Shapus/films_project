@@ -14,7 +14,7 @@
 <body>
     <header class="d-flex justify-content-center">  
         <div class="row container justify-content-between">                 
-            <div class="menu">
+            <div class="menu col-8">
                 <ul class="menu__list row justify-content-center align-items-center">
                     <div class="menu__dropbox">
                         <a class="menu__dropbtn-box" href="films">Фильмы</a>
@@ -41,7 +41,7 @@
                 </ul>
             
             </div>
-            <div class="search_bow row align-items-center">
+            <div class="d-flex align-items-center justify-content-center col-2">
                 <input class="search-input" type="text">
             </div>
             <?php
