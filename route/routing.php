@@ -1,167 +1,185 @@
 <?php
+
 	$host = explode('?', $_SERVER['REQUEST_URI'])[0];
 	$num = substr_count($host, '/');
 	$path = explode('/',$host)[$num];
 
+//============================================================================== START SITE
 	//index
 	if($num == 2 and ($path == "" or $path == "index" or $path == "index.php")){
 		$response = Controller::startSite();
 	}
-		
-	//items
+
+
+
+
+
+//============================================================================== FILMS & SERIALS
+	//all items
 	elseif($path == 'items'){
-		if(isset($_GET['category'])) $response = Controller::getItemsByCategory($_GET['category']);
-		elseif(isset($_GET['id'])) $response = Controller::getItemById($_GET['id']);
-		else $response = Controller::getAllItems();
+		if(isset($_GET['category'])){
+			$response = Controller::getItems(true, true, $_GET['category']);
+		}
+		else{
+			$response = Controller::getItems(true, true, -1);
+		}
 	}
-	
-		
 
 	//serials
-	elseif($path == 'serials'){
-		if(isset($_GET['category'])) $response = Controller::getSerialsByCategory($_GET['category']);
-		elseif(isset($_GET['id']) and isset($_GET['season']) and isset($_GET['seria'])) $response = Controller::getSeria($_GET['id'], $_GET['season'], $_GET['seria']);
-		elseif(isset($_GET['id']) and isset($_GET['season'])) $response = Controller::getSeriasBySerialSeason($_GET['id'], $_GET['season']);
-		elseif(isset($_GET['id'])) $response = Controller::getSeasonsBySerialId($_GET['id']);
-		else $response = Controller::getAllSerials();
+	elseif($path == 'serials' && !isset($_GET['id'])){
+		if(isset($_GET['category'])){
+			$response = Controller::getItems(false, true, $_GET['category']);
+		}
+		else{
+			$response = Controller::getItems(false, true, -1);
+		}
 	}
-
 
 	//films
-	elseif($path == 'films'){
-		if(isset($_GET['category'])) $response = Controller::getFilmsByCategory($_GET['category']);
-		elseif(isset($_GET['id'])) $response = Controller::getFilmById($_GET['id']);
-		else $response = Controller::getAllFilms();
-	}
-	
+	elseif($path == 'films' && !isset($_GET['id'])){
+		if(isset($_GET['category'])){
+			$response = Controller::getItems(true, false, $_GET['category']);
+		}
 
-	//registration&entring
+		else{
+			$response = Controller::getItems(true, false, -1);
+		}
+	}
+
+
+
+
+
+//============================================================================== SERIAL
+	elseif($path == 'serials' && isset($_GET['id']) and !isset($_GET['seria'])){
+		if(isset($_GET['season'])){
+			$response = Controller::getSeriasBySeason($_GET['season']);
+		}
+		else{
+			$response = Controller::getSeasonsBySerialId($_GET['id']);
+		}
+	}
+
+
+
+
+
+//============================================================================== VIDEOPLAYER
+	//seria videoplayer
+	elseif($path == 'serials' and isset($_GET['id']) and isset($_GET['season']) and isset($_GET['seria'])){
+		$seria_id = Serial::getSeriaId($_GET['season'], $_GET['seria']);
+		$response = Controller::getVideoplayer($seria_id);
+	}
+
+	//film videoplayer
+	elseif($path == 'films' and isset($_GET['id'])){
+		$response = Controller::getVideoplayer($_GET['id']);
+	}
+
+
+
+
+
+//============================================================================== REGISTRATION
+	//registration
 	elseif($path == 'registration'){
 		$response = Controller::registration();
 	}
+	//registration answer
 	elseif ($path == 'registrationAnswer') {
 		if(isset($_POST['submit']))
 			$response = Controller::registrationAnswer();
 		else
 			header("Location: registration");
 	}
+
+
+
+
+
+//============================================================================== ENTER
+	//enter
 	elseif($path == 'enter'){
 		$response = Controller::enter();
 	}
+
+	//enter answer
 	elseif($path == 'enterAnswer'){
 		if(isset($_POST['submit']))
 			$response = Controller::enterAnswer($_POST['email'], $_POST['password']);
 		else
 			header("Location: enter");
 	}
+
+	//logout
 	elseif($path == 'logout'){
 		unset($_SESSION['user']);
-		unset($_SESSION['favorites__item']);
-		unset($_SESSION['favorites__season']);
-		unset($_SESSION['favorites__seria']);
+		unset($_SESSION['favorites']);
 		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
 		header("Location: {$link}");
 	}
-	
-	//favorites item
-	elseif($path == "addFavoriteItem"){
-		if(isset($_POST['id']) and isset($_SESSION['user'])){
-			Controller::addFavorite__item($_POST['id']);
+
+
+
+
+
+//============================================================================== FAVORITE
+	//add favorite
+	elseif($path == "addFavorite"){
+		if(isset($_POST['id']) and isset($_POST['type']) and isset($_SESSION['user'])){
+			Controller::addFavorite($_POST['id'], $_POST['type']);
 		}
 		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
 		header("Location: {$link}");
 		
 	}
-	elseif($path == "deleteFavoriteItem"){
-		if(isset($_POST['id']) and isset($_SESSION['user'])){
-			Controller::deleteFavorite__item($_POST['id']);
+
+	//delete favorite
+	elseif($path == "deleteFavorite"){
+		if(isset($_POST['id']) and isset($_POST['type']) and isset($_SESSION['user'])){
+			Controller::deleteFavorite($_POST['id'], $_POST['type']);
 		}
 		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
 		header("Location: {$link}");
 	}
 
-	//favorite season
-	elseif($path == "addFavoriteSeason"){
-		if(isset($_POST['id']) and isset($_SESSION['user'])){
-			Controller::addFavorite__season($_POST['id']);
-		}
-		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
-		header("Location: {$link}");
-		
-	}
-	elseif($path == "deleteFavoriteSeason"){
-		if(isset($_POST['id']) and isset($_SESSION['user'])){
-			Controller::deleteFavorite__season($_POST['id']);
-		}
-		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
-		header("Location: {$link}");
-	}
 
-	//favorite seria
-	elseif($path == "addFavoriteSeria"){
-		if(isset($_POST['id']) and isset($_SESSION['user'])){
-			Controller::addFavorite__seria($_POST['id']);
-		}
-		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
-		header("Location: {$link}");
-		
-	}
-	elseif($path == "deleteFavoriteSeria"){
-		if(isset($_POST['id']) and isset($_SESSION['user'])){
-			Controller::deleteFavorite__seria($_POST['id']);
-		}
-		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
-		header("Location: {$link}");
-	}
 
+
+
+//============================================================================== COMMENTS
 	//insert comments
-	elseif($path == "insertCommentItem"){
-		if(isset($_POST['id']) and isset($_POST['comment_text']) and isset($_SESSION['user'])){
-			Controller::insertComment__item($_POST['id'], $_POST['comment_text']);
-		}
-		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
-		header("Location: {$link}");
-	}
-	elseif($path == "insertCommentSeria"){
-		if(isset($_POST['id']) and isset($_POST['comment_text']) and isset($_SESSION['user'])){
-			Controller::insertComment__seria($_POST['id'], $_POST['comment_text']);
+	elseif($path == "insertComment"){
+		if(isset($_POST['videoplayer_id']) and isset($_POST['comment_text']) and isset($_SESSION['user'])){
+			Controller::insertComment($_POST['videoplayer_id'], $_POST['comment_text']);
 		}
 		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
 		header("Location: {$link}");
 	}
 
 	//hideComment
-	elseif($path == "hideCommentItem"){
+	elseif($path == "hideComment"){
 		if(isset($_POST['comment_id']) and isset($_SESSION['user'])){
-			Controller::hideComment__item($_POST['comment_id']);
-		}
-		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
-		header("Location: {$link}");
-	}
-	elseif($path == "hideCommentSeria"){
-		if(isset($_POST['comment_id']) and isset($_SESSION['user'])){
-			Controller::hideComment__seria($_POST['comment_id']);
+			Controller::hideComment($_POST['comment_id']);
 		}
 		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
 		header("Location: {$link}");
 	}
 
-	//viewComment
-	elseif($path == "viewCommentItem"){
+	//showComment
+	elseif($path == "showComment"){
 		if(isset($_POST['comment_id']) and isset($_SESSION['user'])){
-			Controller::viewComment__item($_POST['comment_id']);
-		}
-		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
-		header("Location: {$link}");
-	}
-	elseif($path == "viewCommentSeria"){
-		if(isset($_POST['comment_id']) and isset($_SESSION['user'])){
-			Controller::viewComment__seria($_POST['comment_id']);
+			Controller::showComment($_POST['comment_id']);
 		}
 		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
 		header("Location: {$link}");
 	}
 
+
+
+
+
+//============================================================================== ERROR 404		
 	//error
 	else{
 		$response = Controller::error404($_SERVER['REQUEST_URI']);

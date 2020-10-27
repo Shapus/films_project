@@ -297,7 +297,8 @@ a:hover {
 
 		&__video {
             height: 100%;
-            width: 100%;
+            width: 100vw;
+            max-width: 1280px;
             border: none;
 		}
 }
@@ -347,8 +348,13 @@ a:hover {
     width: max-content;
     color: $color3;
     font-size: 1.5rem;
+    text-align: center;
     &:hover{
         color: $color5;
+    }
+    &--dark{
+        border: none;
+        color: grey;
     }
 }
 .video-player{
@@ -361,7 +367,7 @@ a:hover {
 .favorite-star{
     height:20px; 
     width:20px; 
-    margin-top:5px;
+    margin: 5px 5px 5px 0px;
     &--fill{
         &:hover{
             content:url("images/other/starEmpty.png");
@@ -371,6 +377,10 @@ a:hover {
         &:hover{
             content:url("images/other/star.png");
         }
+    }
+    &--big{
+        height:30px; 
+        width:30px; 
     }
 }
 .comment{
@@ -385,6 +395,9 @@ a:hover {
        justify-content: flex-start;
        padding: 10px;
    }
+}
+.item-img{
+    border: solid black 2px;
 }
 footer{
     height: 300px;

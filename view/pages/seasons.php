@@ -8,16 +8,16 @@
         <div class="row">
       
 <?php
-        foreach ($database_response as $season){          
+        foreach ($seasons as $season){          
 ?>
             <div class="col-md-2 flex-column mb-5" style="min-width:160px">
-                <a class="d-flex flex-wrap scrollLock" href="?id=<?php echo $season['serial_id'] ?>&season=<?php echo $season['id'] ?>">
+                <a class="d-flex flex-wrap scrollLock" href="?id=<?php echo $season['parent_id'] ?>&season=<?php echo $season['id'] ?>">
                     <img class="content__item-img" src="images/<?php echo $season['image'] ?>">    
                 </a>
 <?php            
-                View::favoriteStar__season($season['id']);
+                View::favoriteStar($season['id'], $season['type']);
 ?>        
-                <a class="d-flex flex-wrap color-4 p-0 m-0 scrollLock" href="?id=<?php echo $season['serial_id'] ?>&season=<?php echo $season['id'] ?>">
+                <a class="d-flex flex-wrap color-4 p-0 m-0 scrollLock" href="?id=<?php echo $season['parent_id'] ?>&season=<?php echo $season['id'] ?>">
                     <p class="color-4 p-0 m-0">Сезон <?php echo $season['number'] ?> </p>
                 </a>
             </div>

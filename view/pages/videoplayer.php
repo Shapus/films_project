@@ -4,31 +4,38 @@
 ?>    
         <div class="d-flex justify-content-center my-5">
             <div class="mr-5">
-                <img class="" style="width:400px; height:600px;" src="images/<?php echo $database_response['image'] ?>" alt="">
+                <img class="" style="width:400px; height:600px;" src="images/<?php echo $videoplayer['image'] ?>" alt="">
             </div>
             <div class="d-flex flex-column align-self-center">
                 <div class="d-flex">
-                    <h1 class=""> <?php echo $database_response['title'] ?> </h1>
+                    <h1 class=""> <?php echo $videoplayer['title'] ?> </h1>
 <?php                   
-                        View::favoriteButton($database_response['id']);
+                        View::favoriteButton($videoplayer['parent_id'], $videoplayer['type']);
 ?>                        
                 </div>
                 <div class="flex-column">
 <?php                
-                    for($i=0; $i<$database_response['rating'];$i++){
-                        echo "<img src=\"images/other/star.png\" style=\"height:20px; width:20px;\">";
+                    for($i=0; $i<$videoplayer['rating'];$i++){
+                        echo "<img src=\"images/other/star.png\" class=\"favorite-star\">";
                     }
-                    for($i=$database_response['rating']; $i<10;$i++){
-                        echo "<img src=\"images/other/starEmpty.png\" style=\"height:20px; width:20px;\">";
+                    for($i=$videoplayer['rating']; $i<10;$i++){
+                        echo "<img src=\"images/other/starEmpty.png\" class=\"favorite-star\">";
                     }
 ?>                    
                 </div>
-                <p class="mt-4"> <?php echo $database_response['year'] ?> </p>
-                <p class="mt-4"> <?php echo $database_response['description'] ?> </p>
-                <a class="back_btn" href="films">К списку фильмов</a>
+                <p class="mt-4"> <?php echo $videoplayer['year'] ?> </p>
+                <p class="mt-4"> <?php echo $videoplayer['description'] ?> </p>
+<?php
+                if($videoplayer['type'] == 1){
+                    echo "<a class=\"back_btn\" href=\"films\">К списку фильмов</a>";
+                }
+                else{
+                    echo "<a class=\"back_btn\" href=\"serials?id={$_GET['id']}&season={$_GET['season']}\">К списку сезонов</a>";
+                }
+?>                
             </div>
         </div>
-        <iframe class="video-player" src="<?php echo $database_response['source'] ?>"></iframe>
+        <iframe class="video-player" src="<?php echo $videoplayer['source'] ?>"></iframe>
         <div class="w-100 mt-5 d-flex flex-column">
 <?php                
             for($i=0; $i<count($comments);$i++){
@@ -36,8 +43,8 @@
             }
 ?>      
         </div>
-        <form class="w-100 mt-5 d-flex flex-column" action="insertCommentItem" method="POST">
-            <input type="hidden" name="id" value="<?php echo $database_response['id']; ?>">
+        <form class="w-100 mt-5 d-flex flex-column" action="insertComment" method="POST">
+            <input type="hidden" name="videoplayer_id" value="<?php echo $videoplayer['id']; ?>">
             <div class="row w-100 border d-flex">
                 <textarea class="form-control w-100" style="min-height:100px; resize: none;" type="text" name="comment_text" placeholder="Введите комментарий" maxLength=1000></textarea>
             </div>   

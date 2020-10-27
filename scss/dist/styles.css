@@ -255,7 +255,8 @@ a:hover {
 }
 .item-player__video {
   height: 100%;
-  width: 100%;
+  width: 100vw;
+  max-width: 1280px;
   border: none;
 }
 
@@ -284,15 +285,35 @@ a:hover {
   background-color: #111111;
   transition: background-color 0.2s linear, color 0.2s linear;
 }
+.form__submit--focused {
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 10px;
+  border: solid #111111 2px;
+  color: #fafafa;
+  background-color: #111111;
+  cursor: pointer;
+}
+.form__submit--focused:hover {
+  color: black;
+  background-color: #fafafa;
+  transition: background-color 0.2s linear, color 0.2s linear;
+}
 
 .back_btn {
   justify-self: self-start;
   width: max-content;
   color: #adaaa9;
   font-size: 1.5rem;
+  text-align: center;
 }
 .back_btn:hover {
   color: #111111;
+}
+.back_btn--dark {
+  border: none;
+  color: grey;
 }
 
 .video-player {
@@ -303,13 +324,17 @@ a:hover {
 .favorite-star {
   height: 20px;
   width: 20px;
-  margin-top: 5px;
+  margin: 5px 5px 5px 0px;
 }
 .favorite-star--fill:hover {
   content: url("images/other/starEmpty.png");
 }
 .favorite-star--empty:hover {
   content: url("images/other/star.png");
+}
+.favorite-star--big {
+  height: 30px;
+  width: 30px;
 }
 
 .comment {
@@ -324,6 +349,10 @@ a:hover {
   display: flex;
   justify-content: flex-start;
   padding: 10px;
+}
+
+.item-img {
+  border: solid black 2px;
 }
 
 footer {

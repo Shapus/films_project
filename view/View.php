@@ -7,87 +7,41 @@ class View{
     public static function viewHeaderEnter(){
         if(isset($_SESSION['user']) and !is_null($_SESSION['user'])){
             echo "
-            <div class=\"registration row align-items-center\">
                 {$_SESSION['user']['name']}
                 <a href=\"logout\" class=\"clearLock\">Выйти</a>
-            </div>
             ";
         }
         else{
             echo "
-            <div class=\"registration row align-items-center\">
                 <a href=\"enter\" class=\"clearLock\">Войти</a>
                 &nbsp;/&nbsp;
                 <a href=\"registration\" class=\"clearlLock\">Зарегистрироваться</a>
-            </div>
             ";
         }
     }
 
 
     //favorite star item
-    public static function favoriteStar__item($id){
+    public static function favoriteStar($id, $type){
         $favoriteItem = array(
+            'user_id' => isset($_SESSION['user']['id'])?$_SESSION['user']['id']:NULL,
             'item_id' => $id,
+            'type' => $type
         );
-        if(isset($_SESSION['favorites__item']) and in_array($favoriteItem, $_SESSION['favorites__item'])){
+        if(isset($_SESSION['favorites']) and in_array($favoriteItem, $_SESSION['favorites'])){
             echo "
-                <form role=\"form\" method=\"POST\" action=\"deleteFavoriteItem\">
+                <form role=\"form\" method=\"POST\" action=\"deleteFavorite\">
                     <input type=\"hidden\" name=\"id\" value=\"{$id}\">
+                    <input type=\"hidden\" name=\"type\" value=\"{$type}\">
                     <input type=\"image\" src=\"images/other/star.png\" name=\"submit\" class=\"favorite-star favorite-star--fill scrollLock\">
                 </form>
                 ";
         }
         else{
             echo "
-                <form role=\"form\" method=\"POST\" action=\"addFavoriteItem\">
+                <form role=\"form\" method=\"POST\" action=\"addFavorite\">
                     <input type=\"hidden\" name=\"id\" value=\"{$id}\">
-                    <input type=\"image\" src=\"images/other/starEmpty.png\" name=\"submit\" class=\"favorite-star favorite-star--empty scrollLock\">
-                </form>
-                ";
-        }
-    }
-
-    //favorite star season
-    public static function favoriteStar__season($id){
-            $favoriteItem = array(
-                'season_id' => $id,
-            );
-            if(isset($_SESSION['favorites__season']) and in_array($favoriteItem, $_SESSION['favorites__season'])){
-                echo "
-                    <form role=\"form\" method=\"POST\" action=\"deleteFavoriteSeason\">
-                        <input type=\"hidden\" name=\"id\" value=\"{$id}\">
-                        <input type=\"image\" src=\"images/other/star.png\" name=\"submit\" class=\"favorite-star favorite-star--fill scrollLock\">
-                    </form>
-                    ";
-            }
-            else{
-                echo "
-                    <form role=\"form\" method=\"POST\" action=\"addFavoriteSeason\">
-                        <input type=\"hidden\" name=\"id\" value=\"{$id}\">
-                        <input type=\"image\" src=\"images/other/starEmpty.png\" name=\"submit\" class=\"favorite-star favorite-star--empty scrollLock\">
-                    </form>
-                    ";
-            }
-    }
-
-    //favorite star seria
-    public static function favoriteStar__seria($id){
-        $favoriteItem = array(
-            'seria_id' => $id,
-        );
-        if(isset($_SESSION['favorites__seria']) and in_array($favoriteItem, $_SESSION['favorites__seria'])){
-            echo "
-                <form role=\"form\" method=\"POST\" action=\"deleteFavoriteSeria\">
-                    <input type=\"hidden\" name=\"id\" value=\"{$id}\">
-                    <input type=\"image\" src=\"images/other/star.png\" name=\"submit\" class=\"favorite-star favorite-star--fill scrollLock\">
-                </form>
-                ";
-        }
-        else{
-            echo "
-                <form role=\"form\" method=\"POST\" action=\"addFavoriteSeria\">
-                    <input type=\"hidden\" name=\"id\" value=\"{$id}\">
+                    <input type=\"hidden\" name=\"type\" value=\"{$type}\">
                     <input type=\"image\" src=\"images/other/starEmpty.png\" name=\"submit\" class=\"favorite-star favorite-star--empty scrollLock\">
                 </form>
                 ";
@@ -95,7 +49,7 @@ class View{
     }
 
     //comment
-    public static function comment($id, $user_id, $user_name, $date, $text, $hidden, $type){
+    public static function comment($id, $user_id, $user_name, $date, $text, $hidden){
         if($hidden){
             echo "
             <div class=\"d-flex comment\">
@@ -106,9 +60,9 @@ class View{
             ";
             if(isset($_SESSION['user']) && $user_id == $_SESSION['user']['id']){
                 echo "
-                    <form method=\"POST\" action=\"viewComment{$type}\">
+                    <form method=\"POST\" action=\"showComment\">
                         <input type=\"hidden\" value=\"{$id}\" name=\"comment_id\">
-                        <input type=\"submit\" class=\"scrollLock\" style=\"margin: auto; cursor:pointer\" value=\"Показать\">
+                        <input type=\"submit\" class=\"scrollLock back_btn back_btn--dark bg-3\" style=\"margin: auto; cursor:pointer\" value=\"Показать\">
                     </form>
                 ";
             }
@@ -131,9 +85,9 @@ class View{
             ";
             if(isset($_SESSION['user']) && $user_id == $_SESSION['user']['id']){
                 echo "
-                    <form method=\"POST\" action=\"hideComment{$type}\">
+                    <form method=\"POST\" action=\"hideComment\">
                         <input type=\"hidden\" value=\"{$id}\" name=\"comment_id\">
-                        <input type=\"submit\" class=\"color-2 scrollLock\" style=\"margin: auto; cursor:pointer\" value=\"Скрыть\">
+                        <input type=\"submit\" class=\"scrollLock back_btn back_btn--dark bg-3\" style=\"margin: auto; cursor:pointer\" value=\"Скрыть\">
                     </form>
                 ";
             }
@@ -148,35 +102,36 @@ class View{
         }
     }
 
-    public static function favoriteButton($id){
+    public static function favoriteButton($id, $type){
         $favoriteItem = array(
+            'user_id' => isset($_SESSION['user']['id'])?$_SESSION['user']['id']:NULL,
             'item_id' => $id,
+            'type' => $type
         );
-        if(isset($_SESSION['favorites__item']) and in_array($favoriteItem, $_SESSION['favorites__item'])){
+        if(isset($_SESSION['favorites']) and in_array($favoriteItem, $_SESSION['favorites'])){
             echo "
-                <div class=\"d-flex justify-content-center align-content-center ml-3 form__submit--focused\">
-                    <p class=\"mr-3 mb-0 d-flex justify-self-center align-self-center\" style=\"vertical-align: center;\">Добавить в избранное</p>                
+            <form role=\"form\" method=\"POST\" action=\"deleteFavorite\">
+                <input type=\"hidden\" name=\"id\" value=\"{$id}\">
+                <input type=\"hidden\" name=\"type\" value=\"{$type}\">
+                <button class=\"d-flex justify-content-center align-content-center ml-3 form__submit--focused\" onClick=\"javascript:this.form.submit();\">
+                    <p class=\"mr-3 mb-0 d-flex justify-self-center align-self-center\" style=\"vertical-align: center;\">В избранном</p>   
+                    <img src=\"images/other/star.png\" class=\"favorite-star favorite-star--big scrollLock\">
+                </button>                          
+            </form>
             ";
-            echo "
-                <form role=\"form\" method=\"POST\" action=\"deleteFavoriteItem\">
-                    <input type=\"hidden\" name=\"id\" value=\"{$id}\">
-                    <input type=\"image\" src=\"images/other/star.png\" name=\"submit\" class=\"favorite-star favorite-star--big favorite-star--fill scrollLock\">
-                </form>
-                ";
         }
         else{
             echo "
-                <div class=\"d-flex justify-content-center align-content-center ml-3 form__submit\">
-                    <p class=\"mr-3 mb-0 d-flex justify-self-center align-self-center\" style=\"vertical-align: center;\">Добавить в избранное</p>                
+            <form role=\"form\" method=\"POST\" action=\"addFavorite\">
+                <input type=\"hidden\" name=\"id\" value=\"{$id}\">
+                <input type=\"hidden\" name=\"type\" value=\"{$type}\">
+                <button class=\"d-flex justify-content-center align-content-center ml-3 form__submit\" onClick=\"javascript:this.form.submit();\">
+                    <p class=\"mr-3 mb-0 d-flex justify-self-center align-self-center\" style=\"vertical-align: center;\">Добавить в избранное</p>  
+                    <img src=\"images/other/starEmpty.png\" class=\"favorite-star favorite-star--big scrollLock\">
+                </button>                  
+            </form>
             ";
-            echo "
-                <form role=\"form\" method=\"POST\" action=\"addFavoriteItem\">
-                    <input type=\"hidden\" name=\"id\" value=\"{$id}\">
-                    <input type=\"image\" src=\"images/other/starEmpty.png\" name=\"submit\" class=\"favorite-star favorite-star--big favorite-star--empty scrollLock\">
-                </form>
-                ";
         }
-        echo "</div>";
     }
 }
 ?>

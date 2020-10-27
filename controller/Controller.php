@@ -1,93 +1,99 @@
 <?php
 class Controller{
 
-
-
-	//items
-	public static function getAllItems(){	
+//============================================================================== START SITE
+	//start site
+	public static function startSite(){
 		$categories = Category::getAllCategories();	
-		$database_response_films = Film::getAllFilms();
-		$database_response_serials = Serial::getAllSerials();
+		$films = Film::getAllFilms();
+		$serials = Serial::getAllSerials();		
 		include_once "view/pages/films_and_serials.php";
 	}
-	public static function getItemById($id){	
-		$database_response = Item::getItemById($id);
-		if($database_response['type'] == 'serial'){
-			$database_response = Serial::getSerialById($id);
-			include_once "view/pages/seasons.php";
+
+
+
+
+
+//============================================================================== FILMS & SERIALS
+	//get films and serials
+	public static function getItems($getFilms, $getSerials, $category_id){	
+		$categories = Category::getAllCategories();
+		if($getFilms){	
+			if($category_id != -1){
+				$films = Film::getFilmsByCategory($category_id);		
+			}
+			else{
+				$films = Film::getAllFilms();
+			}
 		}
-		elseif($database_response['type'] == 'film'){
-			$database_response = Film::getItemById($id);
-			$comments = Comment::getComments__item($id);
-			include_once "view/pages/playerFilm.php";
+		if($getSerials){
+			if($category_id != -1){
+				$serials = Serial::getSerialsByCategory($category_id);		
+			}
+			else{
+				$serials = Serial::getAllSerials();
+			}
+			
 		}
-	}
-	public static function getItemsByCategory($category_id){	
-		$categories = Category::getAllCategories();	
-		$database_response_films = Film::getFilmsByCategory($category_id);	
-		$database_response_serials = Serial::getSerialsByCategory($category_id);
-		include_once "view/pages/films_and_serials.php";		
-	}
-
-
-
-	//serials
-	public static function getAllSerials(){
-		$categories = Category::getAllCategories();	
-		$database_response_serials = Serial::getAllSerials();		
 		include_once "view/pages/films_and_serials.php";
 	}
+
+
+
+
+
+//============================================================================== SERIAL
+	//seasons in serial
 	public static function getSeasonsBySerialId($id){	
-		$database_response = Serial::getSeasonsBySerialId($id);
+		$seasons = Serial::getSeasonsBySerialId($id);
 		include_once "view/pages/seasons.php";
 	}
-	public static function getSerialsByCategory($category_id){	
-		$categories = Category::getAllCategories();	
-		$database_response_serials = Serial::getSerialsByCategory($category_id);
-		include_once "view/pages/films_and_serials.php";
-	}
-	public static function getSeriasBySerialSeason($serial_id, $season_number){
-		$database_response = Serial::getSeriasBySerialSeason($serial_id, $season_number);
+	
+	//serias in season
+	public static function getSeriasBySeason($season_id){
+		$serias = Serial::getSeriasBySeason($season_id);
 		include_once "view/pages/serias.php";
 	}
-	public static function getSeria($serial_id, $season_number, $seria_number){
-		$database_response = Serial::getSeria($serial_id, $season_number, $seria_number);
-		$comments = Comment::getComments__seria($database_response['id']);
-		include_once "view/pages/playerSeria.php";
+
+
+
+
+
+//============================================================================== VIDEOPLAYER
+	//get videoplayer
+	public static function getVideoplayer($item_id){
+		$videoplayer = Videoplayer::getVideoplayer($item_id);
+		$comments = Comment::getComments($videoplayer['id']);
+		include_once "view/pages/videoplayer.php";
 	}
 
 
 
-	//films
-	public static function getAllFilms(){
-		$categories = Category::getAllCategories();	
-		$database_response_films = Film::getAllFilms();
-		include_once "view/pages/films_and_serials.php";
-	} 
-	public static function getFilmById($id){
-		$database_response = Film::getFilmById($id);	
-		$comments = Comment::getComments__item($id);
-		include_once "view/pages/playerFilm.php";
-	} 
-	public static function getFilmsByCategory($category_id){	
-		$categories = Category::getAllCategories();	
-		$database_response_films = Film::getFilmsByCategory($category_id);
-		include_once "view/pages/films_and_serials.php";
-	}
 
+
+//============================================================================== REGISTRATION
 	//registration
 	public static function registration(){
 		include_once "view/pages/registration.php";
 	}
+
+	//registration answer
 	public static function registrationAnswer(){
 		$control = Registration::registrationUser();
 		include_once "view/pages/registrationAnswer.php";
 	}
 
-	//entring
+
+
+
+
+//============================================================================== ENTER
+	//enter
 	public static function enter(){
 		include_once "view/pages/enter.php";
 	}
+
+	//enter answer
 	public static function enterAnswer($email, $password){
 		$_SESSION['user'] = null;
 		$getPass = User::getPasswordHash($email);
@@ -95,97 +101,66 @@ class Controller{
 			$passwordHash = $getPass['password'];
 			if(password_verify($password, $passwordHash)){
 				$_SESSION['user'] = User::getUser($email);
-				$_SESSION['favorites__item'] = User::getFavorites__item($email);
-				$_SESSION['favorites__season'] = User::getFavorites__season($email);
-				$_SESSION['favorites__seria'] = User::getFavorites__seria($email);
+				$_SESSION['favorites'] = User::getFavorites($email);
 
 			}
 		}
 		include_once "view/pages/enterAnswer.php";
 	}
 
-	//favorite items
-	public static function addFavorite__item($id){
+
+
+
+
+//============================================================================== FAVORITE
+	//add favorite
+	public static function addFavorite($id, $type){
 		if(isset($_SESSION['user'])){
-			User::addFavorite__item($id);
-			$_SESSION['favorites__item'] = User::getFavorites__item();
-		}
-	}
-	public static function deleteFavorite__item($id){
-		if(isset($_SESSION['user'])){
-			User::deleteFavorite__item($id);
-			$_SESSION['favorites__item'] = User::getFavorites__item();
-		}
-	}
-	//favorite season
-	public static function addFavorite__season($id){
-		if(isset($_SESSION['user'])){
-			User::addFavorite__season($id);
-			$_SESSION['favorites__season'] = User::getFavorites__season();
-		}
-	}
-	public static function deleteFavorite__season($id){
-		if(isset($_SESSION['user'])){
-			User::deleteFavorite__season($id);
-			$_SESSION['favorites__season'] = User::getFavorites__Season();
-		}
-	}
-	//favorite seria
-	public static function addFavorite__seria($id){
-		if(isset($_SESSION['user'])){
-			User::addFavorite__seria($id);
-			$_SESSION['favorites__seria'] = User::getFavorites__seria();
-		}
-	}
-	public static function deleteFavorite__seria($id){
-		if(isset($_SESSION['user'])){
-			User::deleteFavorite__seria($id);
-			$_SESSION['favorites__seria'] = User::getFavorites__seria();
+			User::addFavorite($id, $type);
+			$_SESSION['favorites'] = User::getFavorites();
 		}
 	}
 
-	//insert comment
-	public static function insertComment__item($item_id, $comment_text){
-		if(!empty($comment_text)){
-			Comment::insertComment__item($item_id, $comment_text);
+	//delete favorite
+	public static function deleteFavorite($id, $type){
+		if(isset($_SESSION['user'])){
+			User::deleteFavorite($id, $type);
+			$_SESSION['favorites'] = User::getFavorites();
 		}
 	}
-	public static function insertComment__seria($seria_id, $comment_text){
+
+
+
+
+
+
+//============================================================================== COMMENTS
+	//insert comment
+	public static function insertComment($videoplayer_id, $comment_text){
 		if(!empty($comment_text)){
-			Comment::insertComment__seria($seria_id, $comment_text);
+			Comment::insertComment($videoplayer_id, $comment_text);
 		}
 	}
 
 	//hide comment
-	public static function hideComment__item($comment_id){
-		Comment::hideComment__item($comment_id);
-	}
-	public static function hideComment__seria($comment_id){
-		Comment::hideComment__seria($comment_id);
+	public static function hideComment($comment_id){
+		Comment::hideComment($comment_id);
 	}
 
-	//view comment
-	public static function viewComment__item($comment_id){
-		Comment::viewComment__item($comment_id);
-	}
-	public static function viewComment__seria($comment_id){
-		Comment::viewComment__seria($comment_id);
+	//show comment
+	public static function showComment($comment_id){
+		Comment::showComment($comment_id);
 	}
 
-	//other
-	public static function getItemsByFilter(){
-		$database_response = Items::getItemsByFilter();
-		include_once "view/pages/films_and_serials.php";
-	}
+
+
+
+
+//============================================================================== ERROR 404
+	//page not found
 	public static function error404($str){
 		$path = $str;
 		include_once "view/pages/error404.php";
-	}
-	public static function startSite(){
-		$categories = Category::getAllCategories();	
-		$database_response_films = Film::getAllFilms();
-		$database_response_serials = Serial::getAllSerials();		
-		include_once "view/pages/films_and_serials.php";
 	}
 }
 ?>

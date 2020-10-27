@@ -13,9 +13,9 @@
 </head>
 <body>
     <header class="d-flex justify-content-center">  
-        <div class="row container justify-content-between">                 
-            <div class="menu col-8">
-                <ul class="menu__list row justify-content-center align-items-center">
+        <div class="row d-flex container">                 
+            <div class="col-6">
+                <ul class="d-flex align-items-center">
                     <div class="menu__dropbox">
                         <a class="menu__dropbtn-box" href="films">Фильмы</a>
                         <ul class="menu__drop-content">
@@ -27,9 +27,9 @@
                     <div class="menu__dropbox">
                         <a class="menu__dropbtn-box" href="serials">Сериалы</a>
                         <ul class="menu__drop-content">
-                            <a class="menu__item col" href="">series_genre_1</a>
-                            <a class="menu__item col" href="">series_genre_2</a>
-                            <a class="menu__item col" href="">series_genre_3</a>
+                            <a class="menu__item" href="">series_genre_1</a>
+                            <a class="menu__item" href="">series_genre_2</a>
+                            <a class="menu__item" href="">series_genre_3</a>
                         </ul>
                     </div> 
                     <div class="menu__dropbox">
@@ -41,20 +41,22 @@
                 </ul>
             
             </div>
-            <div class="d-flex align-items-center justify-content-center col-2">
+            <div class="col-3 d-flex align-items-center justify-content-center">
                 <input class="search-input" type="text">
             </div>
-            <?php
+            <div class="col-3 d-flex align-items-center">
+<?php
                 View::viewHeaderEnter();
-            ?>
+?>
+            </div>
         </div>
     </header>
     <main class="row justify-content-center">                             
             <section class="container d-flex flex-column align-items-center">
-                <?php 
+ <?php 
                     if(isset($content)) echo $content;
                     else echo "<h1>Ups, no content!</h1>";
-                ?>
+?>
             </section>  
     </main>
     <footer class="">

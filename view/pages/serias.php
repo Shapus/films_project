@@ -8,7 +8,7 @@
         <div class="row">
       
 <?php
-        foreach ($database_response as $seria){    
+        foreach ($serias as $seria){    
             $seria_title = $seria['title']!=null ? $seria['title']:"Серия {$seria['number']}";      
 ?>
             <div class="col-md-2 flex-column mb-5" style="min-width:160px">
@@ -16,7 +16,7 @@
                     <img class="content__item-img" src="images/<?php echo $seria['image'] ?>">    
                 </a>
 <?php            
-                View::favoriteStar__seria($seria['id']);
+                View::favoriteStar($seria['id'], $seria['type']);
 ?>        
                 <a class="d-flex flex-wrap color-4 p-0 m-0 scrollLock" href="<?php echo $_SERVER['REQUEST_URI'] ?>&seria=<?php echo $seria['number'] ?>">
                     <p class="color-4 p-0 m-0"><?php echo $seria_title ?> </p>

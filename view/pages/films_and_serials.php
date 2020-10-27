@@ -1,6 +1,11 @@
 <?php 
-    if(!isset($database_response_films) || count($database_response_films) == 0) $database_response_films = null;
-    if(!isset($database_response_serials) || count($database_response_serials) == 0) $database_response_serials = null;
+    if(!isset($films) or count($films) == 0){
+        $films = null;
+    }
+    if(!isset($serials) or count($serials) == 0){
+        $serials = null;
+    }
+
     $host = explode('?', $_SERVER['REQUEST_URI'])[0];
     $num = substr_count($host, '/');
     $path = explode('/',$host)[$num];
@@ -34,26 +39,28 @@
 <?php
 
 //---------------------------------------------------------------FILMS
-    if(!is_null($database_response_films)){
+    if(!is_null($films)){
         $count_items = 0;
 ?>        
         <div class="container">
             <h2 class="align-self-start">Фильмы</h2> 
             <div class="row">
 <?php            
-        foreach ($database_response_films as $item){                  
+        foreach ($films as $item){                  
 ?>
-            <div class="col-md-2 flex-column mb-5" style="min-width:160px">
+            <div class="col-md-2 flex-column mb-5" style="min-width:160px;">
                 <a class="d-flex flex-wrap scrollLock" href="films?id=<?php echo $item['id'] ?>">
                     <img class="content__item-img" src="images/<?php echo $item['image'] ?>">    
                 </a>
+                <div>
 <?php            
-                View::favoriteStar__item($item['id']);
+                    View::favoriteStar($item['id'], $item['type']);
 ?>        
-                <a class="d-flex flex-wrap color-4 p-0 m-0 scrollLock" href="films?id=<?php echo $item['id'] ?>">
-                    <p class="color-4 p-0 m-0"><?php echo $item['title'] ?></p>
-                    <p class="color-3 p-0 m-0"><?php echo $item['year'] ?>, <?php echo $categories[$item['category_id']-1]['name'] ?></p>
-                </a>
+                    <a class="d-flex flex-wrap color-4 p-0 m-0 scrollLock" href="films?id=<?php echo $item['id'] ?>">
+                        <p class="color-4 p-0 m-0"><?php echo $item['title'] ?></p>
+                        <p class="color-3 p-0 m-0"><?php echo $item['year'] ?>, <?php echo $categories[$item['category_id']-1]['name'] ?></p>
+                    </a>
+                </div>
             </div>
 <?php
                 $count_items++;
@@ -68,21 +75,21 @@
 <?php            
     }
 //---------------------------------------------------------------SERIALS    
-    if(!is_null($database_response_serials)){
+    if(!is_null($serials)){
         $count_items = 0;
 ?>       
         <div class="container">
             <h2 class="align-self-start">Сериалы</h2> 
             <div class="row">
 <?php                      
-            foreach ($database_response_serials as $item){  
+            foreach ($serials as $item){  
                 ?>
                 <div class="col-md-2 flex-column mb-5" style="min-width:160px">
                     <a class="d-flex flex-wrap scrollLock" href="serials?id=<?php echo $item['id'] ?>">
                         <img class="content__item-img" src="images/<?php echo $item['image'] ?>">    
                     </a>
     <?php            
-                    View::favoriteStar__item($item['id']);
+                    View::favoriteStar($item['id'], $item['type']);
     ?>        
                     <a class="d-flex flex-wrap color-4 p-0 m-0 scrollLock" href="serials?id=<?php echo $item['id'] ?>">
                         <p class="color-4 p-0 m-0"><?php echo $item['title'] ?></p>
