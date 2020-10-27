@@ -5,8 +5,11 @@
 	$path = explode('/',$host)[$num];
 
 //============================================================================== START SITE
+	if($num > 2){
+		$response = Controller::error404();
+	}
 	//index
-	if($num == 2 and ($path == "" or $path == "index" or $path == "index.php")){
+	else if(($path == "" or $path == "index" or $path == "index.php")){
 		$response = Controller::startSite();
 	}
 
@@ -53,7 +56,8 @@
 //============================================================================== SERIAL
 	elseif($path == 'serials' && isset($_GET['id']) and !isset($_GET['seria'])){
 		if(isset($_GET['season'])){
-			$response = Controller::getSeriasBySeason($_GET['season']);
+			$season_id = Serial::getSeasonId($_GET['id'], $_GET['season']);
+			$response = Controller::getSeriasBySeason($season_id);
 		}
 		else{
 			$response = Controller::getSeasonsBySerialId($_GET['id']);
@@ -67,7 +71,8 @@
 //============================================================================== VIDEOPLAYER
 	//seria videoplayer
 	elseif($path == 'serials' and isset($_GET['id']) and isset($_GET['season']) and isset($_GET['seria'])){
-		$seria_id = Serial::getSeriaId($_GET['season'], $_GET['seria']);
+		$season_id = Serial::getSeasonId($_GET['id'], $_GET['season']);
+		$seria_id = Serial::getSeriaId($season_id, $_GET['seria']);
 		$response = Controller::getVideoplayer($seria_id);
 	}
 
@@ -182,6 +187,6 @@
 //============================================================================== ERROR 404		
 	//error
 	else{
-		$response = Controller::error404($_SERVER['REQUEST_URI']);
+		$response = Controller::error404();
 	}
 ?>

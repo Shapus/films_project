@@ -51,21 +51,16 @@ class Serial{
         $query = "SELECT * FROM item WHERE parent_id={$season_id} and type=4";
         $serias = $database->getAll($query);
         for($i=0;$i<count($serias);$i++) {
-            $gotParentSeason = false;
-            $gotParentSerial = false;
-            $image;
-            if(!$gotParentSeason and is_null($serias[$i]['image']) or empty($serias[$i]['image'])){
+            if(is_null($serias[$i]['image']) or empty($serias[$i]['image'])){
                 $query = "SELECT image, parent_id FROM item WHERE id={$season_id} and type=3";
                 $parent = $database->getOne($query);
-                $gotParentSeason = true;
+                $serias[$i]['image'] = $parent['image'];
             }
-            if(!$gotParentSerial and is_null($parent['image']) or empty($parent['image'])){
+            if(is_null($serias[$i]['image']) or empty($serias[$i]['image'])){
                 $query = "SELECT image FROM item WHERE id={$parent['parent_id']} and type=2";
                 $parent = $database->getOne($query);
-                $gotParentSeason = true;
+                $serias[$i]['image'] = $parent['image'];
             }
-            $image = $parent['image'];
-            $serias[$i]['image'] = $image;
         }
         return $serias;
     }
@@ -74,7 +69,29 @@ class Serial{
     public static function getSeriaId($season_id, $seria_number){
         $query = "SELECT id FROM item WHERE parent_id={$season_id} and number={$seria_number} and type=4";
         $database = new Database();
-        return $database->getOne($query)['id'];
+        $seria = $database->getOne($query);
+        if($seria){
+            return $seria['id'];
+        }
+        return -1;
+    }
+
+    //get season id by serial and season number
+    public static function getSeasonId($serial_id, $season_number){
+        $query = "SELECT id FROM item WHERE parent_id={$serial_id} and number={$season_number} and type=3";
+        $database = new Database();
+        $season = $database->getOne($query);
+        if($season){
+            return $season['id'];
+        }
+        return -1;
+    }
+
+    //number of serias
+    public static function getSeriasCount($season_id){
+        $query = "SELECT count(*) FROM item WHERE parent_id={$season_id} and type=4";
+        $database = new Database();
+        return $database->getOne($query);
     }
 }
 

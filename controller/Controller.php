@@ -46,12 +46,18 @@ class Controller{
 	//seasons in serial
 	public static function getSeasonsBySerialId($id){	
 		$seasons = Serial::getSeasonsBySerialId($id);
+		if(!$seasons){
+			header("Location: error404");
+		}
 		include_once "view/pages/seasons.php";
 	}
 	
 	//serias in season
 	public static function getSeriasBySeason($season_id){
 		$serias = Serial::getSeriasBySeason($season_id);
+		if(!$serias){
+			header("Location: error404");
+		}
 		include_once "view/pages/serias.php";
 	}
 
@@ -63,6 +69,13 @@ class Controller{
 	//get videoplayer
 	public static function getVideoplayer($item_id){
 		$videoplayer = Videoplayer::getVideoplayer($item_id);
+		if(!$videoplayer){
+			header("Location: error404");
+		}
+		if(isset($_GET['id']) and isset($_GET['season'])){
+			$season_id = Serial::getSeasonId($_GET['id'], $_GET['season']);
+			$seriasCount = Serial::getSeriasCount($season_id);
+		}
 		$comments = Comment::getComments($videoplayer['id']);
 		include_once "view/pages/videoplayer.php";
 	}
@@ -158,8 +171,7 @@ class Controller{
 
 //============================================================================== ERROR 404
 	//page not found
-	public static function error404($str){
-		$path = $str;
+	public static function error404(){
 		include_once "view/pages/error404.php";
 	}
 }

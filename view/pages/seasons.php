@@ -11,7 +11,7 @@
         foreach ($seasons as $season){          
 ?>
             <div class="col-md-2 flex-column mb-5" style="min-width:160px">
-                <a class="d-flex flex-wrap scrollLock" href="?id=<?php echo $season['parent_id'] ?>&season=<?php echo $season['id'] ?>">
+                <a class="d-flex flex-wrap scrollLock" href="?id=<?php echo $season['parent_id'] ?>&season=<?php echo $season['number'] ?>">
                     <img class="content__item-img" src="images/<?php echo $season['image'] ?>">    
                 </a>
 <?php            

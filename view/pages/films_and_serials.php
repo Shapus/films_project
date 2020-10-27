@@ -48,7 +48,7 @@
 <?php            
         foreach ($films as $item){                  
 ?>
-            <div class="col-md-2 flex-column mb-5" style="min-width:160px;">
+            <div class="col-2 flex-column mb-5" style="min-width:160px;">
                 <a class="d-flex flex-wrap scrollLock" href="films?id=<?php echo $item['id'] ?>">
                     <img class="content__item-img" src="images/<?php echo $item['image'] ?>">    
                 </a>
@@ -84,7 +84,7 @@
 <?php                      
             foreach ($serials as $item){  
                 ?>
-                <div class="col-md-2 flex-column mb-5" style="min-width:160px">
+                <div class="col-2 flex-column mb-5" style="min-width:160px">
                     <a class="d-flex flex-wrap scrollLock" href="serials?id=<?php echo $item['id'] ?>">
                         <img class="content__item-img" src="images/<?php echo $item['image'] ?>">    
                     </a>

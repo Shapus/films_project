@@ -113,9 +113,9 @@ class View{
             <form role=\"form\" method=\"POST\" action=\"deleteFavorite\">
                 <input type=\"hidden\" name=\"id\" value=\"{$id}\">
                 <input type=\"hidden\" name=\"type\" value=\"{$type}\">
-                <button class=\"d-flex justify-content-center align-content-center ml-3 form__submit--focused\" onClick=\"javascript:this.form.submit();\">
+                <button class=\"d-flex justify-content-center align-content-center ml-3 form__submit--focused scrollLock\" onClick=\"javascript:this.form.submit();\">
                     <p class=\"mr-3 mb-0 d-flex justify-self-center align-self-center\" style=\"vertical-align: center;\">В избранном</p>   
-                    <img src=\"images/other/star.png\" class=\"favorite-star favorite-star--big scrollLock\">
+                    <img src=\"images/other/star.png\" class=\"favorite-star favorite-star--big\">
                 </button>                          
             </form>
             ";
@@ -125,9 +125,9 @@ class View{
             <form role=\"form\" method=\"POST\" action=\"addFavorite\">
                 <input type=\"hidden\" name=\"id\" value=\"{$id}\">
                 <input type=\"hidden\" name=\"type\" value=\"{$type}\">
-                <button class=\"d-flex justify-content-center align-content-center ml-3 form__submit\" onClick=\"javascript:this.form.submit();\">
+                <button class=\"d-flex justify-content-center align-content-center ml-3 form__submit scrollLock\" onClick=\"javascript:this.form.submit();\">
                     <p class=\"mr-3 mb-0 d-flex justify-self-center align-self-center\" style=\"vertical-align: center;\">Добавить в избранное</p>  
-                    <img src=\"images/other/starEmpty.png\" class=\"favorite-star favorite-star--big scrollLock\">
+                    <img src=\"images/other/starEmpty.png\" class=\"favorite-star favorite-star--big\">
                 </button>                  
             </form>
             ";

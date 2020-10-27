@@ -4,7 +4,7 @@ class Videoplayer{
     //get data for correct videoplayer page view (needed data stores in VIDEOPLAYER and ITEM table, necessary get it from both tables)
     public static function getVideoplayer($item_id){
         $database = new Database();
-        $out;
+        $out = array();
         //get data from videoplayer
         $query = "SELECT * FROM videoplayer WHERE parent_id={$item_id}";
         $videoplayer = $database->getOne($query);
@@ -28,13 +28,11 @@ class Videoplayer{
                     $out['title'] = $parent['title'];
                 }
             }
-            if(is_null($videoplayer['image']) or empty($videoplayer['image'])){
+            $out['image'] = $parent['image'];
+            if(is_null($parent['image']) or empty($parent['image'])){
+                $query = "SELECT image FROM item WHERE id={$parent['parent_id']}";
+                $parent = $database->getOne($query);
                 $out['image'] = $parent['image'];
-                if(is_null($parent['image']) or empty($parent['image'])){
-                    $query = "SELECT image FROM item WHERE id={$parent['parent_id']}";
-                    $parent = $database->getOne($query);
-                    $out['image'] = $parent['image'];
-                }
             }
         }
         return $out;
