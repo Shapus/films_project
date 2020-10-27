@@ -17,13 +17,16 @@ class Registration{
 			array_push($names, array());
 			$emails = Registration::getEmails();
 			array_push($emails, array());
+			
+			$emailArray['email'] = $email;
+			$nameArray['name'] = $name;
 
 			//check errors
-			if(in_array($name, $names[0]))		
+			if(in_array($nameArray, $names))		
 				$errorString[0] = "Имя занято";
 			if(!$email)
 				$errorString[1] = "Неверный e-mail";
-			if(in_array($email, $emails[0]))		
+			if(in_array($emailArray, $emails))		
 				$errorString[1] = "Пользователь с такой почтой уже существует";
 			if(mb_strlen($password)<6)
 				$errorString[2] = "Длина пароля должна быть не менее 6 символов";

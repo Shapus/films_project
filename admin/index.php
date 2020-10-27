@@ -2,13 +2,10 @@
 
 session_start();
 require '../inc/Database.php';
-require 'modelAdmin/ModelAdmin.php';
-require 'modelAdmin/ModelAdminNews.php';
-require 'modelAdmin/ModelAdminCategory.php';
+require 'modelAdmin/Model.php';
 
-include_once 'controllerAdmin/ControllerAdmin.php';
-include_once 'controllerAdmin/ControllerAdminNews.php';
-include_once 'routeAdmin/routingAdmin.php';
+include_once 'controllerAdmin/Controller.php';
+include_once 'routeAdmin/routing.php';
 
 echo $response;
 ?>
