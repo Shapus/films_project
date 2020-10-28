@@ -7,7 +7,7 @@ class View{
     public static function viewHeaderEnter(){
         if(isset($_SESSION['user']) and !is_null($_SESSION['user'])){
             echo "
-                {$_SESSION['user']['name']}
+                {$_SESSION['user']['name']}&nbsp;
                 <a href=\"logout\" class=\"clearLock\">Выйти</a>
             ";
         }
@@ -110,10 +110,10 @@ class View{
         );
         if(isset($_SESSION['favorites']) and in_array($favoriteItem, $_SESSION['favorites'])){
             echo "
-            <form role=\"form\" method=\"POST\" action=\"deleteFavorite\">
+            <form role=\"form\" method=\"POST\" action=\"deleteFavorite\" class=\"my-3\">
                 <input type=\"hidden\" name=\"id\" value=\"{$id}\">
                 <input type=\"hidden\" name=\"type\" value=\"{$type}\">
-                <button class=\"d-flex justify-content-center align-content-center ml-3 form__submit--focused scrollLock\" onClick=\"javascript:this.form.submit();\">
+                <button class=\"d-flex justify-content-center align-content-center form__submit--focused scrollLock\" onClick=\"javascript:this.form.submit();\">
                     <p class=\"mr-3 mb-0 d-flex justify-self-center align-self-center\" style=\"vertical-align: center;\">В избранном</p>   
                     <img src=\"images/other/star.png\" class=\"favorite-star favorite-star--big\">
                 </button>                          
@@ -122,10 +122,10 @@ class View{
         }
         else{
             echo "
-            <form role=\"form\" method=\"POST\" action=\"addFavorite\">
+            <form role=\"form\" method=\"POST\" action=\"addFavorite\" class=\"my-3\">
                 <input type=\"hidden\" name=\"id\" value=\"{$id}\">
                 <input type=\"hidden\" name=\"type\" value=\"{$type}\">
-                <button class=\"d-flex justify-content-center align-content-center ml-3 form__submit scrollLock\" onClick=\"javascript:this.form.submit();\">
+                <button class=\"d-flex justify-content-center align-content-center form__submit scrollLock\" onClick=\"javascript:this.form.submit();\">
                     <p class=\"mr-3 mb-0 d-flex justify-self-center align-self-center\" style=\"vertical-align: center;\">Добавить в избранное</p>  
                     <img src=\"images/other/starEmpty.png\" class=\"favorite-star favorite-star--big\">
                 </button>                  

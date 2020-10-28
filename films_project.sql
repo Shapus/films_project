@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Окт 27 2020 г., 18:21
--- Версия сервера: 10.4.14-MariaDB
--- Версия PHP: 7.4.11
+-- Время создания: Окт 28 2020 г., 14:11
+-- Версия сервера: 10.4.13-MariaDB
+-- Версия PHP: 7.2.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -74,9 +74,7 @@ CREATE TABLE `comment` (
 --
 
 INSERT INTO `comment` (`id`, `user_id`, `videoplayer_id`, `user_name`, `date`, `text`, `hidden`) VALUES
-(4, 14, 2, 'user', '2020-10-27', 'aaa', 1),
-(5, 14, 2, 'user', '2020-10-27', 'hohoho', 0),
-(6, 13, 2, 'alex', '2020-10-27', 'Great!', 0);
+(9, 15, 6, 'alex', '2020-10-28', 'Потрясающе!', 0);
 
 -- --------------------------------------------------------
 
@@ -113,19 +111,19 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`id`, `type`, `category_id`, `title`, `image`, `rating`, `number`, `year`, `parent_id`) VALUES
-(3, 1, 1, 'Богемская рапсодия', 'Bohemian_Rhapsody.jpg', '0', NULL, 2018, 3),
-(4, 2, 2, 'Во все тяжкие', 'Breaking_Bad.jpg', '0', NULL, 2008, 4),
-(5, 2, 6, 'Друзья', 'Friends.jpg', '0', NULL, 1994, 5),
-(6, 2, 15, 'Игра престолов', 'Game_of_Thrones.jpg', '0', NULL, 2011, 6),
-(7, 1, 14, 'Начало', 'Inception.jpg', '0', NULL, 2010, 7),
-(8, 1, 2, 'Криминальное чтиво', 'Pulp_Fiction.jpg', '0', NULL, 1994, 8),
-(9, 1, 2, 'Джентельмены', 'The_Gentlemen.jpg', '0', NULL, 2019, 9),
-(10, 1, 5, 'Побег из Шоушенка', 'The_Shawshank_Redemption.jpg', '0', NULL, 1994, 10),
-(11, 2, 13, 'Ходячие мертвецы', 'The_Walking_Dead.jpg', '0', NULL, 2010, 11),
+(3, 1, 1, 'Богемская рапсодия', 'Bohemian_Rhapsody.jpg', '8', NULL, 2018, 3),
+(4, 2, 2, 'Во все тяжкие', 'Breaking_Bad.jpg', '8', NULL, 2008, 4),
+(5, 2, 6, 'Друзья', 'Friends.jpg', '9', NULL, 1994, 5),
+(6, 2, 15, 'Игра престолов', 'Game_of_Thrones.jpg', '10', NULL, 2011, 6),
+(7, 1, 14, 'Начало', 'Inception.jpg', '7', NULL, 2010, 7),
+(8, 1, 2, 'Криминальное чтиво', 'Pulp_Fiction.jpg', '10', NULL, 1994, 8),
+(9, 1, 2, 'Джентельмены', 'The_Gentlemen.jpg', '7', NULL, 2019, 9),
+(10, 1, 5, 'Побег из Шоушенка', 'The_Shawshank_Redemption.jpg', '10', NULL, 1994, 10),
+(11, 2, 13, 'Ходячие мертвецы', 'The_Walking_Dead.jpg', '9', NULL, 2010, 11),
 (12, 3, 15, NULL, NULL, '0', 1, NULL, 6),
 (13, 3, 15, NULL, NULL, '0', 2, NULL, 6),
-(14, 4, 15, 'Зима близко', 'Game_of_Thrones_1_1.jpg', '0', 1, NULL, 12),
-(15, 4, 15, 'Королевский тракт', 'Game_of_Thrones_1_2.jpg', '0', 2, NULL, 12);
+(14, 4, 15, 'Зима близко', 'Game_of_Thrones_1_1.jpg', '10', 1, NULL, 12),
+(15, 4, 15, 'Королевский тракт', 'Game_of_Thrones_1_2.jpg', '10', 2, NULL, 12);
 
 -- --------------------------------------------------------
 
@@ -189,8 +187,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `registration_date`, `status`) VALUES
 (11, 'Alex', 'mail@mail.ru', '$2y$10$qHtHIb.pn1xe/NYcZdNrTuTTcfJXM8/Ck9B1EMQLSPEAtXJHf.NK2', '2020-10-26', 1),
 (12, 'Shapus', 'a@a.com', '$2y$10$NFDuhR7utd99sIENI4CuGeg5qeL0EQhM3IXfCftIb9BQ7XSoT2B9a', '2020-10-26', 1),
-(13, 'alex', 'mail@mail.com', '$2y$10$j4ZiY.POm8T4dVSi/KAY0.5f7Xnw2S4kY7vhgR1ZViRJDQ8cdcPr6', '2020-10-27', 1),
-(14, 'user', 'user@mail.com', '$2y$10$7rluzc7uI7PzehS4R9xlSuniF.5NihKe5Ad3XT05cCLl2AvOvY3yy', '2020-10-27', 1);
+(14, 'user', 'user@mail.com', '$2y$10$7rluzc7uI7PzehS4R9xlSuniF.5NihKe5Ad3XT05cCLl2AvOvY3yy', '2020-10-27', 1),
+(15, 'alex', 'mail@mail.com', '$2y$10$PLMwB/hlIINDHT3.l4e95uFqmiOVjqhUBTrIf.qyfjUG4sC/OjWb2', '2020-10-28', 1);
 
 -- --------------------------------------------------------
 
@@ -293,7 +291,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT для таблицы `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `item`
@@ -317,7 +315,7 @@ ALTER TABLE `type`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблицы `videoplayer`

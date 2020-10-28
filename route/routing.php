@@ -10,6 +10,13 @@
 	}
 	//index
 	else if(($path == "" or $path == "index" or $path == "index.php")){
+
+		$_SESSION['mainLink'] = $_SERVER['REQUEST_URI'];
+		unset($_SESSION['filmLink']);
+		unset($_SESSION['serialLink']);
+		unset($_SESSION['seasonLink']);		
+		unset($_SESSION['seriaLink']);
+
 		$response = Controller::startSite();
 	}
 
@@ -20,6 +27,8 @@
 //============================================================================== FILMS & SERIALS
 	//all items
 	elseif($path == 'items'){
+		Controller::link(true, false, false, false);		
+
 		if(isset($_GET['category'])){
 			$response = Controller::getItems(true, true, $_GET['category']);
 		}
@@ -30,6 +39,8 @@
 
 	//serials
 	elseif($path == 'serials' && !isset($_GET['id'])){
+		Controller::link(true, false, false, false);	
+
 		if(isset($_GET['category'])){
 			$response = Controller::getItems(false, true, $_GET['category']);
 		}
@@ -40,6 +51,8 @@
 
 	//films
 	elseif($path == 'films' && !isset($_GET['id'])){
+		Controller::link(true, false, false, false);	
+
 		if(isset($_GET['category'])){
 			$response = Controller::getItems(true, false, $_GET['category']);
 		}
@@ -55,8 +68,13 @@
 
 //============================================================================== SERIAL
 	elseif($path == 'serials' && isset($_GET['id']) and !isset($_GET['seria'])){
+		Controller::link(false, true, false, false);	
+
 		if(isset($_GET['season'])){
 			$season_id = Serial::getSeasonId($_GET['id'], $_GET['season']);
+
+			Controller::link(false, true, true, false);	
+
 			$response = Controller::getSeriasBySeason($season_id);
 		}
 		else{
@@ -73,11 +91,17 @@
 	elseif($path == 'serials' and isset($_GET['id']) and isset($_GET['season']) and isset($_GET['seria'])){
 		$season_id = Serial::getSeasonId($_GET['id'], $_GET['season']);
 		$seria_id = Serial::getSeriaId($season_id, $_GET['seria']);
+
+		Controller::link(false, true, true, true);	
+
 		$response = Controller::getVideoplayer($seria_id);
 	}
 
 	//film videoplayer
 	elseif($path == 'films' and isset($_GET['id'])){
+		
+		Controller::link(false, false, false, true);
+
 		$response = Controller::getVideoplayer($_GET['id']);
 	}
 

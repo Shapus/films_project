@@ -19,6 +19,8 @@ class Controller{
 	public static function getItems($getFilms, $getSerials, $category_id){	
 		$categories = Category::getAllCategories();
 		if($getFilms){	
+			$_SESSION['mainLink__name'] = "Фильмы";
+			$HTMLtitle = "Фильмы";
 			if($category_id != -1){
 				$films = Film::getFilmsByCategory($category_id);		
 			}
@@ -27,6 +29,8 @@ class Controller{
 			}
 		}
 		if($getSerials){
+			$_SESSION['mainLink__name'] = "Сериалы";
+			$HTMLtitle = "Сериалы";
 			if($category_id != -1){
 				$serials = Serial::getSerialsByCategory($category_id);		
 			}
@@ -34,6 +38,10 @@ class Controller{
 				$serials = Serial::getAllSerials();
 			}
 			
+		}
+		if($getFilms and $getSerials){
+			$_SESSION['mainLink__name'] = "Все";
+			$HTMLtitle = "Все";
 		}
 		include_once "view/pages/films_and_serials.php";
 	}
@@ -46,9 +54,11 @@ class Controller{
 	//seasons in serial
 	public static function getSeasonsBySerialId($id){	
 		$seasons = Serial::getSeasonsBySerialId($id);
+		$HTMLtitle = Serial::getSerialName($id);
 		if(!$seasons){
 			header("Location: error404");
 		}
+		$_SESSION['serialLink__name'] = Serial::getSerialName($id);
 		include_once "view/pages/seasons.php";
 	}
 	
@@ -58,6 +68,8 @@ class Controller{
 		if(!$serias){
 			header("Location: error404");
 		}
+		$_SESSION['seasonLink__name'] = Serial::getSeasonName($season_id);
+		$HTMLtitle = Serial::getSerialName($_GET['id']);
 		include_once "view/pages/serias.php";
 	}
 
@@ -69,14 +81,18 @@ class Controller{
 	//get videoplayer
 	public static function getVideoplayer($item_id){
 		$videoplayer = Videoplayer::getVideoplayer($item_id);
+		$_SESSION['videoLink__name'] = $videoplayer['title'];
+		$HTMLtitle = Film::getFilmName($_GET['id']);
 		if(!$videoplayer){
 			header("Location: error404");
 		}
 		if(isset($_GET['id']) and isset($_GET['season'])){
 			$season_id = Serial::getSeasonId($_GET['id'], $_GET['season']);
 			$seriasCount = Serial::getSeriasCount($season_id);
+			$_SESSION['videoLink__name'] = "Серия {$videoplayer['number']}";
+			$HTMLtitle = Serial::getSerialName($_GET['id']);
 		}
-		$comments = Comment::getComments($videoplayer['id']);
+		$comments = Comment::getComments($videoplayer['id']);		
 		include_once "view/pages/videoplayer.php";
 	}
 
@@ -173,6 +189,40 @@ class Controller{
 	//page not found
 	public static function error404(){
 		include_once "view/pages/error404.php";
+	}
+
+
+
+
+
+//============================================================================== HEADER LINKS
+	//set header links
+	public static function link($main, $serial, $season, $video){
+		//main
+		if($main){
+			$_SESSION['mainLink'] = $_SERVER['REQUEST_URI'];
+		}
+		//film
+		if($video){
+			$_SESSION['videoLink'] = $_SERVER['REQUEST_URI'];
+		}
+		else{
+			unset($_SESSION['videoLink']);
+		}
+		//serial
+		if($serial and isset($_GET['id'])){
+			$_SESSION['serialLink'] = "serials?id={$_GET['id']}";
+		}
+		else{
+			unset($_SESSION['serialLink']);
+		}
+		//season
+		if($season and isset($_GET['id']) and isset($_GET['season'])){
+			$_SESSION['seasonLink'] = "serials?id={$_GET['id']}&season={$_GET['season']}";
+		}
+		else{
+			unset($_SESSION['seasonLink']);
+		}
 	}
 }
 ?>

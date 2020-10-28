@@ -9,7 +9,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="js/dropbox.js"></script>
     
-    <title>Document</title>
+    <title>
+<?php 
+        $secondaryTitle = "";
+        if(isset($HTMLtitle)){
+            $secondaryTitle = ' - '.$HTMLtitle;
+        }
+        echo "FoxFilm".$secondaryTitle; 
+?>
+    </title>
 </head>
 <body>
     <header class="d-flex justify-content-center">  
@@ -51,13 +59,36 @@
             </div>
         </div>
     </header>
-    <main class="row justify-content-center">                             
-            <section class="container d-flex flex-column align-items-center">
+    <main class="row justify-content-center">     
+        <section class="container d-flex flex-column align-items-center">
+        <div class="link-row d-flex align-self-start">
+<?php
+            if(isset($_SESSION['mainLink'])){
+                echo "<a href=\"{$_SESSION['mainLink']}\" class=\"scrollLock back_btn\" style=\"height:max-content\">{$_SESSION['mainLink__name']}</a>";
+            }
+            else{
+                echo "<a href=\"./\" class=\"scrollLock back_btn\" style=\"height:max-content\">{$_SESSION['mainLink__name']}</a>";
+            }
+            if(isset($_SESSION['serialLink'])){
+                echo "<p class=\"\" style=\"font-size:1.5rem\">&nbsp; &#187; &nbsp;</p>";
+                echo "<a href=\"{$_SESSION['serialLink']}\" class=\"scrollLock back_btn\" style=\"height:max-content\">{$_SESSION['serialLink__name']}</a>";
+            }
+
+            if(isset($_SESSION['seasonLink'])){
+                echo "<p class=\"\" style=\"font-size:1.5rem\">&nbsp; &#187; &nbsp;</p>";
+                echo "<a href=\"{$_SESSION['seasonLink']}\" class=\"scrollLock back_btn\" style=\"height:max-content\">{$_SESSION['seasonLink__name']}</a>";
+            }
+            if(isset($_SESSION['videoLink'])){
+                echo "<p class=\"\" style=\"font-size:1.5rem\">&nbsp; &#187; &nbsp;</p>";
+                echo "<a href=\"{$_SESSION['videoLink']}\" class=\"scrollLock back_btn\" style=\"height:max-content\">{$_SESSION['videoLink__name']}</a>";
+            }
+?>            
+        </div>
  <?php 
-                    if(isset($content)) echo $content;
-                    else echo "<h1>Ups, no content!</h1>";
+            if(isset($content)) echo $content;
+            else echo "<h1>Ups, no content!</h1>";
 ?>
-            </section>  
+        </section>  
     </main>
     <footer class="">
     </footer>

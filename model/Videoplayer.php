@@ -27,6 +27,7 @@ class Videoplayer{
                 else{
                     $out['title'] = $parent['title'];
                 }
+                $out['number'] = $parent['number'];
             }
             $out['image'] = $parent['image'];
             if(is_null($parent['image']) or empty($parent['image'])){

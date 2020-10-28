@@ -23,6 +23,17 @@ class Serial{
         return $database->getOne($query);
     }
 
+    //get serial name
+    public static function getSerialName($id){
+        $query = "SELECT title FROM item WHERE type=2 and id={$id}";
+        $database = new Database();
+        $serial = $database->getOne($query);
+        if($serial){
+            return $serial['title'];
+        }
+        return "Сериал";
+    }
+
     //get seasons
     public static function getSeasonsBySerialId($serial_id){
         $database = new Database();
@@ -42,6 +53,17 @@ class Serial{
             }
         }
         return $seasons;
+    }
+
+    //get season name
+    public static function getSeasonName($id){
+        $query = "SELECT number FROM item WHERE type=3 and id={$id}";
+        $database = new Database();
+        $season = $database->getOne($query);
+        if($season){
+            return "Сезон {$season['number']}";
+        }
+        return "Сезон";
     }
 
     //get serias

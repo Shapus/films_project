@@ -7,14 +7,11 @@
                 <img class="" style="width:400px; height:600px;" src="images/<?php echo $videoplayer['image'] ?>" alt="">
             </div>
             <div class="d-flex flex-column align-self-center">
-                <div class="d-flex">
-                    <h1 class=""> <?php echo $videoplayer['title'] ?> </h1>
-<?php                   
-                        View::favoriteButton($videoplayer['parent_id'], $videoplayer['type']);
-?>                        
-                </div>
-                <div class="flex-column">
-<?php                
+      
+                <div class="flex-column">                
+                    <h1 class=""> <?php echo $videoplayer['title'] ?> </h1> 
+<?php                                
+                    View::favoriteButton($videoplayer['parent_id'], $videoplayer['type']); 
                     for($i=0; $i<$videoplayer['rating'];$i++){
                         echo "<img src=\"images/other/star.png\" class=\"favorite-star\">";
                     }
@@ -31,7 +28,7 @@
                 }
                 else{             
                     echo "
-                    <a class=\"back_btn\" href=\"serials?id={$_GET['id']}&season={$_GET['season']}\">К списку сезонов</a>
+                    <a class=\"back_btn\" href=\"{$_SESSION['seasonLink']}\">К списку серий</a>
                     <div class=\"row mt-5\">
                     ";
                     if($_GET['seria'] > 1){
