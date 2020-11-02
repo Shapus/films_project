@@ -66,6 +66,13 @@ class Serial{
         return "Сезон";
     }
 
+    //get parent
+    public static function getParent($id){
+        $query = "SELECT parent_id FROM item WHERE id={$id}";
+        $database = new Database();
+        return $database->getOne($query);
+    }
+
     //get serias
     public static function getSeriasBySeason($season_id){
         $database = new Database();
