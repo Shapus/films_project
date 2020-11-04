@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Окт 28 2020 г., 14:11
+-- Время создания: Ноя 04 2020 г., 14:11
 -- Версия сервера: 10.4.13-MariaDB
 -- Версия PHP: 7.2.31
 
@@ -188,7 +188,8 @@ INSERT INTO `user` (`id`, `name`, `email`, `password`, `registration_date`, `sta
 (11, 'Alex', 'mail@mail.ru', '$2y$10$qHtHIb.pn1xe/NYcZdNrTuTTcfJXM8/Ck9B1EMQLSPEAtXJHf.NK2', '2020-10-26', 1),
 (12, 'Shapus', 'a@a.com', '$2y$10$NFDuhR7utd99sIENI4CuGeg5qeL0EQhM3IXfCftIb9BQ7XSoT2B9a', '2020-10-26', 1),
 (14, 'user', 'user@mail.com', '$2y$10$7rluzc7uI7PzehS4R9xlSuniF.5NihKe5Ad3XT05cCLl2AvOvY3yy', '2020-10-27', 1),
-(15, 'alex', 'mail@mail.com', '$2y$10$PLMwB/hlIINDHT3.l4e95uFqmiOVjqhUBTrIf.qyfjUG4sC/OjWb2', '2020-10-28', 1);
+(15, 'alex', 'mail@mail.com', '$2y$10$PLMwB/hlIINDHT3.l4e95uFqmiOVjqhUBTrIf.qyfjUG4sC/OjWb2', '2020-10-28', 1),
+(17, 'admin', 'admin@admin.com', '$2y$10$r1dZGLJidue4.J2osZnZoe8o7zMYkswgNTWxCG6yAg2ExEYKwWvau', '2020-11-04', 2);
 
 -- --------------------------------------------------------
 
@@ -315,7 +316,7 @@ ALTER TABLE `type`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT для таблицы `videoplayer`

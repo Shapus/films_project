@@ -6,7 +6,9 @@ class Controller{
 	public static function startSite(){
 		$categories = Category::getAllCategories();	
 		$films = Film::getAllFilms();
-		$serials = Serial::getAllSerials();		
+		$serials = Serial::getAllSerials();	
+		$_SESSION['mainLink__name']	 = 'Все';
+		$HTMLtitle = "Все";
 		include_once "view/pages/films_and_serials.php";
 	}
 

@@ -1,7 +1,7 @@
 <?php 
     ob_start();
-    if(isset($_SESSION['user']) and !is_null($_SESSION['user'])){   
-        header("Location: items");
+    if(isset($_SESSION['user']) and !is_null($_SESSION['user']) and $_SESSION['user']['status']==2){   
+        header("Location: dashboard");
     }
     else{
 ?>
@@ -28,26 +28,14 @@
             </div>
             <div class="row justify-content-center">
                 <div class="row" style="width:60%">
-                    <div class="col  d-flex justify-self-start align-self-center">
-                        <a href="./" class=" back_btn">Назад</a>
-                    </div> 
+                    <div class="col"></div> 
                     <input class="col-6 form__submit" type="submit" name="submit" value="Войти">  
                     <div class="col"></div>    
-                </div>
-                <div class="row mt-3" style="width:60%">
-                    <div class="col">
-                        <a href="registration" class="">Зарегистрироваться</a>
-                    </div> 
-                </div>
-                <div class="row" style="width:60%">
-                    <div class="col">
-                        <a href="#" class="">Забыли пароль?</a> 
-                    </div>    
                 </div>
             </div>
         </form>
 <?php
     }
     $content = ob_get_clean();
-    include 'view/layout/emptyLayout.php' 
+    include 'viewAdmin/layout/emptyLayout.php' 
 ?>

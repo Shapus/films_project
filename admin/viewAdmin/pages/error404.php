@@ -7,5 +7,5 @@
 
 <?php 
     $content = ob_get_clean();
-    include_once 'view/layout/emptyLayout.php';
+    include_once 'viewAdmin/layout/emptyLayout.php';
 ?>

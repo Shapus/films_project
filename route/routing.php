@@ -11,11 +11,8 @@
 	//index
 	else if(($path == "" or $path == "index" or $path == "index.php")){
 
-		$_SESSION['mainLink'] = $_SERVER['REQUEST_URI'];
-		unset($_SESSION['filmLink']);
-		unset($_SESSION['serialLink']);
-		unset($_SESSION['seasonLink']);		
-		unset($_SESSION['seriaLink']);
+		Controller::link(true, false, false, false);
+		
 
 		$response = Controller::startSite();
 	}

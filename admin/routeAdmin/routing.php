@@ -4,9 +4,21 @@
 	$path = explode('/',$host)[$num];
 
 	if($path == "" or $path == "index" or $path == "index.php"){
-		$response = Controller::startSite();
+		$response = Controller::enter();
 	}
 	elseif ($path == "dashboard") {
-		$response = Controller::dashbord();
+		if(isset($_SESSION['user']) and !is_null($_SESSION['user']) and $_SESSION['user']['status'] == 2){
+			$response = Controller::dashbord();
+		}
+		else{
+			$response = Controller::error404();
+		}
+	}
+
+	elseif($path == "enter"){
+		$response = Controller::enter();
+	}
+	elseif($path == "enterAnswer"){
+		$response = Controller::enterAnswer();
 	}
 ?>
