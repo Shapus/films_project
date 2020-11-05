@@ -1,14 +1,11 @@
 <?php
+$_SESSION['categories'] = Category::getAll();
 class Controller{
 
 //============================================================================== START SITE
 	//start site
 	public static function startSite(){
-		$categories = Category::getAllCategories();	
-		$films = Film::getAllFilms();
-		$serials = Serial::getAllSerials();	
-		$_SESSION['mainLink__name']	 = 'Все';
-		$HTMLtitle = "Все";
+		Controller::getItems(0, null);
 		include_once "view/pages/films_and_serials.php";
 	}
 
@@ -16,36 +13,38 @@ class Controller{
 
 
 
-//============================================================================== FILMS & SERIALS
+//============================================================================== ITEMS
 	//get films and serials
-	public static function getItems($getFilms, $getSerials, $category_id){	
-		$categories = Category::getAllCategories();
-		if($getFilms){	
-			$_SESSION['mainLink__name'] = "Фильмы";
-			$HTMLtitle = "Фильмы";
-			if($category_id != -1){
-				$films = Film::getFilmsByCategory($category_id);		
-			}
-			else{
-				$films = Film::getAllFilms();
-			}
-		}
-		if($getSerials){
-			$_SESSION['mainLink__name'] = "Сериалы";
-			$HTMLtitle = "Сериалы";
-			if($category_id != -1){
-				$serials = Serial::getSerialsByCategory($category_id);		
-			}
-			else{
-				$serials = Serial::getAllSerials();
-			}
-			
-		}
-		if($getFilms and $getSerials){
-			$_SESSION['mainLink__name'] = "Все";
-			$HTMLtitle = "Все";
+	public static function getItems($type, $category_id){	
+		switch ($type) {
+			case 0:
+				$films = Item::getAll(1, $category_id);
+				$serials = Item::getAll(2, $category_id);
+				break;
+			case 1:
+				$films = Item::getAll($type, $category_id);
+				$serials = null;
+				break;		
+			case 2:
+				$films = null;
+				$serials = Item::getAll($type, $category_id);
+				break;
+			default:
+				break;
 		}
 		include_once "view/pages/films_and_serials.php";
+	}
+
+	public static function getItem($id){
+		$item = Item::get($id);
+		switch ($item['type']) {
+			case 1:
+				Controller::getVideoplayer($id);
+				break;
+			case 2:
+				Controller::getSeasons($id);
+				break;
+		}
 	}
 
 
@@ -54,24 +53,15 @@ class Controller{
 
 //============================================================================== SERIAL
 	//seasons in serial
-	public static function getSeasonsBySerialId($id){	
-		$seasons = Serial::getSeasonsBySerialId($id);
-		$HTMLtitle = Serial::getSerialName($id);
-		if(!$seasons){
-			header("Location: error404");
-		}
-		$_SESSION['serialLink__name'] = Serial::getSerialName($id);
+	public static function getSeasons($serial_id){	
+		$seasons = Serial::getSeasons($serial_id);
 		include_once "view/pages/seasons.php";
 	}
 	
 	//serias in season
-	public static function getSeriasBySeason($season_id){
-		$serias = Serial::getSeriasBySeason($season_id);
-		if(!$serias){
-			header("Location: error404");
-		}
-		$_SESSION['seasonLink__name'] = Serial::getSeasonName($season_id);
-		$HTMLtitle = Serial::getSerialName($_GET['id']);
+	public static function getSerias($serial_id, $season_number){
+		$season_id = Serial::getSeasonId($serial_id, $season_number);
+		$serias = Serial::getSerias($season_id);
 		include_once "view/pages/serias.php";
 	}
 
@@ -82,18 +72,14 @@ class Controller{
 //============================================================================== VIDEOPLAYER
 	//get videoplayer
 	public static function getVideoplayer($item_id){
-		$videoplayer = Videoplayer::getVideoplayer($item_id);
-		$_SESSION['videoLink__name'] = $videoplayer['title'];
-		$HTMLtitle = Film::getFilmName($_GET['id']);
-		if(!$videoplayer){
-			header("Location: error404");
+		if(isset($_GET['seria'])){
+			$season_id = Serial::getSeasonId($item_id, $_GET['season']);
+			$id = Serial::getSeriaId($season_id, $_GET['seria']);
 		}
-		if(isset($_GET['id']) and isset($_GET['season'])){
-			$season_id = Serial::getSeasonId($_GET['id'], $_GET['season']);
-			$seriasCount = Serial::getSeriasCount($season_id);
-			$_SESSION['videoLink__name'] = "Серия {$videoplayer['number']}";
-			$HTMLtitle = Serial::getSerialName($_GET['id']);
+		else{
+			$id = $item_id;
 		}
+		$videoplayer = Videoplayer::getVideoplayer($id);
 		$comments = Comment::getComments($videoplayer['id']);		
 		include_once "view/pages/videoplayer.php";
 	}
@@ -197,33 +183,21 @@ class Controller{
 
 
 
-//============================================================================== HEADER LINKS
-	//set header links
-	public static function link($main, $serial, $season, $video){
-		//main
-		if($main){
-			$_SESSION['mainLink'] = $_SERVER['REQUEST_URI'];
+//============================================================================== NAVIGATION LINKS
+	//set navigation links
+	public static function link($category, $id, $season, $seria){
+		$link = "items?type={$_GET['type']}";
+		if(!is_null($category)){
+			$link .= "&category={$category}";
 		}
-		//film
-		if($video){
-			$_SESSION['videoLink'] = $_SERVER['REQUEST_URI'];
+		if(!is_null($id)){
+			$link .= "&id={$id}";
 		}
-		else{
-			unset($_SESSION['videoLink']);
+		if(!is_null($season)){
+			$link .= "&season={$season}";
 		}
-		//serial
-		if($serial and isset($_GET['id'])){
-			$_SESSION['serialLink'] = "serials?id={$_GET['id']}";
-		}
-		else{
-			unset($_SESSION['serialLink']);
-		}
-		//season
-		if($season and isset($_GET['id']) and isset($_GET['season'])){
-			$_SESSION['seasonLink'] = "serials?id={$_GET['id']}&season={$_GET['season']}";
-		}
-		else{
-			unset($_SESSION['seasonLink']);
+		if(!is_null($seria)){
+			$link .= "&seria={$seria}";
 		}
 	}
 }

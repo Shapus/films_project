@@ -308,6 +308,7 @@ a:hover {
   color: #adaaa9;
   font-size: 1.5rem;
   text-align: center;
+  cursor: pointer;
 }
 .back_btn:hover {
   color: #111111;
@@ -315,6 +316,11 @@ a:hover {
 .back_btn--dark {
   border: none;
   color: grey;
+}
+
+.black_alert {
+  margin: auto;
+  font-size: 2rem;
 }
 
 .video-player {

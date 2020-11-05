@@ -1,6 +1,5 @@
 <?php 
     ob_start();
-    $last_url = isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:"./";
 ?>    
         <div class="d-flex justify-content-center my-5">
             <div class="mr-5">
@@ -12,42 +11,13 @@
                     <h1 class=""> <?php echo $videoplayer['title'] ?> </h1> 
 <?php                                
                     View::favoriteButton($videoplayer['parent_id'], $videoplayer['type']); 
-                    for($i=0; $i<$videoplayer['rating'];$i++){
-                        echo "<img src=\"images/other/star.png\" class=\"favorite-star\">";
-                    }
-                    for($i=$videoplayer['rating']; $i<10;$i++){
-                        echo "<img src=\"images/other/starEmpty.png\" class=\"favorite-star\">";
-                    }
+                    View::rating($videoplayer['rating']);
 ?>                    
                 </div>
                 <p class="mt-4"> <?php echo $videoplayer['year'] ?> </p>
                 <p class="mt-4"> <?php echo $videoplayer['description'] ?> </p>
 <?php
-                if($videoplayer['type'] == 1){
-                    echo "<a class=\"back_btn\" href=\"films\">К списку фильмов</a>";
-                }
-                else{             
-                    echo "
-                    <a class=\"back_btn\" href=\"{$_SESSION['seasonLink']}\">К списку серий</a>
-                    <div class=\"row mt-5\">
-                    ";
-                    if($_GET['seria'] > 1){
-                        $prevSeria = $_GET['seria'] - 1;
-                        echo "<a class=\"col-4 form__submit text-center\" href=\"serials?id={$_GET['id']}&season={$_GET['season']}&seria={$prevSeria}\">&#8592;Предыдущая серия</a>";
-                    }
-                    else{
-                        echo "<div class=\"col-4\"></div>";
-                    }
-                    echo "<div class=\"col-4\"></div>";
-                    if($_GET['seria'] < $seriasCount['count(*)']){
-                        $nextSeria = $_GET['seria'] + 1;
-                        echo"<a class=\"col-4 form__submit text-center\" href=\"serials?id={$_GET['id']}&season={$_GET['season']}&seria={$nextSeria}\">Следующая серия&#8594;</a>";
-                    }
-                    else{
-                        echo "<div class=\"col-4\"></div>";
-                    }
-                    echo "</div>"; 
-                }
+                View::videoLinks($videoplayer['type']);
 ?>                
             </div>
         </div>

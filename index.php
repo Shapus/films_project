@@ -3,7 +3,7 @@
 session_start();
 include_once 'inc/Database.php';
 require 'model/Videoplayer.php';
-require 'model/Film.php';
+require 'model/Item.php';
 require 'model/Serial.php';
 require 'model/Category.php';
 require 'model/Registration.php';

@@ -63,6 +63,7 @@
         <section class="container d-flex flex-column align-items-center">
         <div class="link-row d-flex align-self-start">
 <?php
+/*
             if(isset($_SESSION['mainLink'])){
                 echo "<a href=\"{$_SESSION['mainLink']}\" class=\"scrollLock back_btn\" style=\"height:max-content\">{$_SESSION['mainLink__name']}</a>";
             }
@@ -82,6 +83,7 @@
                 echo "<p class=\"\" style=\"font-size:1.5rem\">&nbsp; &#187; &nbsp;</p>";
                 echo "<a href=\"{$_SESSION['videoLink']}\" class=\"scrollLock back_btn\" style=\"height:max-content\">{$_SESSION['videoLink__name']}</a>";
             }
+*/
 ?>            
         </div>
  <?php 

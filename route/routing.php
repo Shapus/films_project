@@ -9,11 +9,8 @@
 		$response = Controller::error404();
 	}
 	//index
-	else if(($path == "" or $path == "index" or $path == "index.php")){
-
+	elseif(($path == "" or $path == "index" or $path == "index.php")){
 		Controller::link(true, false, false, false);
-		
-
 		$response = Controller::startSite();
 	}
 
@@ -21,85 +18,22 @@
 
 
 
-//============================================================================== FILMS & SERIALS
-	//all items
+//============================================================================== ITEMS
 	elseif($path == 'items'){
-		Controller::link(true, false, false, false);		
-
-		if(isset($_GET['category'])){
-			$response = Controller::getItems(true, true, $_GET['category']);
+		$category = isset($_GET['category'])?$_GET['category']:null;
+		$type = isset($_GET['type'])?$_GET['type']:0;
+		if(isset($_GET['id']) and isset($_GET['season']) and isset($_GET['seria'])){
+			$response = Controller::getVideoplayer($_GET['id'], $_GET['season'], $_GET['seria']);
+		}
+		elseif(isset($_GET['id']) and isset($_GET['season'])){
+			$response = Controller::getSerias($_GET['id'], $_GET['season']);
+		}
+		elseif(isset($_GET['id'])){
+			$response = Controller::getItem($_GET['id']);
 		}
 		else{
-			$response = Controller::getItems(true, true, -1);
+			$response = Controller::getItems($type, $category);
 		}
-	}
-
-	//serials
-	elseif($path == 'serials' && !isset($_GET['id'])){
-		Controller::link(true, false, false, false);	
-
-		if(isset($_GET['category'])){
-			$response = Controller::getItems(false, true, $_GET['category']);
-		}
-		else{
-			$response = Controller::getItems(false, true, -1);
-		}
-	}
-
-	//films
-	elseif($path == 'films' && !isset($_GET['id'])){
-		Controller::link(true, false, false, false);	
-
-		if(isset($_GET['category'])){
-			$response = Controller::getItems(true, false, $_GET['category']);
-		}
-
-		else{
-			$response = Controller::getItems(true, false, -1);
-		}
-	}
-
-
-
-
-
-//============================================================================== SERIAL
-	elseif($path == 'serials' && isset($_GET['id']) and !isset($_GET['seria'])){
-		Controller::link(false, true, false, false);	
-
-		if(isset($_GET['season'])){
-			$season_id = Serial::getSeasonId($_GET['id'], $_GET['season']);
-
-			Controller::link(false, true, true, false);	
-
-			$response = Controller::getSeriasBySeason($season_id);
-		}
-		else{
-			$response = Controller::getSeasonsBySerialId($_GET['id']);
-		}
-	}
-
-
-
-
-
-//============================================================================== VIDEOPLAYER
-	//seria videoplayer
-	elseif($path == 'serials' and isset($_GET['id']) and isset($_GET['season']) and isset($_GET['seria'])){
-		$season_id = Serial::getSeasonId($_GET['id'], $_GET['season']);
-		$seria_id = Serial::getSeriaId($season_id, $_GET['seria']);
-
-		Controller::link(false, true, true, true);	
-
-		$response = Controller::getVideoplayer($seria_id);
-	}
-
-	//film videoplayer
-	elseif($path == 'films' and isset($_GET['id'])){
-		
-		Controller::link(false, false, false, true);
-
-		$response = Controller::getVideoplayer($_GET['id']);
 	}
 
 

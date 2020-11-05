@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Ноя 04 2020 г., 14:11
+-- Время создания: Ноя 05 2020 г., 14:16
 -- Версия сервера: 10.4.13-MariaDB
 -- Версия PHP: 7.2.31
 
@@ -120,8 +120,8 @@ INSERT INTO `item` (`id`, `type`, `category_id`, `title`, `image`, `rating`, `nu
 (9, 1, 2, 'Джентельмены', 'The_Gentlemen.jpg', '7', NULL, 2019, 9),
 (10, 1, 5, 'Побег из Шоушенка', 'The_Shawshank_Redemption.jpg', '10', NULL, 1994, 10),
 (11, 2, 13, 'Ходячие мертвецы', 'The_Walking_Dead.jpg', '9', NULL, 2010, 11),
-(12, 3, 15, NULL, NULL, '0', 1, NULL, 6),
-(13, 3, 15, NULL, NULL, '0', 2, NULL, 6),
+(12, 3, 15, 'Сезон 1', 'Game_of_Thrones.jpg', '0', 1, NULL, 6),
+(13, 3, 15, 'Сезон 2', 'Game_of_Thrones.jpg', '0', 2, NULL, 6),
 (14, 4, 15, 'Зима близко', 'Game_of_Thrones_1_1.jpg', '10', 1, NULL, 12),
 (15, 4, 15, 'Королевский тракт', 'Game_of_Thrones_1_2.jpg', '10', 2, NULL, 12);
 
