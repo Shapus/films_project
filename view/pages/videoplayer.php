@@ -17,7 +17,7 @@
                 <p class="mt-4"> <?php echo $videoplayer['year'] ?> </p>
                 <p class="mt-4"> <?php echo $videoplayer['description'] ?> </p>
 <?php
-                View::videoLinks($videoplayer['type']);
+                View::videoLinks($videoplayer['type'],$seriasCount['count']);
 ?>                
             </div>
         </div>

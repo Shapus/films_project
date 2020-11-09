@@ -16,6 +16,11 @@ class Item{
         $database = new Database();
         return $database->getAll($query);
     }
+    public static function getType($id){
+        $query = "SELECT type FROM item WHERE id={$id}";
+        $database = new Database();
+        return $database->getOne($query);
+    }
 }
 
 ?>

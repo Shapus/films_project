@@ -9,6 +9,7 @@ class Serial{
         return $seasons;
     }
 
+
     //get serias
     public static function getSerias($season_id){
         $database = new Database();
@@ -39,9 +40,42 @@ class Serial{
         return null;
     }
 
+    //get season id by seria
+    public static function getSeason($seria_id){
+        $query = "SELECT * FROM item WHERE id=(SELECT parent_id FROM item WHERE id={$seria_id})";
+        $database = new Database();
+        $season = $database->getOne($query);
+        if($season){
+            return $season;
+        }
+        return null;
+    }
+
+    //get serial id by season id
+    public static function getSerial($season_id){
+        $query = "SELECT * FROM item WHERE id=(SELECT parent_id FROM item WHERE id={$season_id})";
+        $database = new Database();
+        $serial = $database->getOne($query);
+        if($serial){
+            return $serial;
+        }
+        return null;
+    }
+
+    //get serial id by seria id
+    public static function getSerialBySeria($seria_id){
+        $query = "SELECT * FROM item WHERE id=(SELECT parent_id FROM item WHERE id=(SELECT parent_id FROM item WHERE id={$seria_id}))";
+        $database = new Database();
+        $serial = $database->getOne($query);
+        if($serial){
+            return $serial;
+        }
+        return null;
+    }
+
     //number of serias
     public static function getSeriasCount($season_id){
-        $query = "SELECT count(*) FROM item WHERE parent_id={$season_id} and type=4";
+        $query = "SELECT count(*) AS count FROM item WHERE parent_id={$season_id} and type=4";
         $database = new Database();
         return $database->getOne($query);
     }

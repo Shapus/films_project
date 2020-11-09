@@ -23,13 +23,13 @@
 		$category = isset($_GET['category'])?$_GET['category']:null;
 		$type = isset($_GET['type'])?$_GET['type']:0;
 		if(isset($_GET['id']) and isset($_GET['season']) and isset($_GET['seria'])){
-			$response = Controller::getVideoplayer($_GET['id'], $_GET['season'], $_GET['seria']);
+			$response = Controller::getVideoplayer($_GET['id'], $type);
 		}
 		elseif(isset($_GET['id']) and isset($_GET['season'])){
 			$response = Controller::getSerias($_GET['id'], $_GET['season']);
 		}
 		elseif(isset($_GET['id'])){
-			$response = Controller::getItem($_GET['id']);
+			$response = Controller::getItem($_GET['id'], $type);
 		}
 		else{
 			$response = Controller::getItems($type, $category);
@@ -84,6 +84,10 @@
 
 
 //============================================================================== FAVORITE
+	elseif($path == "favorites"){
+		$type = isset($_GET['type'])?$_GET['type']:0;
+		$response = Controller::favorites($type);	
+	}
 	//add favorite
 	elseif($path == "addFavorite"){
 		if(isset($_POST['id']) and isset($_POST['type']) and isset($_SESSION['user'])){

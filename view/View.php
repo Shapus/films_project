@@ -170,43 +170,39 @@ class View{
         ";       
 
         //row inner
-        if(count($items) == 0){
-            echo "<p class=\"d-flex align-self-center black_alert\">Здесь пока ничего нет<p>";
+        foreach ($items as $item){              
+            $type = isset($_GET['type'])?$_GET['type']:0;
+            $category = isset($_GET['category'])?"&category={$_GET['category']}":"";
+            $link = "items?type={$type}{$category}";
+            switch ($item['type']) {
+                case 1:
+                    $link .= "&id={$item['id']}";
+                    $subtitle = "{$_SESSION['categories'][$item['category_id']-1]['name']}, {$item['year']}";
+                    break;
+                case 2:
+                    $link .= "&id={$item['id']}";
+                    $subtitle = "{$_SESSION['categories'][$item['category_id']-1]['name']}, {$item['year']}";
+                    break;  
+                case 3:
+                    $link .= "&id={$item['parent_id']}&season={$item['number']}";
+                    $subtitle = "";
+                    break;
+                case 4:
+                    $serial_id = Serial::getSerialBySeria($item['id'])['id'];
+                    $season_id = Serial::getSeason($item['id'])['id'];
+                    $link .= "&id={$serial_id}&season={$season_id}&seria={$item['number']}";
+                    $subtitle = "";
+                    break;      
+                default:
+                    # code...
+                    break;
+            }
+            View::item($item['id'], $item['type'], $link, $item['image'], $item['title'], $subtitle);
+            $count_items++;
+            $count_items%=$item_in_row;
         }
-        else{
-            foreach ($items as $item){              
-                echo"<br><br>";  
-                $type = isset($_GET['type'])?$_GET['type']:0;
-                $category = isset($_GET['category'])?"&category={$_GET['category']}":"";
-                $link = "items?type={$type}{$category}";
-                switch ($item['type']) {
-                    case 1:
-                        $link .= "&id={$item['id']}";
-                        $subtitle = "{$_SESSION['categories'][$item['category_id']-1]['name']}, {$item['year']}";
-                        break;
-                    case 2:
-                        $link .= "&id={$item['id']}";
-                        $subtitle = "{$_SESSION['categories'][$item['category_id']-1]['name']}, {$item['year']}";
-                        break;  
-                    case 3:
-                        $link .= "&id={$_GET['id']}&season={$item['number']}";
-                        $subtitle = "";
-                        break;
-                    case 4:
-                        $link .= "&id={$_GET['id']}&season={$_GET['season']}&seria={$item['number']}";
-                        $subtitle = "";
-                        break;      
-                    default:
-                        # code...
-                        break;
-                }
-                View::item($item['id'], $type, $link, $item['image'], $item['title'], $subtitle);
-                $count_items++;
-                $count_items%=$item_in_row;
-            }
-            for ($count_items; $count_items < $item_in_row; $count_items++) {                 
-                echo "<div class=\"col\"></div>";
-            }
+        for ($count_items; $count_items < $item_in_row; $count_items++) {                 
+            echo "<div class=\"col\"></div>";
         }
 
         //close row
@@ -227,7 +223,7 @@ class View{
     }
 
 //============================================================================== VIDEO_LINKS
-    public static function videoLinks($type){
+    public static function videoLinks($type, $seriasAmount){
         $getType = isset($_GET['type'])?$_GET['type']:0;
         $category = isset($_GET['category'])?"&category={$_GET['category']}":"";
         $link = "items?type={$getType}{$category}";
@@ -235,7 +231,7 @@ class View{
             case 1:
                 echo "<a class=\"back_btn\" href=\"{$link}\">Назад</a>";
                 break;
-            case 2:
+            case 4:
                 echo "
                 <a class=\"back_btn\" href=\"{$link}&id={$_GET['id']}&season={$_GET['season']}\">К списку серий</a>
                 <div class=\"row mt-5\">
@@ -248,7 +244,7 @@ class View{
                     echo "<div class=\"col-4\"></div>";
                 }
                 echo "<div class=\"col-4\"></div>";
-                if($_GET['seria'] < $seriasCount['count(*)']){
+                if($_GET['seria'] < $seriasAmount){
                     $nextSeria = $_GET['seria'] + 1;
                     echo"<a class=\"col-4 form__submit text-center\" href=\"{$link}&id={$_GET['id']}&season={$_GET['season']}&seria={$nextSeria}\">Следующая серия&#8594;</a>";
                 }

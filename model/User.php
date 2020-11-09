@@ -13,8 +13,21 @@ class User{
     }
 
     //get favorites
-    public static function getFavorites(){
-        $query = "SELECT * FROM favorite_item WHERE user_id={$_SESSION['user']['id']}";
+    public static function getFavorites($user_id){
+        $query = "SELECT * FROM favorite_item WHERE user_id={$user_id} ORDER BY type";
+        $database = new Database();
+        return $database->getAll($query);
+    }
+
+    public static function getFavoriteItems($favorites){
+        $idString = "";
+        for($i=0;$i<count($favorites);$i++){
+            $idString .= $favorites[$i]['item_id'];
+            if($i<count($favorites)-1){
+                $idString .= ",";
+            }
+        }
+        $query = "SELECT * FROM item WHERE id IN ({$idString}) ORDER BY type, year";
         $database = new Database();
         return $database->getAll($query);
     }

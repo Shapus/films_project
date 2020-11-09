@@ -365,3 +365,7 @@ a:hover {
 footer {
   height: 300px;
 }
+
+.type-btn {
+  max-width: max-content !important;
+}

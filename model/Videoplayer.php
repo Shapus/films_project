@@ -2,11 +2,11 @@
 class Videoplayer{
 
     //get data for correct videoplayer page view (needed data stores in VIDEOPLAYER and ITEM table, necessary get it from both tables)
-    public static function getVideoplayer($item_id){
+    public static function getVideoplayer($item_id, $type){
         $database = new Database();
         $out = array();
         //get data from videoplayer
-        $query = "SELECT * FROM videoplayer WHERE parent_id={$item_id}";
+        $query = "SELECT * FROM videoplayer WHERE parent_id={$item_id} AND (SELECT type FROM item WHERE id=(SELECT parent_id FROM item WHERE id=(SELECT parent_id FROM item WHERE id={$item_id})))={$type}";
         $videoplayer = $database->getOne($query);
         //get data from item
         $query = "SELECT * FROM item WHERE id={$item_id}";

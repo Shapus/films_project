@@ -25,7 +25,7 @@
             <div class="col-6">
                 <ul class="d-flex align-items-center">
                     <div class="menu__dropbox">
-                        <a class="menu__dropbtn-box" href="films">Фильмы</a>
+                        <a class="menu__dropbtn-box" href="items?type=1">Фильмы</a>
                         <ul class="menu__drop-content">
                             <a class="menu__item" href="">film_genre_1</a>
                             <a class="menu__item" href="">film_genre_2</a>
@@ -33,7 +33,7 @@
                         </ul>
                     </div> 
                     <div class="menu__dropbox">
-                        <a class="menu__dropbtn-box" href="serials">Сериалы</a>
+                        <a class="menu__dropbtn-box" href="items?type=2">Сериалы</a>
                         <ul class="menu__drop-content">
                             <a class="menu__item" href="">series_genre_1</a>
                             <a class="menu__item" href="">series_genre_2</a>
@@ -44,7 +44,7 @@
                         <a class="menu__dropbtn-box" href="#">О нас</a>
                     </div> 
                     <div class="menu__dropbox">
-                        <a class="menu__dropbtn-box" href="#">Избранное</a>
+                        <a class="menu__dropbtn-box" href="favorites">Избранное</a>
                     </div> 
                 </ul>
             
