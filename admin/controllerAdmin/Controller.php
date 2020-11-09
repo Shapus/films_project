@@ -1,5 +1,5 @@
 <?php
-
+$_SESSION['categories'] = Category::getAll();
 
 class Controller{
 	
@@ -17,7 +17,8 @@ class Controller{
 	}
 	//dashbord
 	public static function dashbord(){
-
+		$items = Item::getAll();
+		include "viewAdmin/pages/dashboard.php";
 	}
 
 
@@ -40,6 +41,7 @@ class Controller{
 	//get all items
 	public static function getAllItems($type){
 		$items = Item::getAll();
+		include "viewAdmin/pages/dashboard.php";
 	}
 	//get item
 	public static function getItem($id){

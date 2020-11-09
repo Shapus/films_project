@@ -15,7 +15,21 @@ class Item{
     }
     //delete item
     public static function delete($id){
-        
+        $query = "DELETE FROM item WHERE id={$id}";
+        $database = new Database();
+        $database->executeRun($query);
+    }
+    //get item
+    public static function get($id){
+        $query = "SELECT * FROM item WHERE id={$id}";
+        $database = new Database();
+        return $database->getOne($query);
+    }
+    //get all items
+    public static function getAll(){
+        $query = "SELECT * FROM item";
+        $database = new Database();
+        return $database->getAll($query);
     }
 }
 

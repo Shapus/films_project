@@ -102,35 +102,45 @@ class View{
         }
     }
 
-    public static function favoriteButton($id, $type){
-        $favoriteItem = array(
-            'user_id' => isset($_SESSION['user']['id'])?$_SESSION['user']['id']:NULL,
-            'item_id' => $id,
-            'type' => $type
-        );
-        if(isset($_SESSION['favorites']) and in_array($favoriteItem, $_SESSION['favorites'])){
-            echo "
-            <form role=\"form\" method=\"POST\" action=\"deleteFavorite\">
-                <input type=\"hidden\" name=\"id\" value=\"{$id}\">
-                <input type=\"hidden\" name=\"type\" value=\"{$type}\">
-                <button class=\"d-flex justify-content-center align-content-center ml-3 form__submit--focused scrollLock\" onClick=\"javascript:this.form.submit();\">
-                    <p class=\"mr-3 mb-0 d-flex justify-self-center align-self-center\" style=\"vertical-align: center;\">В избранном</p>   
-                    <img src=\"images/other/star.png\" class=\"favorite-star favorite-star--big\">
-                </button>                          
-            </form>
-            ";
+    public static function adminItem($item){
+         switch ($item['type']) {
+            case 1:
+                $type = "Фильм";  
+                break;
+            case 2:
+                $type = "Сериал";
+                break;
+            case 3:
+                $type = "Сезон";
+                break;
+            case 4:
+                $type = "Серия";
+                break;
+            default:
+                $type = "Нет типа";
         }
-        else{
-            echo "
-            <form role=\"form\" method=\"POST\" action=\"addFavorite\">
-                <input type=\"hidden\" name=\"id\" value=\"{$id}\">
-                <input type=\"hidden\" name=\"type\" value=\"{$type}\">
-                <button class=\"d-flex justify-content-center align-content-center ml-3 form__submit scrollLock\" onClick=\"javascript:this.form.submit();\">
-                    <p class=\"mr-3 mb-0 d-flex justify-self-center align-self-center\" style=\"vertical-align: center;\">Добавить в избранное</p>  
-                    <img src=\"images/other/starEmpty.png\" class=\"favorite-star favorite-star--big\">
-                </button>                  
-            </form>
-            ";
+        $category = $_SESSION['categories'][$item['category_id']-1]['name'];
+        $title = $item['title'];
+        $image = "images/".$item['image'];
+        $rating = $item['rating'];
+        $number = $item['number'];
+        $year = $item['year'];
+        echo "
+            <div class=\"row admin-item\">
+                <img class=\"col\" src={$image}>
+                <div class=\"col\">{$type}</div>
+                <div class=\"col\">{$title}</div>
+                <div class=\"col\">{$category}</div>
+                <div class=\"col\">{$rating}</div>
+                <div class=\"col\">{$number}</div>
+                <div class=\"col\">{$year}</div>
+            </div>
+        ";
+    }
+    public static function adminItemRow($items){
+        echo "<div class=\"col\">";
+        foreach ($items as $item) {
+            View::adminItem($item);
         }
     }
 }
