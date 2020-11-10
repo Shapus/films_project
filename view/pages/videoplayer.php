@@ -3,21 +3,21 @@
 ?>    
         <div class="d-flex justify-content-center my-5">
             <div class="mr-5">
-                <img class="" style="width:400px; height:600px;" src="images/<?php echo $videoplayer['image'] ?>" alt="">
+                <img class="" style="width:400px; height:600px;" src="images/<?php echo $item['image'] ?>" alt="">
             </div>
             <div class="d-flex flex-column align-self-center">
       
                 <div class="flex-column">                
-                    <h1 class=""> <?php echo $videoplayer['title'] ?> </h1> 
+                    <h1 class=""> <?php echo $item['title'] ?> </h1> 
 <?php                                
-                    View::favoriteButton($videoplayer['parent_id'], $videoplayer['type']); 
-                    View::rating($videoplayer['rating']);
+                    View::favoriteButton($videoplayer['parent_id'], $item['type']); 
+                    View::rating($item['rating']);
 ?>                    
                 </div>
-                <p class="mt-4"> <?php echo $videoplayer['year'] ?> </p>
+                <p class="mt-4"> <?php echo $item['year'] ?> </p>
                 <p class="mt-4"> <?php echo $videoplayer['description'] ?> </p>
 <?php
-                View::videoLinks($videoplayer['type'],$seriasCount['count']);
+                View::videoLinks($item['type'],$seriasCount['count']);
 ?>                
             </div>
         </div>

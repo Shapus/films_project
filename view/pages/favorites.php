@@ -11,8 +11,13 @@
 <?php
     View::itemRow("Фильмы", $films);
     View::itemRow("Сериалы", $serials);
-    View::itemRow("Сезоны", $seasons);
-    View::itemRow("Серии", $serias);
+    foreach($serialsNames as $serial){
+        var_dump($serias);
+        $seasons = is_null($seasons)?array():$seasons;
+        $serias = is_null($serias)?array():$serias;
+        View::itemRow($serial['title'], array_merge($seasons, $serias));
+    }
+    
     $type = isset($_GET['type'])?$_GET['type']:0;
     $category = isset($_GET['category'])?"&category={$_GET['category']}":"";
     $content = ob_get_clean();

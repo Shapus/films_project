@@ -23,13 +23,13 @@
 		$category = isset($_GET['category'])?$_GET['category']:null;
 		$type = isset($_GET['type'])?$_GET['type']:0;
 		if(isset($_GET['id']) and isset($_GET['season']) and isset($_GET['seria'])){
-			$response = Controller::getVideoplayer($_GET['id'], $type);
+			$response = Controller::getSeria($_GET['id'], $_GET['season'], $_GET['seria']);
 		}
 		elseif(isset($_GET['id']) and isset($_GET['season'])){
-			$response = Controller::getSerias($_GET['id'], $_GET['season']);
+			$response = Controller::getSeason($_GET['id'], $_GET['season']);
 		}
 		elseif(isset($_GET['id'])){
-			$response = Controller::getItem($_GET['id'], $type);
+			$response = Controller::getItem($_GET['id']);
 		}
 		else{
 			$response = Controller::getItems($type, $category);
@@ -90,8 +90,8 @@
 	}
 	//add favorite
 	elseif($path == "addFavorite"){
-		if(isset($_POST['id']) and isset($_POST['type']) and isset($_SESSION['user'])){
-			Controller::addFavorite($_POST['id'], $_POST['type']);
+		if(isset($_POST['id']) and isset($_SESSION['user'])){
+			Controller::addFavorite($_POST['id']);
 		}
 		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
 		header("Location: {$link}");
@@ -100,8 +100,8 @@
 
 	//delete favorite
 	elseif($path == "deleteFavorite"){
-		if(isset($_POST['id']) and isset($_POST['type']) and isset($_SESSION['user'])){
-			Controller::deleteFavorite($_POST['id'], $_POST['type']);
+		if(isset($_POST['id']) and isset($_SESSION['user'])){
+			Controller::deleteFavorite($_POST['id']);
 		}
 		$link = $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:"./";
 		header("Location: {$link}");

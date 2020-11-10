@@ -18,16 +18,16 @@ class Controller{
 	public static function getItems($type, $category_id){	
 		switch ($type) {
 			case 0:
-				$films = Item::getAll(1, $category_id);
-				$serials = Item::getAll(2, $category_id);
+				$films = Item::getByCategory(1, $category_id);
+				$serials = Item::getByCategory(2, $category_id);
 				break;
 			case 1:
-				$films = Item::getAll($type, $category_id);
+				$films = Item::getByCategory($type, $category_id);
 				$serials = null;
 				break;		
 			case 2:
 				$films = null;
-				$serials = Item::getAll($type, $category_id);
+				$serials = Item::getByCategory($type, $category_id);
 				break;
 			default:
 				break;
@@ -35,80 +35,39 @@ class Controller{
 		include_once "view/pages/films_and_serials.php";
 	}
 
-	public static function getItem($id, $type){
-		$item = Item::get($id);
-		if($type == 0){
-			$type = Item::getType($id)['type'];
-		}
+	public static function getItem($item_id){
+		$type = 1;
 		switch ($type) {
 			case 1:
-				Controller::getVideoplayer($id, $type);
+				$item = Item::getFilm($item_id);
+				$videoplayer = Item::getFilmPlayer($item_id);
+				$seriasCount = 0;
+				if(!$videoplayer){
+					include_once "view/pages/error404.php";
+				}
+				else{
+					$comments = Comment::getComments($videoplayer['id']);		
+					include_once "view/pages/videoplayer.php";
+				}
 				break;
 			case 2:
-				Controller::getSeasons($id);
+				$serial = Item::getSerial($item_id);
+				$seasons = Item::getSeasons($item_id);
+				include_once "view/pages/seasons.php";
 				break;
 		}
 	}
 
-
-
-
-
-//============================================================================== SERIAL
-	//seasons in serial
-	public static function getSeasons($serial_id){	
-		$seasons = Serial::getSeasons($serial_id);
-		if(!$seasons){
-			include_once "view/pages/error404.php";
-			return;
-		}
-		include_once "view/pages/seasons.php";
-	}
-	
-	//serias in season
-	public static function getSerias($serial_id, $season_number){
-		$season_id = Serial::getSeasonId($serial_id, $season_number);
-		$serias = Serial::getSerias($season_id);
-		if(!$serias){
-			include_once "view/pages/error404.php";
-			return;
-		}
+	public static function getSeason($item_id, $seasonNumber){
+		$serial = Item::getSerial($item_id);
+		$serias= Item::getSeason($item_id, $seasonNumber);
 		include_once "view/pages/serias.php";
 	}
-
-
-
-
-
-//============================================================================== VIDEOPLAYER
-	//get videoplayer
-	public static function getVideoplayer($item_id, $type){
-		if($type == 0){
-			$type = Item::getType($item_id)['type'];
-		}
-		switch ($type) {
-			case 1:
-				$seriasCount['count'] = 1;
-				$id = $item_id;
-				break;
-			case 2:
-				$season_id = Serial::getSeasonId($item_id, $_GET['season']);
-				$id = Serial::getSeriaId($season_id, $_GET['seria']);
-				$seriasCount = Serial::getSeriasCount($season_id);
-				break;
-			default:
-				$id = null;
-				$type = null;
-		}
-
-		$videoplayer = Videoplayer::getVideoplayer($id, $type);
-		if(!$videoplayer){
-			include_once "view/pages/error404.php";
-		}
-		else{
-			$comments = Comment::getComments($videoplayer['id']);		
-			include_once "view/pages/videoplayer.php";
-		}
+	public static function getSeria($item_id, $seasonNumber, $seriaNumber){
+		$serial = Item::getSerial($item_id);
+		$seria = Item::getSeria($item_id, $seasonNumber, $seriaNumber);
+		$videoplayer= Item::getSeriaPlayer($item_id, $seasonNumber, $seriaNumber);
+		include_once "view/pages/videoplayer.php";
 	}
 
 
@@ -161,6 +120,7 @@ class Controller{
 	public static function favorites($type){
 		$user_id = isset($_SESSION['user'])?$_SESSION['user']['id']:null;
 		$favorites = User::getFavorites($_SESSION['user']['id']);
+		$serialsIds = array();
 		switch ($type) {
 			case 0:
 				$films = array();
@@ -211,33 +171,36 @@ class Controller{
 					break;
 				case 3:
 					if(!is_null($seasons)){
-						array_push($seasons, $favorite);
+						if(!in_array($favorite['parent_id'], $serialsIds)){
+							array_push($serialsIds, $favorite['parent_id']);
+						};
+						array_push($seasons,$favorite);
 					}
 					break;
 				case 4:
 					if(!is_null($serias)){
-						array_push($serias, $favorite);
+						if(!in_array($favorite['parent_id'], $serialsIds)){
+							array_push($serialsIds, $favorite['parent_id']);
+						};
+						array_push($serias,$favorite);
 					}
 					break;
 			}
 		}
+		$serialsNames = Serial::getNames($serialsIds);
 		include_once "view/pages/favorites.php";
 	}
 
 	//add favorite
-	public static function addFavorite($id, $type){
-		if(isset($_SESSION['user'])){
-			User::addFavorite($id, $type);
-			$_SESSION['favorites'] = User::getFavorites($_SESSION['user']['id']);
-		}
+	public static function addFavorite($id){
+		User::addFavorite($id);
+		$_SESSION['favorites'] = User::getFavorites($_SESSION['user']['id']);
 	}
 
 	//delete favorite
-	public static function deleteFavorite($id, $type){
-		if(isset($_SESSION['user'])){
-			User::deleteFavorite($id, $type);
-			$_SESSION['favorites'] = User::getFavorites($_SESSION['user']['id']);
-		}
+	public static function deleteFavorite($id){
+		User::deleteFavorite($id);
+		$_SESSION['favorites'] = User::getFavorites($_SESSION['user']['id']);
 	}
 
 

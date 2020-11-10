@@ -26,19 +26,9 @@
                 <ul class="d-flex align-items-center">
                     <div class="menu__dropbox">
                         <a class="menu__dropbtn-box" href="items?type=1">Фильмы</a>
-                        <ul class="menu__drop-content">
-                            <a class="menu__item" href="">film_genre_1</a>
-                            <a class="menu__item" href="">film_genre_2</a>
-                            <a class="menu__item" href="">film_genre_3</a>
-                        </ul>
                     </div> 
                     <div class="menu__dropbox">
                         <a class="menu__dropbtn-box" href="items?type=2">Сериалы</a>
-                        <ul class="menu__drop-content">
-                            <a class="menu__item" href="">series_genre_1</a>
-                            <a class="menu__item" href="">series_genre_2</a>
-                            <a class="menu__item" href="">series_genre_3</a>
-                        </ul>
                     </div> 
                     <div class="menu__dropbox">
                         <a class="menu__dropbtn-box" href="#">О нас</a>
@@ -63,8 +53,9 @@
         <section class="container d-flex flex-column align-items-center">
         <div class="link-row d-flex align-self-start">
 <?php
-/*
+
             if(isset($_SESSION['mainLink'])){
+                $_SESSION['mainLink__name'] = isset($_SESSION['mainLink__name'])?$_SESSION['mainLink__name']:"Главная";
                 echo "<a href=\"{$_SESSION['mainLink']}\" class=\"scrollLock back_btn\" style=\"height:max-content\">{$_SESSION['mainLink__name']}</a>";
             }
             else{
@@ -83,7 +74,7 @@
                 echo "<p class=\"\" style=\"font-size:1.5rem\">&nbsp; &#187; &nbsp;</p>";
                 echo "<a href=\"{$_SESSION['videoLink']}\" class=\"scrollLock back_btn\" style=\"height:max-content\">{$_SESSION['videoLink__name']}</a>";
             }
-*/
+
 ?>            
         </div>
  <?php 

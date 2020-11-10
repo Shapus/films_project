@@ -21,17 +21,15 @@ class View{
     }
 
 //============================================================================== FAVORITE_STAR
-    public static function favoriteStar($id, $type){
+    public static function favoriteStar($id){
         $favoriteItem = array(
             'user_id' => isset($_SESSION['user']['id'])?$_SESSION['user']['id']:NULL,
             'item_id' => $id,
-            'type' => $type
         );
         if(isset($_SESSION['favorites']) and in_array($favoriteItem, $_SESSION['favorites'])){
             echo "
                 <form role=\"form\" method=\"POST\" action=\"deleteFavorite\">
                     <input type=\"hidden\" name=\"id\" value=\"{$id}\">
-                    <input type=\"hidden\" name=\"type\" value=\"{$type}\">
                     <input type=\"image\" src=\"images/other/star.png\" name=\"submit\" class=\"favorite-star favorite-star--fill scrollLock\">
                 </form>
                 ";
@@ -40,7 +38,6 @@ class View{
             echo "
                 <form role=\"form\" method=\"POST\" action=\"addFavorite\">
                     <input type=\"hidden\" name=\"id\" value=\"{$id}\">
-                    <input type=\"hidden\" name=\"type\" value=\"{$type}\">
                     <input type=\"image\" src=\"images/other/starEmpty.png\" name=\"submit\" class=\"favorite-star favorite-star--empty scrollLock\">
                 </form>
                 ";
@@ -48,17 +45,15 @@ class View{
     }
 
 //============================================================================== FAVORITE_BUTTON    
-    public static function favoriteButton($id, $type){
+    public static function favoriteButton($id){
         $favoriteItem = array(
             'user_id' => isset($_SESSION['user']['id'])?$_SESSION['user']['id']:NULL,
             'item_id' => $id,
-            'type' => $type
         );
         if(isset($_SESSION['favorites']) and in_array($favoriteItem, $_SESSION['favorites'])){
             echo "
             <form role=\"form\" method=\"POST\" action=\"deleteFavorite\" class=\"my-3\">
                 <input type=\"hidden\" name=\"id\" value=\"{$id}\">
-                <input type=\"hidden\" name=\"type\" value=\"{$type}\">
                 <button class=\"d-flex justify-content-center align-content-center form__submit--focused scrollLock\" onClick=\"javascript:this.form.submit();\">
                     <p class=\"mr-3 mb-0 d-flex justify-self-center align-self-center\" style=\"vertical-align: center;\">В избранном</p>   
                     <img src=\"images/other/star.png\" class=\"favorite-star favorite-star--big\">
@@ -70,7 +65,6 @@ class View{
             echo "
             <form role=\"form\" method=\"POST\" action=\"addFavorite\" class=\"my-3\">
                 <input type=\"hidden\" name=\"id\" value=\"{$id}\">
-                <input type=\"hidden\" name=\"type\" value=\"{$type}\">
                 <button class=\"d-flex justify-content-center align-content-center form__submit scrollLock\" onClick=\"javascript:this.form.submit();\">
                     <p class=\"mr-3 mb-0 d-flex justify-self-center align-self-center\" style=\"vertical-align: center;\">Добавить в избранное</p>  
                     <img src=\"images/other/starEmpty.png\" class=\"favorite-star favorite-star--big\">
@@ -135,7 +129,7 @@ class View{
     }
 
 //============================================================================== ITEM_IN_ROW
-    public static function item($id, $type, $link, $image, $title, $subtitle){
+    public static function item($id, $link, $image, $title, $subtitle){
         echo"
         <div class=\"col-2 flex-column mb-5\" style=\"min-width:160px;\">
             <a class=\"d-flex flex-wrap scrollLock\" href=\"{$link}\">
@@ -143,7 +137,7 @@ class View{
             </a>
             <div>      
         ";  
-                View::favoriteStar($id, $type);  
+                View::favoriteStar($id);  
         echo "   
                 <a class=\"d-flex flex-wrap color-4 p-0 m-0 scrollLock\" href=\"{$link}\">
                     <p class=\"color-4 p-0 m-0\">{$title}</p>
@@ -170,34 +164,34 @@ class View{
         ";       
 
         //row inner
-        foreach ($items as $item){              
+        foreach ($items as $item){            
             $type = isset($_GET['type'])?$_GET['type']:0;
             $category = isset($_GET['category'])?"&category={$_GET['category']}":"";
             $link = "items?type={$type}{$category}";
             switch ($item['type']) {
                 case 1:
-                    $link .= "&id={$item['id']}";
+                    $link .= "&id={$item['item_id']}";
                     $subtitle = "{$_SESSION['categories'][$item['category_id']-1]['name']}, {$item['year']}";
                     break;
                 case 2:
-                    $link .= "&id={$item['id']}";
+                    $link .= "&id={$item['item_id']}";
                     $subtitle = "{$_SESSION['categories'][$item['category_id']-1]['name']}, {$item['year']}";
                     break;  
                 case 3:
-                    $link .= "&id={$item['parent_id']}&season={$item['number']}";
-                    $subtitle = "";
+                    $link .= "&id={$item['parent']}&season={$item['season_number']}";
+                    $subtitle = "Сезон ".$item['season_number'];
                     break;
                 case 4:
                     $serial_id = Serial::getSerialBySeria($item['id'])['id'];
                     $season_id = Serial::getSeason($item['id'])['id'];
                     $link .= "&id={$serial_id}&season={$season_id}&seria={$item['number']}";
-                    $subtitle = "";
+                    $subtitle = "Серия ".$item['seria_number'];;
                     break;      
                 default:
                     # code...
                     break;
             }
-            View::item($item['id'], $item['type'], $link, $item['image'], $item['title'], $subtitle);
+            View::item($item['id'], $link, $item['image'], $item['title'], $subtitle);
             $count_items++;
             $count_items%=$item_in_row;
         }
