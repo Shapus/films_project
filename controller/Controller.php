@@ -62,6 +62,7 @@ class Controller{
 		$serial = Item::getSerial($item_id);
 		$serias= Item::getSerias($item_id, $seasonNumber);
 		$_SESSION['season_name'] = "Сезон {$seasonNumber}";
+		$_SESSION['item_name'] = "{$serial['title']}";
 		if(!$serias){
 			include_once "view/pages/error404.php";
 		}
@@ -75,6 +76,8 @@ class Controller{
 		$seriasCount = Item::seriasCount($item_id);
 		$videoplayer= Item::getSeriaPlayer($item_id, $seasonNumber, $seriaNumber);
 		$_SESSION['seria_name'] = "Серия {$seriaNumber}";
+		$_SESSION['season_name'] = "Сезон {$seasonNumber}";
+		$_SESSION['item_name'] = "{$item['title']}";
 		if(!$videoplayer){
 			include_once "view/pages/error404.php";
 		}
