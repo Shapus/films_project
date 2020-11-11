@@ -9,13 +9,25 @@
         <a href="favorites?type=4" class="col-2 d-flex type-btn">Серии</a>
     </div>
 <?php
-    View::itemRow("Фильмы", $films);
-    View::itemRow("Сериалы", $serials);
-    foreach($serialsNames as $serial){
-        var_dump($serias);
-        $seasons = is_null($seasons)?array():$seasons;
+    View::itemRow("Фильмы", $films, null);
+    View::itemRow("Сериалы", $serials, null);
+    foreach($parents as $parent){
+        $seasonsBuffer = array();
+        $seriasBuffer = array();
+        $seasons = isset($seasons)?$seasons:array();
+        $serias = isset($serias)?$serias:array();
+        for($i=0;$i<count($seasons);$i++){
+            if($seasons[$i]['item_id'] == $parent['id']){
+                array_push($seasonsBuffer, $seasons[$i]);
+            }
+        }
+        for($i=0;$i<count($serias);$i++){
+            if($serias[$i]['item_id'] == $parent['id']){
+                array_push($seriasBuffer, $serias[$i]);
+            }
+        }
         $serias = is_null($serias)?array():$serias;
-        View::itemRow($serial['title'], array_merge($seasons, $serias));
+        View::itemRow($parent['title'], array_merge($seasonsBuffer, $seriasBuffer), $parent);
     }
     
     $type = isset($_GET['type'])?$_GET['type']:0;

@@ -86,7 +86,12 @@
 //============================================================================== FAVORITE
 	elseif($path == "favorites"){
 		$type = isset($_GET['type'])?$_GET['type']:0;
-		$response = Controller::favorites($type);	
+		if(isset($_SESSION['user'])){
+			$response = Controller::favorites($type);	
+		}
+		else{
+			header("Location: enter");
+		}
 	}
 	//add favorite
 	elseif($path == "addFavorite"){

@@ -24,7 +24,7 @@ class View{
     public static function favoriteStar($id){
         $favoriteItem = array(
             'user_id' => isset($_SESSION['user']['id'])?$_SESSION['user']['id']:NULL,
-            'item_id' => $id,
+            'element_id' => $id,
         );
         if(isset($_SESSION['favorites']) and in_array($favoriteItem, $_SESSION['favorites'])){
             echo "
@@ -48,7 +48,7 @@ class View{
     public static function favoriteButton($id){
         $favoriteItem = array(
             'user_id' => isset($_SESSION['user']['id'])?$_SESSION['user']['id']:NULL,
-            'item_id' => $id,
+            'element_id' => $id,
         );
         if(isset($_SESSION['favorites']) and in_array($favoriteItem, $_SESSION['favorites'])){
             echo "
@@ -149,8 +149,8 @@ class View{
     }
 
 //============================================================================== ITEM_ROW
-    public static function itemRow($title, $items){
-        if(is_null($items)){
+    public static function itemRow($title, $elements, $item){
+        if(is_null($elements) or empty($elements)){
             return;
         }
         $count_items = 0;      
@@ -162,36 +162,51 @@ class View{
             <h2 class=\"align-self-start\">{$title}</h2> 
             <div class=\"row\" style=\"height:300px\"> 
         ";       
-
+        $ids= array();
+        $i = 0;
+        foreach ($elements as $element) {
+            array_push($ids, $element['item_id']);
+        }
+        $items = Item::getParents($ids);
         //row inner
-        foreach ($items as $item){            
+        foreach ($elements as $element){          
             $type = isset($_GET['type'])?$_GET['type']:0;
             $category = isset($_GET['category'])?"&category={$_GET['category']}":"";
             $link = "items?type={$type}{$category}";
-            switch ($item['type']) {
+            switch ($element['type']) {
                 case 1:
-                    $link .= "&id={$item['item_id']}";
-                    $subtitle = "{$_SESSION['categories'][$item['category_id']-1]['name']}, {$item['year']}";
+                    foreach ($items as $parent) {
+                        if($parent['id'] == $element['item_id']){
+                            $parentItem = $parent;
+                            break;
+                        }
+                    }
+                    $link .= "&id={$element['item_id']}";
+                    $subtitle = "{$_SESSION['categories'][$parentItem['category']-1]['name']}, {$parentItem['year']}";
                     break;
                 case 2:
-                    $link .= "&id={$item['item_id']}";
-                    $subtitle = "{$_SESSION['categories'][$item['category_id']-1]['name']}, {$item['year']}";
+                    foreach ($items as $parent) {
+                        if($parent['id'] == $element['item_id']){
+                            $parentItem = $parent;
+                            break;
+                        }
+                    }
+                    $link .= "&id={$element['item_id']}";
+                    $subtitle = "{$_SESSION['categories'][$parentItem['category']-1]['name']}, {$parentItem['year']}";
                     break;  
                 case 3:
-                    $link .= "&id={$item['parent']}&season={$item['season_number']}";
-                    $subtitle = "Сезон ".$item['season_number'];
+                    $link .= "&id={$element['item_id']}&season={$element['season_number']}";
+                    $subtitle = "Сезон ".$element['season_number'];
                     break;
                 case 4:
-                    $serial_id = Serial::getSerialBySeria($item['id'])['id'];
-                    $season_id = Serial::getSeason($item['id'])['id'];
-                    $link .= "&id={$serial_id}&season={$season_id}&seria={$item['number']}";
-                    $subtitle = "Серия ".$item['seria_number'];;
+                    $link .= "&id={$element['item_id']}&season={$element['season_number']}&seria={$element['seria_number']}";
+                    $subtitle = "Серия ".$element['seria_number'];;
                     break;      
                 default:
                     # code...
                     break;
             }
-            View::item($item['id'], $link, $item['image'], $item['title'], $subtitle);
+            View::item($element['id'], $link, $element['image'], $element['title'], $subtitle);
             $count_items++;
             $count_items%=$item_in_row;
         }

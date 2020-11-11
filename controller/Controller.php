@@ -36,11 +36,11 @@ class Controller{
 	}
 
 	public static function getItem($item_id){
-		$type = 1;
-		switch ($type) {
+		$item = Item::getItem($item_id);
+		switch ($item['type']) {
 			case 1:
-				$item = Item::getFilm($item_id);
-				$videoplayer = Item::getFilmPlayer($item_id);
+				$element = Item::getFilm($item_id);
+				$videoplayer = Item::getFilmPlayer($element['id']);
 				$seriasCount = 0;
 				if(!$videoplayer){
 					include_once "view/pages/error404.php";
@@ -51,7 +51,6 @@ class Controller{
 				}
 				break;
 			case 2:
-				$serial = Item::getSerial($item_id);
 				$seasons = Item::getSeasons($item_id);
 				include_once "view/pages/seasons.php";
 				break;
@@ -60,14 +59,26 @@ class Controller{
 
 	public static function getSeason($item_id, $seasonNumber){
 		$serial = Item::getSerial($item_id);
-		$serias= Item::getSeason($item_id, $seasonNumber);
-		include_once "view/pages/serias.php";
+		$serias= Item::getSerias($item_id, $seasonNumber);
+		if(!$serias){
+			include_once "view/pages/error404.php";
+		}
+		else{
+			include_once "view/pages/serias.php";
+		}
 	}
 	public static function getSeria($item_id, $seasonNumber, $seriaNumber){
-		$serial = Item::getSerial($item_id);
-		$seria = Item::getSeria($item_id, $seasonNumber, $seriaNumber);
+		$item = Item::getItem($item_id);
+		$element = Item::getSeria($item_id, $seasonNumber, $seriaNumber);
+		$seriasCount = Item::seriasCount($item_id);
 		$videoplayer= Item::getSeriaPlayer($item_id, $seasonNumber, $seriaNumber);
-		include_once "view/pages/videoplayer.php";
+		if(!$videoplayer){
+			include_once "view/pages/error404.php";
+		}
+		else{
+			$comments = Comment::getComments($videoplayer['id']);		
+			include_once "view/pages/videoplayer.php";
+		}
 	}
 
 
@@ -120,7 +131,7 @@ class Controller{
 	public static function favorites($type){
 		$user_id = isset($_SESSION['user'])?$_SESSION['user']['id']:null;
 		$favorites = User::getFavorites($_SESSION['user']['id']);
-		$serialsIds = array();
+		$ids = array();
 		switch ($type) {
 			case 0:
 				$films = array();
@@ -171,23 +182,23 @@ class Controller{
 					break;
 				case 3:
 					if(!is_null($seasons)){
-						if(!in_array($favorite['parent_id'], $serialsIds)){
-							array_push($serialsIds, $favorite['parent_id']);
+						if(!in_array($favorite['item_id'], $ids)){
+							array_push($ids, $favorite['item_id']);
 						};
 						array_push($seasons,$favorite);
 					}
 					break;
 				case 4:
 					if(!is_null($serias)){
-						if(!in_array($favorite['parent_id'], $serialsIds)){
-							array_push($serialsIds, $favorite['parent_id']);
+						if(!in_array($favorite['item_id'], $ids)){
+							array_push($ids, $favorite['item_id']);
 						};
 						array_push($serias,$favorite);
 					}
 					break;
 			}
 		}
-		$serialsNames = Serial::getNames($serialsIds);
+		$parents = Item::getParents($ids);
 		include_once "view/pages/favorites.php";
 	}
 
