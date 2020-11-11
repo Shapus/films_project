@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Ноя 05 2020 г., 14:16
+-- Время создания: Ноя 11 2020 г., 11:53
 -- Версия сервера: 10.4.13-MariaDB
 -- Версия PHP: 7.2.31
 
@@ -74,19 +74,95 @@ CREATE TABLE `comment` (
 --
 
 INSERT INTO `comment` (`id`, `user_id`, `videoplayer_id`, `user_name`, `date`, `text`, `hidden`) VALUES
-(9, 15, 6, 'alex', '2020-10-28', 'Потрясающе!', 0);
+(9, 15, 6, 'alex', '2020-10-28', 'Потрясающе!', 0),
+(10, 15, 7, 'alex', '2020-11-09', 'Потрясающе!', 0),
+(11, 15, 2, 'alex', '2020-11-10', 'aaa', 0),
+(12, 11, 2, 'Alex', '2020-11-11', 'aa', 1);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `favorite_item`
+-- Структура таблицы `element`
 --
 
-CREATE TABLE `favorite_item` (
-  `user_id` int(11) NOT NULL,
+CREATE TABLE `element` (
+  `id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
-  `type` int(11) NOT NULL
+  `type` int(11) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `rating` enum('0','1','2','3','4','5','6','7','8','9','10') NOT NULL DEFAULT '0',
+  `season_number` int(11) DEFAULT NULL,
+  `seria_number` int(11) DEFAULT NULL,
+  `year` int(11) DEFAULT NULL,
+  `parent` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `element`
+--
+
+INSERT INTO `element` (`id`, `item_id`, `type`, `title`, `image`, `rating`, `season_number`, `seria_number`, `year`, `parent`) VALUES
+(3, 1, 1, 'Богемская рапсодия', 'Bohemian_Rhapsody.jpg', '8', 0, NULL, 2018, 3),
+(4, 2, 2, 'Во все тяжкие', 'Breaking_Bad.jpg', '8', 0, NULL, 2008, 4),
+(5, 3, 2, 'Друзья', 'Friends.jpg', '9', 0, NULL, 1994, 5),
+(6, 4, 2, 'Игра престолов', 'Game_of_Thrones.jpg', '10', 0, NULL, 2011, 6),
+(7, 5, 1, 'Начало', 'Inception.jpg', '7', 0, NULL, 2010, 7),
+(8, 6, 1, 'Криминальное чтиво', 'Pulp_Fiction.jpg', '10', 0, NULL, 1994, 8),
+(9, 7, 1, 'Джентельмены', 'The_Gentlemen.jpg', '7', 0, NULL, 2019, 9),
+(10, 8, 1, 'Побег из Шоушенка', 'The_Shawshank_Redemption.jpg', '10', 0, NULL, 1994, 10),
+(11, 9, 2, 'Ходячие мертвецы', 'The_Walking_Dead.jpg', '9', 0, NULL, 2010, 11),
+(12, 4, 3, '', 'Game_of_Thrones.jpg', '0', 1, NULL, NULL, 6),
+(13, 4, 3, '', 'Game_of_Thrones.jpg', '0', 2, NULL, NULL, 6),
+(14, 4, 4, 'Зима близко', 'Game_of_Thrones_1_1.jpg', '10', 1, 1, NULL, 12),
+(15, 4, 4, 'Королевский тракт', 'Game_of_Thrones_1_2.jpg', '10', 1, 2, NULL, 12),
+(17, 2, 3, NULL, NULL, '0', 1, NULL, NULL, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `element_type`
+--
+
+CREATE TABLE `element_type` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `element_type`
+--
+
+INSERT INTO `element_type` (`id`, `name`) VALUES
+(1, 'film'),
+(2, 'serial'),
+(3, 'season'),
+(4, 'seria');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `favorite_element`
+--
+
+CREATE TABLE `favorite_element` (
+  `user_id` int(11) NOT NULL,
+  `element_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `favorite_element`
+--
+
+INSERT INTO `favorite_element` (`user_id`, `element_id`) VALUES
+(11, 3),
+(11, 6),
+(11, 9),
+(11, 11),
+(11, 12),
+(11, 13),
+(11, 14),
+(11, 15);
 
 -- --------------------------------------------------------
 
@@ -97,33 +173,45 @@ CREATE TABLE `favorite_item` (
 CREATE TABLE `item` (
   `id` int(11) NOT NULL,
   `type` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `rating` enum('0','1','2','3','4','5','6','7','8','9','10') NOT NULL DEFAULT '0',
-  `number` int(11) DEFAULT NULL,
-  `year` int(11) DEFAULT NULL,
-  `parent_id` int(11) NOT NULL
+  `title` varchar(255) NOT NULL,
+  `rating` enum('0','1','2','3','4','5','6','7','8','9','10') NOT NULL,
+  `year` int(11) NOT NULL,
+  `category` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Дамп данных таблицы `item`
 --
 
-INSERT INTO `item` (`id`, `type`, `category_id`, `title`, `image`, `rating`, `number`, `year`, `parent_id`) VALUES
-(3, 1, 1, 'Богемская рапсодия', 'Bohemian_Rhapsody.jpg', '8', NULL, 2018, 3),
-(4, 2, 2, 'Во все тяжкие', 'Breaking_Bad.jpg', '8', NULL, 2008, 4),
-(5, 2, 6, 'Друзья', 'Friends.jpg', '9', NULL, 1994, 5),
-(6, 2, 15, 'Игра престолов', 'Game_of_Thrones.jpg', '10', NULL, 2011, 6),
-(7, 1, 14, 'Начало', 'Inception.jpg', '7', NULL, 2010, 7),
-(8, 1, 2, 'Криминальное чтиво', 'Pulp_Fiction.jpg', '10', NULL, 1994, 8),
-(9, 1, 2, 'Джентельмены', 'The_Gentlemen.jpg', '7', NULL, 2019, 9),
-(10, 1, 5, 'Побег из Шоушенка', 'The_Shawshank_Redemption.jpg', '10', NULL, 1994, 10),
-(11, 2, 13, 'Ходячие мертвецы', 'The_Walking_Dead.jpg', '9', NULL, 2010, 11),
-(12, 3, 15, 'Сезон 1', 'Game_of_Thrones.jpg', '0', 1, NULL, 6),
-(13, 3, 15, 'Сезон 2', 'Game_of_Thrones.jpg', '0', 2, NULL, 6),
-(14, 4, 15, 'Зима близко', 'Game_of_Thrones_1_1.jpg', '10', 1, NULL, 12),
-(15, 4, 15, 'Королевский тракт', 'Game_of_Thrones_1_2.jpg', '10', 2, NULL, 12);
+INSERT INTO `item` (`id`, `type`, `title`, `rating`, `year`, `category`) VALUES
+(1, 1, 'Богемская рапсодия', '8', 2018, 1),
+(2, 2, 'Во все тяжкие', '8', 2008, 2),
+(3, 2, 'Друзья', '9', 1994, 6),
+(4, 2, 'Игра престолов', '10', 2011, 15),
+(5, 1, 'Начало', '7', 2010, 14),
+(6, 1, 'Криминальное чтиво', '10', 1994, 2),
+(7, 1, 'Джентельмены', '7', 2019, 2),
+(8, 1, 'Побег из шоушенка', '10', 1994, 5),
+(9, 2, 'Ходячие мертвецы', '9', 2010, 13);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `item_type`
+--
+
+CREATE TABLE `item_type` (
+  `id` int(11) NOT NULL,
+  `type` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `item_type`
+--
+
+INSERT INTO `item_type` (`id`, `type`) VALUES
+(1, 'film'),
+(2, 'serial');
 
 -- --------------------------------------------------------
 
@@ -143,27 +231,6 @@ CREATE TABLE `status` (
 INSERT INTO `status` (`id`, `name`) VALUES
 (1, 'user'),
 (2, 'admin');
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `type`
---
-
-CREATE TABLE `type` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Дамп данных таблицы `type`
---
-
-INSERT INTO `type` (`id`, `name`) VALUES
-(1, 'film'),
-(2, 'serial'),
-(3, 'season'),
-(4, 'seria');
 
 -- --------------------------------------------------------
 
@@ -236,32 +303,45 @@ ALTER TABLE `comment`
   ADD KEY `videoplayer_id` (`videoplayer_id`);
 
 --
--- Индексы таблицы `favorite_item`
+-- Индексы таблицы `element`
 --
-ALTER TABLE `favorite_item`
-  ADD PRIMARY KEY (`user_id`,`item_id`,`type`),
+ALTER TABLE `element`
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `parent` (`parent`),
   ADD KEY `type` (`type`),
   ADD KEY `item_id` (`item_id`);
+
+--
+-- Индексы таблицы `element_type`
+--
+ALTER TABLE `element_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `favorite_element`
+--
+ALTER TABLE `favorite_element`
+  ADD PRIMARY KEY (`user_id`,`element_id`) USING BTREE,
+  ADD KEY `item_id` (`element_id`);
 
 --
 -- Индексы таблицы `item`
 --
 ALTER TABLE `item`
-  ADD PRIMARY KEY (`id`,`type`),
-  ADD KEY `type` (`type`),
-  ADD KEY `category_id` (`category_id`),
-  ADD KEY `parent_id` (`parent_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `category` (`category`),
+  ADD KEY `type` (`type`);
+
+--
+-- Индексы таблицы `item_type`
+--
+ALTER TABLE `item_type`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `status`
 --
 ALTER TABLE `status`
-  ADD PRIMARY KEY (`id`);
-
---
--- Индексы таблицы `type`
---
-ALTER TABLE `type`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -292,25 +372,37 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT для таблицы `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT для таблицы `element`
+--
+ALTER TABLE `element`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT для таблицы `element_type`
+--
+ALTER TABLE `element_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `item`
 --
 ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT для таблицы `item_type`
+--
+ALTER TABLE `item_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `status`
 --
 ALTER TABLE `status`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT для таблицы `type`
---
-ALTER TABLE `type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
@@ -336,20 +428,26 @@ ALTER TABLE `comment`
   ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`videoplayer_id`) REFERENCES `videoplayer` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `favorite_item`
+-- Ограничения внешнего ключа таблицы `element`
 --
-ALTER TABLE `favorite_item`
-  ADD CONSTRAINT `favorite_item_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `favorite_item_ibfk_3` FOREIGN KEY (`type`) REFERENCES `type` (`id`),
-  ADD CONSTRAINT `favorite_item_ibfk_4` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`);
+ALTER TABLE `element`
+  ADD CONSTRAINT `element_ibfk_5` FOREIGN KEY (`type`) REFERENCES `element_type` (`id`),
+  ADD CONSTRAINT `element_ibfk_6` FOREIGN KEY (`parent`) REFERENCES `element` (`id`),
+  ADD CONSTRAINT `element_ibfk_7` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `favorite_element`
+--
+ALTER TABLE `favorite_element`
+  ADD CONSTRAINT `favorite_element_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `favorite_element_ibfk_4` FOREIGN KEY (`element_id`) REFERENCES `element` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `item`
 --
 ALTER TABLE `item`
-  ADD CONSTRAINT `item_ibfk_2` FOREIGN KEY (`type`) REFERENCES `type` (`id`),
-  ADD CONSTRAINT `item_ibfk_3` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
-  ADD CONSTRAINT `item_ibfk_4` FOREIGN KEY (`parent_id`) REFERENCES `item` (`id`);
+  ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`category`) REFERENCES `category` (`id`),
+  ADD CONSTRAINT `item_ibfk_2` FOREIGN KEY (`type`) REFERENCES `item_type` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `user`
@@ -361,7 +459,7 @@ ALTER TABLE `user`
 -- Ограничения внешнего ключа таблицы `videoplayer`
 --
 ALTER TABLE `videoplayer`
-  ADD CONSTRAINT `videoplayer_ibfk_3` FOREIGN KEY (`parent_id`) REFERENCES `item` (`id`);
+  ADD CONSTRAINT `videoplayer_ibfk_3` FOREIGN KEY (`parent_id`) REFERENCES `element` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

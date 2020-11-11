@@ -53,28 +53,7 @@
         <section class="container d-flex flex-column align-items-center">
         <div class="link-row d-flex align-self-start">
 <?php
-
-            if(isset($_SESSION['mainLink'])){
-                $_SESSION['mainLink__name'] = isset($_SESSION['mainLink__name'])?$_SESSION['mainLink__name']:"Главная";
-                echo "<a href=\"{$_SESSION['mainLink']}\" class=\"scrollLock back_btn\" style=\"height:max-content\">{$_SESSION['mainLink__name']}</a>";
-            }
-            else{
-                echo "<a href=\"./\" class=\"scrollLock back_btn\" style=\"height:max-content\">{$_SESSION['mainLink__name']}</a>";
-            }
-            if(isset($_SESSION['serialLink'])){
-                echo "<p class=\"\" style=\"font-size:1.5rem\">&nbsp; &#187; &nbsp;</p>";
-                echo "<a href=\"{$_SESSION['serialLink']}\" class=\"scrollLock back_btn\" style=\"height:max-content\">{$_SESSION['serialLink__name']}</a>";
-            }
-
-            if(isset($_SESSION['seasonLink'])){
-                echo "<p class=\"\" style=\"font-size:1.5rem\">&nbsp; &#187; &nbsp;</p>";
-                echo "<a href=\"{$_SESSION['seasonLink']}\" class=\"scrollLock back_btn\" style=\"height:max-content\">{$_SESSION['seasonLink__name']}</a>";
-            }
-            if(isset($_SESSION['videoLink'])){
-                echo "<p class=\"\" style=\"font-size:1.5rem\">&nbsp; &#187; &nbsp;</p>";
-                echo "<a href=\"{$_SESSION['videoLink']}\" class=\"scrollLock back_btn\" style=\"height:max-content\">{$_SESSION['videoLink__name']}</a>";
-            }
-
+            View::navigationRow();
 ?>            
         </div>
  <?php 

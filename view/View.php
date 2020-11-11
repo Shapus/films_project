@@ -200,7 +200,7 @@ class View{
                     break;
                 case 4:
                     $link .= "&id={$element['item_id']}&season={$element['season_number']}&seria={$element['seria_number']}";
-                    $subtitle = "Серия ".$element['seria_number'];;
+                    $subtitle = "Серия ".$element['seria_number'];
                     break;      
                 default:
                     # code...
@@ -263,6 +263,32 @@ class View{
                 echo "</div>"; 
                 break; 
         }
+    }
+
+
+//============================================================================== TOP NAVIGATION
+    public static function navigationRow(){
+        $type = isset($_GET['type'])?"{$_GET['type']}":"";
+        $category = isset($_GET['category'])?"category={$_GET['category']}":"";
+        $id = isset($_GET['id'])?"{$_GET['id']}":"";
+        $season = isset($_GET['season'])?"{$_GET['season']}":"";
+        $season = isset($_GET['seria'])?"{$_GET['seria']}":"";
+        echo "
+            <div class=\"row d-flex justify-content-start\">
+                <a class=\"back_btn\" href=\"items\">Главная</a>
+        ";
+                if(isset($_GET['id'])){
+                    echo "<p class=\"back_btn\" style=\"color:black\">&nbsp;&raquo;&nbsp;</p><a class=\"back_btn\" href=\"items?id={$_GET['id']}\">{$_SESSION['item_name']}</a>";
+                }
+                if(isset($_GET['id']) and isset($_GET['season'])){
+                    echo "<p class=\"back_btn\" style=\"color:black\">&nbsp;&raquo;&nbsp;</p><a class=\"back_btn\" href=\"items?id={$_GET['id']}&season={$_GET['season']}\">{$_SESSION['season_name']}</a>";
+                }
+                if(isset($_GET['id']) and isset($_GET['season']) and isset($_GET['seria'])){
+                    echo "<p class=\"back_btn\" style=\"color:black\">&nbsp;&raquo;&nbsp;</p><a class=\"back_btn\" href=\"items?id={$_GET['id']}&season={$_GET['season']}&seria={$_GET['seria']}\">{$_SESSION['seria_name']}</a>";
+                }
+        echo "
+            </div>
+        ";
     }
 }
 ?>

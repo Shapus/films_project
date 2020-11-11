@@ -37,6 +37,7 @@ class Controller{
 
 	public static function getItem($item_id){
 		$item = Item::getItem($item_id);
+		$_SESSION['item_name'] = $item['title'];
 		switch ($item['type']) {
 			case 1:
 				$element = Item::getFilm($item_id);
@@ -60,6 +61,7 @@ class Controller{
 	public static function getSeason($item_id, $seasonNumber){
 		$serial = Item::getSerial($item_id);
 		$serias= Item::getSerias($item_id, $seasonNumber);
+		$_SESSION['season_name'] = "Сезон {$seasonNumber}";
 		if(!$serias){
 			include_once "view/pages/error404.php";
 		}
@@ -72,6 +74,7 @@ class Controller{
 		$element = Item::getSeria($item_id, $seasonNumber, $seriaNumber);
 		$seriasCount = Item::seriasCount($item_id);
 		$videoplayer= Item::getSeriaPlayer($item_id, $seasonNumber, $seriaNumber);
+		$_SESSION['seria_name'] = "Серия {$seriaNumber}";
 		if(!$videoplayer){
 			include_once "view/pages/error404.php";
 		}
