@@ -8,7 +8,7 @@
             <div class="d-flex flex-column align-self-center">
       
                 <div class="flex-column">                
-                    <h1 class=""> <?php echo $item['title'] ?> </h1> 
+                    <h1 class=""> <?php echo $element['title'] ?> </h1> 
 <?php                                
                     View::favoriteButton($videoplayer['parent_id'], $element['type']); 
                     View::rating($item['rating']);

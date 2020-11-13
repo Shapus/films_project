@@ -40,7 +40,7 @@ class User{
     }
     //delete favorite
     public static function deleteFavorite($id){
-        $query = "DELETE FROM favorite_element WHERE user_id={$_SESSION['user']['id']} AND item_id={$id}";
+        $query = "DELETE FROM favorite_element WHERE user_id={$_SESSION['user']['id']} AND element_id={$id}";
         $database = new Database();
         $database->executeRun($query);
     }
